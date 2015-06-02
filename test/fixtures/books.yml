@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  path: MyString
+  cover_img: MyString
+  downloads: 1
+  description: MyString
+  title: MyString
+  group: MyString
+  isbn_10: MyString
+  isbn_13: MyString
+  language: MyString
+  series: MyString
+  publisher: MyString
+
+two:
+  path: MyString
+  cover_img: MyString
+  downloads: 1
+  description: MyString
+  title: MyString
+  group: MyString
+  isbn_10: MyString
+  isbn_13: MyString
+  language: MyString
+  series: MyString
+  publisher: MyString

@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Path:</strong>
+  <%= @book.path %>
+</p>
+
+<p>
+  <strong>Cover img:</strong>
+  <%= @book.cover_img %>
+</p>
+
+<p>
+  <strong>Downloads:</strong>
+  <%= @book.downloads %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @book.description %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @book.title %>
+</p>
+
+<p>
+  <strong>Group:</strong>
+  <%= @book.group %>
+</p>
+
+<p>
+  <strong>Isbn 10:</strong>
+  <%= @book.isbn_10 %>
+</p>
+
+<p>
+  <strong>Isbn 13:</strong>
+  <%= @book.isbn_13 %>
+</p>
+
+<p>
+  <strong>Language:</strong>
+  <%= @book.language %>
+</p>
+
+<p>
+  <strong>Series:</strong>
+  <%= @book.series %>
+</p>
+
+<p>
+  <strong>Publisher:</strong>
+  <%= @book.publisher %>
+</p>
+
+<%= link_to 'Edit', edit_book_path(@book) %> |
+<%= link_to 'Back', books_path %>
