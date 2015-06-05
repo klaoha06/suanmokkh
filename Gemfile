@@ -15,7 +15,13 @@ gem 'devise'
 gem 'cancan' # or cancancan
 gem 'draper'
 gem 'pundit'
-# gem 'simple_form'
+gem 'activeadmin_addons'
+# gem 'activeadmin_associations'
+
+# gem 'rich'
+gem 'ckeditor'
+# For Uploading Files
+gem "paperclip", "~> 4.2"
 
 # Use autoprefixer to automatically adds the proper vendor prefixes to your CSS code when it is compiled.
 gem 'autoprefixer-rails'
@@ -47,8 +53,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+	gem 'quiet_assets'
 	gem 'guard'
 	gem 'guard-livereload', '~> 2.4', require: false
+	gem 'faker'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

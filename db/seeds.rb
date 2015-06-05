@@ -5,3 +5,22 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+require 'faker'
+
+
+Author.delete_all
+Book.delete_all
+
+10.times do 
+	author = Author.create({ name: Faker::Name.name, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, brief_biography: Faker::Lorem.paragraph })
+	2.times do 
+		author.books.create({title: Faker::Commerce.product_name, description: Faker::Lorem.paragraph })
+	end
+end
+
+# Author.create!([{ name: 'Ajarn Buddhadasa' }, { name: 'YOYOYO' },{ name: 'Ajarn Jayasaro'}, { name: 'Thich Nhat Han' }])
+# Book.create!([{ title: 'a' }, { title: 'b' },{ title: 'cc'}, { title: 'ddd' }])
+
+# user.products.create(:name => 'Apple', :store => walmart)
+
+

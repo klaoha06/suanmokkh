@@ -30,6 +30,12 @@ hr.light {
     border-color: #fff;
 }
 
+hr.full {
+	max-width: 100%;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
 a {
 		font-size: 16px;
     color: #725843;
@@ -57,6 +63,10 @@ p {
     margin-bottom: 20px;
     font-size: 19px;
     line-height: 1.5;
+}
+
+p,h1,h2,h3,h4,h5,h6,blockquote {
+  word-wrap: break-word;
 }
 
 .bg-primary {
@@ -187,8 +197,26 @@ aside {
 .navbar-default .nav>li.active>a:focus:hover {
     background-color: transparent;
 }
+.dropdown-menu {
+	min-width: 350px;
+	border:none;
+}
+
+.dropdown-menu li a {
+	text-align: center;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 320px;
+    overflow-x: hidden;
+}
 
 @media(min-width:768px) {
+		.dropdown-menu {
+			width: 100%;
+			border:none;
+		}
     .navbar-default {
         /*border-color: rgba(255,255,255,.3);*/
         background-color: transparent;
@@ -242,14 +270,7 @@ aside {
     }
 }
 
-.dropdown-menu {
-	min-width: 320px;
-	border:none;
-}
 
-.dropdown-menu li a {
-	text-align: center;
-}
 
 header {
     position: relative;
@@ -257,12 +278,15 @@ header {
     min-height: auto;
     text-align: center;
     color: #fff;
-    background-image: url(ajarn1.jpg);
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+}
+
+.indexPage {
+	background-image: url(ajarn1.jpg);
 }
 
 header .header-content {
@@ -480,9 +504,9 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-    border-color: #ed431f;
-    color: #fff;
-    background-color: #ee4b28;
+    border-color: #725843;
+    color: black;
+    background-color: white;
 }
 
 .btn-primary:active,

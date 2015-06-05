@@ -16,3 +16,5 @@
 //= require bootstrap-sprockets
 //= require owl.carousel
 //= require_tree .
+//= stub ckeditor/init
+//= stub activeadmin
