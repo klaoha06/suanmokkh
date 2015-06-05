@@ -1,6 +1,6 @@
 ActiveAdmin.register Book do
 	menu priority: 2
-	permit_params :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ]
+	permit_params :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ]
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -148,27 +148,26 @@ controller do
 	def create
 		super do |format|
 			params.permit!
-			# @new_authors = params[:book].delete("authors_attributes")
 			@existing_authors = params[:book].delete("author_ids")
-			# if @new_authors
-			# 	@new_authors.each do |key,value|
-			# 		@book.authors << Author.new(value)
-			# 	end
-			# end
 			if @existing_authors
 				@book.authors << Author.where(id: @existing_authors)
 			end
-		 end
 
-		# @book = Book.new(params[:book])
-
-		# if @book.save 
-  #      redirect_to resource_path(@book)
-		# else
-		# 	redirect_to :back
-		# 	errors.add
-		# end
+		end
 	end
+
+	def update
+		super do |format|
+			params.permit!
+			@existing_authors = params[:book].delete("author_ids")
+			if @existing_authors
+				@book.authors.clear
+				@book.authors << Author.where(id: @existing_authors)
+			end
+		end
+	end
+
+
 end
 
 end
