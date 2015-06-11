@@ -1,9 +1,9 @@
 class PublishersController < InheritedResources::Base
-
+	
   private
 
-    def publisher_params
-      params.require(:publisher).permit()
+    def author_params
+      params.require(:author).permit()
     end
 end
 

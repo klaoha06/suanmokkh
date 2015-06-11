@@ -53,19 +53,40 @@ ActiveRecord::Schema.define(version: 20150604051016) do
     t.string   "title"
     t.text     "content"
     t.string   "language"
-    t.integer  "reads",              default: 0
     t.string   "series"
-    t.string   "publisher"
+    t.string   "group"
+    t.date     "publication_date"
     t.boolean  "draft",              default: false
     t.boolean  "featured",           default: false
     t.boolean  "allow_comments",     default: true
+    t.integer  "reads",              default: 0
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
   end
+
+  create_table "articles_authors", id: false, force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "article_id"
+  end
+
+  add_index "articles_authors", ["article_id"], name: "index_articles_authors_on_article_id", using: :btree
+  add_index "articles_authors", ["author_id"], name: "index_articles_authors_on_author_id", using: :btree
+
+  create_table "articles_publishers", id: false, force: :cascade do |t|
+    t.integer "publisher_id"
+    t.integer "article_id"
+  end
+
+  add_index "articles_publishers", ["article_id"], name: "index_articles_publishers_on_article_id", using: :btree
+  add_index "articles_publishers", ["publisher_id"], name: "index_articles_publishers_on_publisher_id", using: :btree
 
   create_table "audios", force: :cascade do |t|
     t.string   "title"
@@ -106,23 +127,21 @@ ActiveRecord::Schema.define(version: 20150604051016) do
     t.string   "title"
     t.text     "description"
     t.string   "language"
-    t.integer  "downloads",                                      default: 0
-    t.integer  "views",                                          default: 0
-    t.integer  "shares",                                         default: 0
     t.string   "series"
     t.string   "group"
     t.string   "isbn_10"
     t.string   "isbn_13"
-    t.string   "publisher"
-    t.string   "format"
     t.date     "publication_date"
     t.boolean  "draft",                                          default: false
     t.boolean  "featured",                                       default: false
     t.boolean  "allow_comments",                                 default: true
+    t.string   "format"
     t.integer  "weight"
     t.integer  "pages"
     t.decimal  "price",                  precision: 8, scale: 2
-    t.integer  "publisher_id"
+    t.integer  "downloads",                                      default: 0
+    t.integer  "views",                                          default: 0
+    t.integer  "shares",                                         default: 0
     t.datetime "created_at",                                                     null: false
     t.datetime "updated_at",                                                     null: false
     t.string   "cover_img_file_name"
@@ -135,7 +154,13 @@ ActiveRecord::Schema.define(version: 20150604051016) do
     t.datetime "file_updated_at"
   end
 
-  add_index "books", ["publisher_id"], name: "index_books_on_publisher_id", using: :btree
+  create_table "books_publishers", id: false, force: :cascade do |t|
+    t.integer "publisher_id"
+    t.integer "book_id"
+  end
+
+  add_index "books_publishers", ["book_id"], name: "index_books_publishers_on_book_id", using: :btree
+  add_index "books_publishers", ["publisher_id"], name: "index_books_publishers_on_publisher_id", using: :btree
 
   create_table "catagories", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -159,9 +184,15 @@ ActiveRecord::Schema.define(version: 20150604051016) do
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   create_table "publishers", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "book_id"
+    t.integer  "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_index "publishers", ["article_id"], name: "index_publishers_on_article_id", using: :btree
+  add_index "publishers", ["book_id"], name: "index_publishers_on_book_id", using: :btree
 
   create_table "videos", force: :cascade do |t|
     t.string   "title"

@@ -1,5 +1,5 @@
 ActiveAdmin.register Video do
-	menu priority: 4
+	# menu priority: 4
 	permit_params :title, :cover_img, :publisher, :description, :group, :language, :plays, :downloads, :path, :series, :file, :featured, :draft
 
 # See permitted parameters documentation:

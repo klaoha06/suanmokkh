@@ -1,7 +1,8 @@
 ActiveAdmin.register Book do
 	menu priority: 2
-	permit_params :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ]
+	permit_params :id, :title, :cover_img, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ]
 
+	# belongs_to :publisher
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -32,11 +33,11 @@ sidebar "Author", :only => :show do
     end
 end
 
-# sidebar "Publisher(s) Details", :only => :show do
-#     table_for(book.publishers) do
-#     	column("Name") {|publisher| link_to "#{publisher.name}", admin_publisher_path(publisher) }
-#     end
-# end
+sidebar "Publisher", :only => :show do
+    table_for(book.publishers) do
+    	column("Name") {|publisher| link_to "#{publisher.name}", admin_publisher_path(publisher) }
+    end
+end
 
 scope :all, :default => true
 scope :published do |products|
@@ -45,7 +46,7 @@ end
 scope :not_published do |products|
   products.where(:draft => true)
 end
-scope :featured_products do |products|
+scope :featured do |products|
   products.where(:featured => true)
 end
 
@@ -63,7 +64,7 @@ end
 index do
 	selectable_column
 	id_column
-	image_column :cover_img, style: :thumb
+	# image_column :cover_img
 	column :title
 	# column :description
 	column :language
@@ -114,7 +115,10 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :price
 	        end
 	        f.inputs 'Publication Details' do
-	        	f.input :publisher
+	        	f.input :publishers
+	        	f.has_many :publishers do |publisher|
+	        	   publisher.inputs
+	        	end
 	          f.input :isbn_10
 	          f.input :isbn_13
 	          f.input :publication_date
@@ -126,31 +130,43 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Upload JPG/PNG/GIF image")
 	        end
 	        f.inputs 'Post Status' do
-	        	f.input :draft
+	        	f.input :draft, :label => "Make this a draft?"
 	        	f.input :featured
-	        	f.input :allow_comments, :label => "Allow commenting on this book"
+	        	f.input :allow_comments, :label => "Allow commenting on this book?"
 	        end
 	      end
 
-	      tab 'Publication' do
-	        f.inputs 'Publication Details' do
-	        	f.input :publisher
-	          f.input :isbn_10
-	          f.input :isbn_13
-	          f.input :publication_date
-	        end
-	      end
+	      # tab 'Publication' do
+	      #   f.inputs 'Publication Details' do
+	      #   	f.input :publishers
+	      #   	# f.has_many :publishers do |author|
+	      #   	#    author.inputs
+	      #   	# end
+
+	      #     f.input :isbn_10
+	      #     f.input :isbn_13
+	      #     f.input :publication_date
+	      #   end
+	      # end
 	    end
 	f.actions
 end
 
 controller do
+	# def new
+	# 	byebug
+	# end
+
 	def create
 		super do |format|
 			params.permit!
 			@existing_authors = params[:book].delete("author_ids")
+			@existing_publishers = params[:book].delete("publisher_ids")
 			if @existing_authors
 				@book.authors << Author.where(id: @existing_authors)
+			end
+			if @existing_publishers
+				@book.publishers << Publisher.where(id: @existing_publishers)
 			end
 
 		end
@@ -160,9 +176,13 @@ controller do
 		super do |format|
 			params.permit!
 			@existing_authors = params[:book].delete("author_ids")
+			@existing_publishers = params[:book].delete("publisher_ids")
 			if @existing_authors
-				@book.authors.clear
 				@book.authors << Author.where(id: @existing_authors)
+			end
+			if @existing_publishers
+				# @book.publishers.clear
+				@book.publishers << Publisher.where(id:  @existing_publishers)
 			end
 		end
 	end

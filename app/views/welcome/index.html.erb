@@ -16,13 +16,16 @@
 	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	            <ul class="nav navbar-nav">
 	                <li>
-	                    <a class="page-scroll" href="#tanajarn">Tan Ajarn</a>
+	                    <a class="page-scroll" href="#tanajarn">Buddhadasa</a>
 	                </li>
 	                <li>
 	                    <a class="page-scroll" href="#teachings">Teachings</a>
 	                </li>
 	                <li>
 	                    <a class="page-scroll" href="#suanMokkh">Suan Mokkh</a>
+	                </li>
+	                <li>
+	                    <a class="page-scroll" href="#news">News</a>
 	                </li>
 	                <li>
 	                    <a class="page-scroll" href="#retreat">Retreat</a>
@@ -33,9 +36,6 @@
 	           <!--      <li>
 	                    <a class="page-scroll" href="#contact">Resource</a>
 	                </li> -->
-	                <li>
-	                    <a class="page-scroll" href="#news">News</a>
-	                </li>
 	            </ul>
 	            <ul class="nav navbar-nav navbar-right ">
 	              <li class="dropdown">
@@ -79,8 +79,6 @@
 	                  <li><a href="#">News Articles</a></li>
 	                  <li><a href="#">Schedule</a></li>
 	                  <li><a href="#">Subscribe</a></li>
-	                  <li class="divider"></li>
-	                  <li><a href="/admin">Log In</a></li>
 	                </ul>
 	              </li>
 	            </ul>
@@ -95,7 +93,7 @@
 			<h1>Suan Mokkh</h1>
 			<h1>Garden of Liberation</h1>
 			<hr>
-			<p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
+			<p style="font-size:22px;">Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
 		</div>
 	</div>
 </header>
@@ -106,12 +104,19 @@
 
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
+	<!-- <div>
+		    		<%= image_tag "ajarn1.jpg", class: "lazyOwl img-responsive floatCenter shadow"%>	
+		    		</div> -->
+
 					<iframe id="ytplayer" type="text/html" width="100%" height="555" src="https://www.youtube.com/embed/rp3-7nquO3U?cc_load_policy=1&modestbranding=1&color=white&theme=light"frameborder="0" allowfullscreen></iframe>
+
+					<!-- <iframe width="100%" height="600" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/119522369&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
 			</div>
 			<div class="col-md-12">
 				<br>
 				<p class="havePadding" style="line-height:2;"><i class="fa fa-quote-left fa-3x pull-left"></i> ...founded Suan Mokkh after giving up on the monastic system in Bangkok. He found the Wats (temples) there dirty, crowded, and corrupt, nothing like the purer, more simple Buddhism of his birthplace. Thus, returned to the South and moved into an abandoned temple near his hometown. At first living alone, then with others as news of his experiment spread, he took a radical look into the sources of Theravada Buddhism and dedicated his life to following the pristine Dhamma and correcting the numerous mistaken beliefs and practices that had crept in over the centuries. Some hated him, others loved him. Why not see what he has to offer? See below for some of his teachings.</p>
-				<br>
+				<hr>
+				<a href="#" class="btn btn-primary btn-xl text-center floatCenter" role="button" style="width: 200px;">Learn More</a>
 <!-- 				<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/119522369&amp;color=725843&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false"></iframe> -->
 			</div>
 		</div>
@@ -163,9 +168,9 @@
 			<% if @books.count > 0 %>
 			<% @books.each do |book| %>
 					<!-- <h1 class="brown"><%= book.id %></h1> -->
-			    <div>
+			    <div class="havePadding">
 			    	<a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
-			    		<%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter"%>
+			    		<%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow"%>
 			    		<h4><%= book.title %></h4>
 			    		<div class="portfolio-box-caption">
 			    			<div class="portfolio-box-caption-content">
@@ -238,6 +243,42 @@
 				<a href="#" class="btn btn-default btn-xl text-center">Learn More</a>
 	</section>
 
+	<section id="news" style="padding-top:15px;">
+		<h1 class="text-center">News</h1>
+		<hr>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-md-6">
+					<div class="mainArticle">
+						<%= image_tag "event1.png", size: '150X150',class: "lazyOwl img-responsive floatCenter shadow"%>
+						<div class="caption text-center">
+							<h3>Latest News/Activity Title</h3>
+							<p class="text-justify">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
+							<p><a href="#" class="btn btn-primary" role="button">Read More</a></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+				<% 5.times do |yo| %>
+				<div class="media">
+				      <div class="media-body">
+				        <h4 class="media-heading" id="media-heading"><b>News/Activity Title</b><a class="anchorjs-link" href="#media-heading"><span class="anchorjs-icon"></span></a><small> - <i class="fa fa-clock-o"></i> June 2nd, 2015</small></h4>
+				        <p style="font-weight:500">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
+				      </div>
+				      <div class="media-right">
+				        <a href="#">
+				          <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEzLjQ2MDkzNzUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+				        </a>
+				      </div>
+				    </div>
+				<% end %>
+			<a class="pull-right"href="">See All</a>
+				</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
 	<section id="retreat" class="bg-dark" style="padding:50px 0px;">
 	<!-- 	<div>
 			<%= image_tag "header5.png",width: "100%",class: "lazyOwl img-responsive floatCenter"%>
@@ -278,40 +319,4 @@
 			</div>
 		</div>
 	</section> 
-
-	<section id="news" style="padding-top:15px;">
-		<h1 class="text-center">News</h1>
-		<hr>
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6 col-md-6">
-					<div class="mainArticle">
-						<%= image_tag "event1.png", size: '150X150',class: "lazyOwl img-responsive floatCenter shadow"%>
-						<div class="caption text-center">
-							<h3>Latest News/Activity Title</h3>
-							<p class="text-justify">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
-							<p><a href="#" class="btn btn-primary" role="button">Read More</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-				<% 5.times do |yo| %>
-				<div class="media">
-				      <div class="media-body">
-				        <h4 class="media-heading" id="media-heading"><b>News/Activity Title</b><a class="anchorjs-link" href="#media-heading"><span class="anchorjs-icon"></span></a><small> - <i class="fa fa-clock-o"></i> June 2nd, 2015</small></h4>
-				        <p style="font-weight:500">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
-				      </div>
-				      <div class="media-right">
-				        <a href="#">
-				          <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEzLjQ2MDkzNzUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
-				        </a>
-				      </div>
-				    </div>
-				<% end %>
-			<a class="pull-right"href="">See All</a>
-				</div>
-				</div>
-			</div>
-		</div>
-	</section>
 

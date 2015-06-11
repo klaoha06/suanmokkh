@@ -12,9 +12,18 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.easing.min
+//= require cbpAnimatedHeader
+//= require classie
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require owl.carousel
-//= require_tree .
+//= require wow.min
+//= require creative
+//= require authors
+//= require books
+//= require zwelcome
+//= require_self
+//= stub active_admin/application
 //= stub ckeditor/init
 //= stub activeadmin

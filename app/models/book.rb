@@ -12,11 +12,11 @@ class Book < ActiveRecord::Base
   validates_attachment :file, :presence => true, content_type: { content_type: ["application/pdf", "application/epub"] }
 
   # Associations
-  has_and_belongs_to_many :authors
+  has_and_belongs_to_many :authors, -> { distinct }
+  has_and_belongs_to_many :publishers, -> { distinct }
 
 	accepts_nested_attributes_for :authors, allow_destroy: true
-	# accepts_nested_attributes_for :publishers, allow_destroy: true
-
+	accepts_nested_attributes_for :publishers, allow_destroy: true
 
 	def create
 		params.permit!
@@ -26,7 +26,7 @@ class Book < ActiveRecord::Base
 	private
 
   def book_params
-    params.require(:book).permit(:title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ])
+    params.require(:book).permit(:id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name ])
   end
 
 end

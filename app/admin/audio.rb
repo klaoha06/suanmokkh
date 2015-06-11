@@ -1,5 +1,5 @@
 ActiveAdmin.register Audio do
-	menu priority: 3
+	# menu priority: 3
 	permit_params :title, :cover_img, :publisher, :description, :group, :language, :plays, :downloads, :path, :series, :file, :draft
 
 # See permitted parameters documentation:

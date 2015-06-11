@@ -4,12 +4,18 @@ class CreateArticles < ActiveRecord::Migration
     	t.string :title
     	t.text :content
     	t.string :language
-    	t.integer :reads, default: 0
     	t.string :series
-    	t.string :publisher
+    	t.string :group
+    	
+    	# t.string :publisher
+    	t.date :publication_date
+
     	t.boolean :draft, default: false
     	t.boolean :featured, default: false
     	t.boolean :allow_comments, default: true
+    	t.integer :reads, default: 0
+
+    	# t.belongs_to :publisher, index:true
 
       t.timestamps null: false
     end

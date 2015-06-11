@@ -87,31 +87,38 @@
   <div class="container">
     <div class="row" style="padding-top:100px; padding-bottom: 50px;">
       <div class="col-md-4">
-        <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "coverImgShowBook lazyOwl img-responsive floatCenter shadow"%>
+        <%= image_tag "#{@book.cover_img.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive floatCenter shadow"%>
       </div>
       <div class="col-md-8">
         <h1><%= @book.title %></h1>
-        <p>
+        <p style="text-d">
           <% @book.authors.each do |author|%>
             <%= author.name %>
-            <%= author %>
           <% end %>
         </p>
-        <%= @book.description.html_safe %>
+        <hr>
+        <span style="color:white !important"><%= @book.description.html_safe %></span>
       </div>
     </div>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#start_reading" class="btn btn-default btn-xl text-center page-scroll floatCenter" style="width:175px;">Start Reading</a>
+        </div>
+      </div>
 <!--     <h1>Suan Mokkh</h1>
     <h1>Garden of Liberation</h1>
     <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
   </div>
 </div>
-<div class="container">
-  <object type="application/pdf" width="100%" height="1130px" data=<%= @book.file.url %>></object>
-  <!-- <iframe src=<%= @book.file.url %> width="100%" height="1000px" border="0"></iframe> -->
+<div class="container-fluid" style="background-color: #CCCCCC;">
+<div id="start_reading" class="container">
+  <!-- <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object> -->
+  <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none"></iframe>
 
   <!-- <iframe id="ifr" src="http://docs.google.com/gview?url=#{@book.file.url}&embedded=true" style="width:718px; height:700px;" frameborder="0"> -->
   <!-- <iframe style="height: 1000px; width: 100%;" src=<%= @book.file.url %> /> -->
   <!-- <hr class="full"> -->
+  <div class="row">
   <h1 class="text-center">
     <small>Downloads</small>
     <%= @book.downloads %>
@@ -121,6 +128,7 @@
     <%= @book.shares %>
   </h1>
   <hr>
+  </div>
 
-
+</div>
 </div>

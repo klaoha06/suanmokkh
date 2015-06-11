@@ -4,6 +4,7 @@ ActiveAdmin.register Author do
   config.batch_actions = true
 
   belongs_to :book, optional: true
+  belongs_to :article, optional: true
   # navigation_menu :book
 
 # See permitted parameters documentation:
@@ -26,6 +27,14 @@ show :title => :name do
       column("Title") {|book| book.title}
       column("Draft")                   {|book| status_tag(book.draft) }
       column("Created At", :sortable => :created_at){|book| pretty_format(book.created_at) }
+    end
+  end
+  panel "Article(s) written by this author..." do
+    table_for(author.articles) do
+      column("Article ID", :sortable => :id) {|book| link_to "##{article.id}", admin_article_path(article) }
+      column("Title") {|article| article.title}
+      column("Draft")                   {|article| status_tag(article.draft) }
+      column("Created At", :sortable => :created_at){|article| pretty_format(article.created_at) }
     end
   end
 end

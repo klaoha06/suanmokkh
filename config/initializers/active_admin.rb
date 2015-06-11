@@ -243,4 +243,9 @@ ActiveAdmin.setup do |config|
   # You can enable or disable them for all resources here.
   #
   # config.filters = true
+
+  # current_javascripts = config.javascripts.clone
+  # config.clear_javascripts! 
+  # config.register_javascript 'application.js'
+  # current_javascripts.reverse.each{|j| config.register_javascript j}
 end
