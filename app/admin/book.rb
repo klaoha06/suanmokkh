@@ -153,10 +153,6 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 end
 
 controller do
-	# def new
-	# 	byebug
-	# end
-
 	def create
 		super do |format|
 			params.permit!

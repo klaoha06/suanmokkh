@@ -12,13 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require turbolinks
+//= require bootstrap-sprockets
 //= require jquery.easing.min
 //= require cbpAnimatedHeader
 //= require classie
-//= require turbolinks
-//= require bootstrap-sprockets
 //= require owl.carousel
-//= require wow.min
 //= require creative
 //= require authors
 //= require books

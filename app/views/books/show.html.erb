@@ -1,76 +1,8 @@
-  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                  <span class="sr-only">Toggle navigation</span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-                  <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand page-scroll" href="/">
-              <!-- <img alt="Brand" src="public/logo.jpg"> --><i class="fa fa-play-circle-o fa-rotate-90 fa-lg"></i> SUAN MOKKH</a>
-          </div>
+<% content_for :head do %>
+<title><%= @book.title %> - Suan Mokkh</title>
+<% end %>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                  <li>
-                      <a href="#tanajarn">Tan Ajarn</a>
-                  </li>
-                  <li>
-                      <a href="#teachings">Teachings</a>
-                  </li>
-                  <li>
-                      <a href="#suanMokkh">Suan Mokkh</a>
-                  </li>
-                  <li>
-                      <a href="#retreat">Retreat</a>
-                  </li>
-                  <li>
-                      <a href="#news">News</a>
-                  </li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-sitemap"></i> Sitemap <span class="caret"></span></a>
-                  <ul class="dropdown-menu text-center" role="menu">
-                    <h4 class="text-center brown"><i class="fa fa-circle-thin brown"></i> Ajarn Buddhadasa</h4>
-                    <li><a href="#">Biography</a></li>
-                    <li><a href="#">Basic Teachings</a></li>                    
-                    <li><a href="#">Gallery</a></li>
-                    <li class="divider"></li>
-                    <h4 class="text-center brown"><i class="fa fa-book brown"></i> Ajarn's Teachings</h4>                 
-                    <li><a href="#">Books</a></li>
-                    <li><a href="#">Poetry</a></li>
-                    <li><a href="#">Audio</a></li>
-                    <li><a href="#">Video</a></li>
-                    <li><a href="#">Santikaro's Work</a></li>
-                    <li class="divider"></li>
-                    <h4 class="text-center brown"><i class="fa fa-pagelines brown"></i> Suan Mokkh</h4>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li class="divider"></li>
-                    <h4 class="text-center brown"><i class="fa fa-child brown"></i> Retreat</h4>
-                    <li><a href="#">Learn More</a></li>
-                    <li class="divider"></li>
-                    <h4 class="text-center brown"><i class="fa fa-archive brown"></i> BIA</h4>
-                    <li><a href="#">Learn More</a></li>
-                    <li class="divider"></li>
-                    <h4 class="text-center brown"><i class="fa fa-newspaper-o brown"></i> News</h4>
-                    <li><a href="#">News Articles</a></li>
-                    <li><a href="#">Schedule</a></li>
-                    <li><a href="#">Subscribe</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/admin">Log In</a></li>
-                  </ul>
-                </li>
-              </ul>
-          </div>
-          <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container-fluid -->
-  </nav>
+<%= render "shared/main_navbar" %>
 <!-- <p id="notice"><%= notice %></p> -->
 <!-- <header class="showBook">
   <div class="header-content">
@@ -82,27 +14,27 @@
     </div>
   </div>
 </header> -->
-<div class="jumbotron bg-dark" style="margin-bottom: 0;">
+<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <!-- <hr class="full"> -->
-  <div class="container">
-    <div class="row" style="padding-top:100px; padding-bottom: 50px;">
+  <div class="container book_header">
+    <div class="row">
       <div class="col-md-4">
         <%= image_tag "#{@book.cover_img.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive floatCenter shadow"%>
       </div>
       <div class="col-md-8">
-        <h1><%= @book.title %></h1>
+        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @book.title %></h1>
         <p style="text-d">
           <% @book.authors.each do |author|%>
-            <%= author.name %>
+            <%= author.name.upcase %>
           <% end %>
         </p>
-        <hr>
+        <hr class="full">
         <span style="color:white !important"><%= @book.description.html_safe %></span>
       </div>
     </div>
       <div class="row">
         <div class="col-md-12">
-          <a href="#start_reading" class="btn btn-default btn-xl text-center page-scroll floatCenter" style="width:175px;">Start Reading</a>
+          <a href="#start_reading" class="btn btn-default text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em;"><i class="fa fa-book"></i> Start Reading</a>
         </div>
       </div>
 <!--     <h1>Suan Mokkh</h1>
@@ -110,15 +42,16 @@
     <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
   </div>
 </div>
-<div class="container-fluid" style="background-color: #CCCCCC;">
+<div class="container-fluid">
 <div id="start_reading" class="container">
   <!-- <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object> -->
-  <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none"></iframe>
+  <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
 
   <!-- <iframe id="ifr" src="http://docs.google.com/gview?url=#{@book.file.url}&embedded=true" style="width:718px; height:700px;" frameborder="0"> -->
   <!-- <iframe style="height: 1000px; width: 100%;" src=<%= @book.file.url %> /> -->
   <!-- <hr class="full"> -->
-  <div class="row">
+
+<!--   <div class="row">
   <h1 class="text-center">
     <small>Downloads</small>
     <%= @book.downloads %>
@@ -128,7 +61,22 @@
     <%= @book.shares %>
   </h1>
   <hr>
-  </div>
+  </div> -->
+
+
+<!--   <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'suanmokkh';
+      
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> -->
 
 </div>
 </div>

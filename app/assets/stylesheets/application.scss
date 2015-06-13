@@ -11,10 +11,10 @@
  * file per style scope.
  *
  */
-@import "bootstrap-sprockets";
 @import "bootstrap";
-@import "welcome";
 @import "font-awesome";
 @import "owl.carousel";
 @import "owl.theme";
-@import "animate"
+@import "animate";
+@import "welcome";
+@import "books"

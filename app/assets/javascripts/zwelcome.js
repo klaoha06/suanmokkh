@@ -5,7 +5,7 @@
  */
 
 (function($) {
-    "use strict"; // Start of use strict
+    // "use strict"; // Start of use strict
 
     // jQuery for page scrolling feature - requires jQuery Easing plugin
     $('a.page-scroll').bind('click', function(event) {
@@ -43,22 +43,46 @@
     });
 
     // Initialize WOW.js Scrolling Animations
-    new WOW().init();
+    // new WOW().init();
+
+   $('.dropdown-toggle').dropdown();
 
     // Start Owl Carousel
     $("#owl-books").owlCarousel({
     	navigation : true,
     	autoPlay : true,
     	stopOnHover : true,
+    	scrollPerPage: true
+    });
+
+    $("#owl-articles").owlCarousel({
+    	navigation : true,
+    	autoPlay : true,
+    	stopOnHover : true,
+    	scrollPerPage: true
     });
 
     $("#owl-demo").owlCarousel({
-    
         navigation : false, // Show next and prev buttons
         slideSpeed : 300,
         paginationSpeed : 400,
         singleItem:true,
-    
     });
+
+    //Switch to Articles
+    $('#switch_to_articles').click(function (event) {
+      event.preventDefault(); // Prevent link from following its href
+      $('#teachings_books').addClass("hide");
+      $('#teachings_articles').removeClass("hide");
+    });
+
+    //Switch to Books
+    $('#switch_to_books').click(function (event) {
+      event.preventDefault(); // Prevent link from following its href
+      $('#teachings_articles').addClass("hide");
+      $('#teachings_books').removeClass("hide");
+    });
+
+
 
 })(jQuery); // End of use strict

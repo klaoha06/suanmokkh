@@ -1,0 +1,29 @@
+<% if @articles.count > 0 %>
+<section id="teachings_articles" class="bg-dark hide">
+		<div class="container-fluid">
+			<!-- <h2 class="text-center">articles</h2> -->
+			<div id="owl-articles" class="owl-carousel">
+				<% @articles.each do |article| %>
+				    <div class="havePadding animated fadeIn">
+				    	<a href=<%= '/articles/' + article.id.to_s %> class="portfolio-box text-center">
+				    		<%= image_tag "#{article.photo.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow"%>
+				    		<div class="portfolio-box-caption">
+				    			<div class="portfolio-box-caption-content">
+				    		<!-- 		<div class="project-category text-faded">
+				    					Take a look
+				    				</div> -->
+				    				<div class="project-name">
+				    				<i class="fa fa-search"></i> 
+				    					Take a look
+				    				</div>
+				    			</div>
+				    		</div>
+				    	</a>
+				    	<h4 class="text-center"><%= article.title %></h4>
+				    </div>
+				<% end %>
+			</div>
+		</div>
+		<a href="/articles" class="text-center floatCenter"><p class="white">See All</p></a>
+	</section>
+<% end %>

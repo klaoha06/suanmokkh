@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   resources :books
   get 'welcome/index'
+  get "welcome/switch_section/" => 'welcome#switch_section'
+  # get "switch_section/:format" => 'welcome#switch_section'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

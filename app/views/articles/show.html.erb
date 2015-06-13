@@ -1,4 +1,66 @@
-<p id="notice"><%= notice %></p>
+<% content_for :head do %>
+<title><%= @article.title %> - Suan Mokkh</title>
+<% end %>
 
-<%= link_to 'Edit', edit_article_path(@article) %> |
-<%= link_to 'Back', articles_path %>
+<%= render "shared/main_navbar" %>
+<!-- <p id="notice"><%= notice %></p> -->
+<!-- <header class="showBook">
+  <div class="header-content">
+    <div class="header-content-inner wow fadeIn">
+      <h1>Suan Mokkh</h1>
+      <h1>Garden of Liberation</h1>
+      <hr>
+      <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
+    </div>
+  </div>
+</header> -->
+<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
+  <!-- <hr class="full"> -->
+  <div class="container book_header">
+    <div class="row">
+      <div class="col-md-4">
+        <%= image_tag "#{@article.photo.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive floatCenter shadow"%>
+      </div>
+      <div class="col-md-8">
+        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @article.title %></h1>
+        <p style="text-d">
+          <% @article.authors.each do |author|%>
+            <%= author.name.upcase %>
+          <% end %>
+        </p>
+        <hr class="full">
+        <span style="color:white !important"><%= @article.content.html_safe %></span>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#start_reading" class="btn btn-default text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em;"><i class="fa fa-book"></i> Start Reading</a>
+        </div>
+      </div>
+<!--     <h1>Suan Mokkh</h1>
+    <h1>Garden of Liberation</h1>
+    <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
+  </div>
+</div>
+<div class="container-fluid">
+<div id="start_reading" class="container">
+
+  <iframe src=<%= @article.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
+
+
+<!--   <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'suanmokkh';
+      
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> -->
+
+</div>
+</div>
