@@ -3,7 +3,9 @@ class CreateBooks < ActiveRecord::Migration
     create_table :books do |t|
       t.string :title
       t.text :description
-      t.text :external_link
+      t.text :external_url_link
+      t.text :external_cover_img_link
+      t.text :external_file_link
       t.string :language
       t.string :series
       t.string :group

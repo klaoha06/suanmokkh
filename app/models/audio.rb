@@ -6,9 +6,13 @@ class Audio < ActiveRecord::Base
 
 	has_and_belongs_to_many :books, -> { distinct }
 	has_and_belongs_to_many :authors, -> { distinct }
+	has_and_belongs_to_many :languages, -> { distinct }
+	has_and_belongs_to_many :groups, -> { distinct }
 
 	accepts_nested_attributes_for :books
 	accepts_nested_attributes_for :authors
+	accepts_nested_attributes_for :languages
+	accepts_nested_attributes_for :groups
 
 		def create
 			@audio = Audio.new(audio_params)

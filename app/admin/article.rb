@@ -1,5 +1,5 @@
 ActiveAdmin.register Article do
-		permit_params :author_ids, :publisher_ids, :publishers_attributes, :featured, :title, :photo, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ]
+		permit_params :author_ids, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ]
 		
 	sidebar "Author", :only => :show do
 	    table_for(Article.find(params[:id]).authors) do
@@ -65,8 +65,14 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        f.inputs 'Basic Details' do
 	        	f.input :title, :required => true
 	        	f.input :content, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
-	        	f.input :language
-	        	f.input :group
+	        	f.input :languages
+	        	f.has_many :languages do |language|
+	        	   language.inputs
+	        	end
+	        	f.input :groups
+	        	f.has_many :groups do |group|
+	        	   group.inputs
+	        	end
 	        	f.input :series
 	        end
 	        f.inputs "Author" do
@@ -85,7 +91,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        f.inputs 'Actual Files' do
 	        	f.input :file
 	        	# f.input :photo, hint: f.article.photo? ? image_tag(f.article.photo.url, height: '200') : content_tag(:span, "Upload JPG/PNG/GIF image")
-	        	f.input :photo
+	        	f.input :cover_img
 	        end
 	        f.inputs 'Publish Status' do
 	        	f.input :draft, :label => "Make this a draft?"

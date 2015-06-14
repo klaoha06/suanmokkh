@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :languages
+  resources :groups
   resources :news_articles
   resources :poems
   resources :catagories

@@ -4,9 +4,9 @@ class CreatePoems < ActiveRecord::Migration
     	t.string :title
     	t.text :content
     	t.string :author
-      t.string :language
+      # t.string :language
       t.string :series
-      t.string :group
+      # t.string :group
       t.date :creation_date
 
       t.integer :views
