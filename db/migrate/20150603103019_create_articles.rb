@@ -3,9 +3,9 @@ class CreateArticles < ActiveRecord::Migration
     create_table :articles do |t|
     	t.string :title
     	t.text :content
-    	t.string :language
+    	# t.string :language
     	t.string :series
-    	t.string :group
+    	# t.string :group
     	
     	# t.string :publisher
     	t.date :publication_date

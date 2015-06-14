@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150613091927) do
+ActiveRecord::Schema.define(version: 20150614083634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,9 +52,7 @@ ActiveRecord::Schema.define(version: 20150613091927) do
   create_table "articles", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
-    t.string   "language"
     t.string   "series"
-    t.string   "group"
     t.date     "publication_date"
     t.boolean  "draft",              default: false
     t.boolean  "featured",           default: false
@@ -80,6 +78,22 @@ ActiveRecord::Schema.define(version: 20150613091927) do
   add_index "articles_authors", ["article_id"], name: "index_articles_authors_on_article_id", using: :btree
   add_index "articles_authors", ["author_id"], name: "index_articles_authors_on_author_id", using: :btree
 
+  create_table "articles_groups", id: false, force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "group_id"
+  end
+
+  add_index "articles_groups", ["article_id"], name: "index_articles_groups_on_article_id", using: :btree
+  add_index "articles_groups", ["group_id"], name: "index_articles_groups_on_group_id", using: :btree
+
+  create_table "articles_languages", id: false, force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "language_id"
+  end
+
+  add_index "articles_languages", ["article_id"], name: "index_articles_languages_on_article_id", using: :btree
+  add_index "articles_languages", ["language_id"], name: "index_articles_languages_on_language_id", using: :btree
+
   create_table "articles_publishers", id: false, force: :cascade do |t|
     t.integer "publisher_id"
     t.integer "article_id"
@@ -96,6 +110,7 @@ ActiveRecord::Schema.define(version: 20150613091927) do
     t.string   "group"
     t.date     "creation_date"
     t.string   "duration"
+    t.string   "audio_code"
     t.text     "embeded_audio_link"
     t.text     "external_link"
     t.boolean  "draft",              default: false
@@ -128,6 +143,22 @@ ActiveRecord::Schema.define(version: 20150613091927) do
   add_index "audios_books", ["audio_id"], name: "index_audios_books_on_audio_id", using: :btree
   add_index "audios_books", ["book_id"], name: "index_audios_books_on_book_id", using: :btree
 
+  create_table "audios_groups", id: false, force: :cascade do |t|
+    t.integer "audio_id"
+    t.integer "group_id"
+  end
+
+  add_index "audios_groups", ["audio_id"], name: "index_audios_groups_on_audio_id", using: :btree
+  add_index "audios_groups", ["group_id"], name: "index_audios_groups_on_group_id", using: :btree
+
+  create_table "audios_languages", id: false, force: :cascade do |t|
+    t.integer "audio_id"
+    t.integer "language_id"
+  end
+
+  add_index "audios_languages", ["audio_id"], name: "index_audios_languages_on_audio_id", using: :btree
+  add_index "audios_languages", ["language_id"], name: "index_audios_languages_on_language_id", using: :btree
+
   create_table "authors", force: :cascade do |t|
     t.string   "name"
     t.string   "first_name"
@@ -148,7 +179,9 @@ ActiveRecord::Schema.define(version: 20150613091927) do
   create_table "books", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.text     "external_link"
+    t.text     "external_url_link"
+    t.text     "external_cover_img_link"
+    t.text     "external_file_link"
     t.string   "language"
     t.string   "series"
     t.string   "group"
@@ -156,18 +189,18 @@ ActiveRecord::Schema.define(version: 20150613091927) do
     t.string   "isbn_10"
     t.string   "isbn_13"
     t.date     "publication_date"
-    t.boolean  "draft",                                          default: false
-    t.boolean  "featured",                                       default: false
-    t.boolean  "allow_comments",                                 default: true
+    t.boolean  "draft",                                           default: false
+    t.boolean  "featured",                                        default: false
+    t.boolean  "allow_comments",                                  default: true
     t.string   "format"
     t.float    "weight"
     t.integer  "pages"
-    t.decimal  "price",                  precision: 8, scale: 2
-    t.integer  "downloads",                                      default: 0
-    t.integer  "views",                                          default: 1
-    t.integer  "shares",                                         default: 0
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.decimal  "price",                   precision: 8, scale: 2
+    t.integer  "downloads",                                       default: 0
+    t.integer  "views",                                           default: 1
+    t.integer  "shares",                                          default: 0
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
     t.string   "cover_img_file_name"
     t.string   "cover_img_content_type"
     t.integer  "cover_img_file_size"
@@ -178,6 +211,22 @@ ActiveRecord::Schema.define(version: 20150613091927) do
     t.datetime "file_updated_at"
   end
 
+  create_table "books_groups", id: false, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "group_id"
+  end
+
+  add_index "books_groups", ["book_id"], name: "index_books_groups_on_book_id", using: :btree
+  add_index "books_groups", ["group_id"], name: "index_books_groups_on_group_id", using: :btree
+
+  create_table "books_languages", id: false, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "language_id"
+  end
+
+  add_index "books_languages", ["book_id"], name: "index_books_languages_on_book_id", using: :btree
+  add_index "books_languages", ["language_id"], name: "index_books_languages_on_language_id", using: :btree
+
   create_table "books_publishers", id: false, force: :cascade do |t|
     t.integer "publisher_id"
     t.integer "book_id"
@@ -187,6 +236,7 @@ ActiveRecord::Schema.define(version: 20150613091927) do
   add_index "books_publishers", ["publisher_id"], name: "index_books_publishers_on_publisher_id", using: :btree
 
   create_table "catagories", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -207,10 +257,53 @@ ActiveRecord::Schema.define(version: 20150613091927) do
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
+  create_table "groups", force: :cascade do |t|
+    t.string   "name"
+    t.date     "date"
+    t.text     "external_cover_img_link"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
+  end
+
+  create_table "groups_languages", id: false, force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "language_id"
+  end
+
+  add_index "groups_languages", ["group_id"], name: "index_groups_languages_on_group_id", using: :btree
+  add_index "groups_languages", ["language_id"], name: "index_groups_languages_on_language_id", using: :btree
+
+  create_table "groups_poems", id: false, force: :cascade do |t|
+    t.integer "poem_id"
+    t.integer "group_id"
+  end
+
+  add_index "groups_poems", ["group_id"], name: "index_groups_poems_on_group_id", using: :btree
+  add_index "groups_poems", ["poem_id"], name: "index_groups_poems_on_poem_id", using: :btree
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "languages_poems", id: false, force: :cascade do |t|
+    t.integer "poem_id"
+    t.integer "language_id"
+  end
+
+  add_index "languages_poems", ["language_id"], name: "index_languages_poems_on_language_id", using: :btree
+  add_index "languages_poems", ["poem_id"], name: "index_languages_poems_on_poem_id", using: :btree
+
   create_table "news_articles", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
     t.string   "language"
+    t.string   "author"
     t.integer  "views"
     t.boolean  "draft",                  default: false
     t.boolean  "featured",               default: false
@@ -227,9 +320,7 @@ ActiveRecord::Schema.define(version: 20150613091927) do
     t.string   "title"
     t.text     "content"
     t.string   "author"
-    t.string   "language"
     t.string   "series"
-    t.string   "group"
     t.date     "creation_date"
     t.integer  "views"
     t.boolean  "draft",                  default: false
@@ -245,10 +336,11 @@ ActiveRecord::Schema.define(version: 20150613091927) do
 
   create_table "publishers", force: :cascade do |t|
     t.string   "name"
+    t.text     "contact_info"
     t.integer  "book_id"
     t.integer  "article_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   add_index "publishers", ["article_id"], name: "index_publishers_on_article_id", using: :btree
