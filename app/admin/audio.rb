@@ -14,22 +14,22 @@ ActiveAdmin.register Audio do
 #   permitted << :other if resource.something?
 #   permitted
 # end
-	sidebar "Book", :only => :show do
+	sidebar "Book related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).books) do
 	    	column("Name") {|book| link_to "#{book.title}", admin_book_path(book) }
 	    end
 	end
-	sidebar "Author", :only => :show do
+	sidebar "Author related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).authors) do
 	    	column("Name") {|author| link_to "#{author.name}", admin_author_path(author) }
 	    end
 	end
-	sidebar "Group", :only => :show do
+	sidebar "Group related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).groups) do
 	    	column("Name") {|group| link_to "#{group.name}", admin_group_path(group) }
 	    end
 	end
-	sidebar "Language", :only => :show do
+	sidebar "Language related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).languages) do
 	    	column("Name") {|language| link_to "#{language.name}", admin_language_path(language) }
 	    end
@@ -46,14 +46,19 @@ ActiveAdmin.register Audio do
 	index do
 		selectable_column
 		id_column
+		column :audio_code
 		# image_column :cover_img
 		column :title
-		column :description
+		# column :description
 		column :series
-		column :audio_code
 		column :creation_date
-		column :draft, :sortable => :draft do |book|
-	      status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
+		# column :authors do |audio|
+		# 		audio.authors.each do |a|
+		# 			content_tag(:li, a.name)
+		# 		end
+		# end
+		column :draft, :sortable => :draft do |audio|
+	      status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
 	    end
 		column :featured
 		# column :cover_img
@@ -68,6 +73,7 @@ ActiveAdmin.register Audio do
 		tabs do
 		      tab 'Basic' do
 		        f.inputs 'Basic Details' do
+		        	f.input :audio_code
 		        	f.input :title, :required => true
 		        	f.input :description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 		        	f.input :languages
@@ -81,7 +87,6 @@ ActiveAdmin.register Audio do
 		        	f.input :series
 		        	f.input :creation_date
 		        	f.input :duration
-		        	f.input :audio_code
 		        end
 		        f.inputs "Links" do
 		          f.input :embeded_audio_link, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
