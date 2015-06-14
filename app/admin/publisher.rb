@@ -1,5 +1,5 @@
 ActiveAdmin.register Publisher do
-	menu priority: 4
+	# menu priority: 4
 	permit_params :name, :title
 	config.batch_actions = true
 

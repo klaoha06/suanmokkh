@@ -17,5 +17,13 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
       t.belongs_to :publisher, index: true
       t.belongs_to :article, index: true
     end
+    create_table :audios_books, id: false do |t|
+      t.belongs_to :audio, index: true
+      t.belongs_to :book, index: true
+    end
+    create_table :audios_authors, id: false do |t|
+      t.belongs_to :audio, index: true
+      t.belongs_to :author, index: true
+    end
   end
 end

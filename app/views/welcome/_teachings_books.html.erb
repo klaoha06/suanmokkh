@@ -1,10 +1,11 @@
+	<% if @books.count > 0 %>
 	<section id="teachings_books" class="bg-dark">
 <!-- 			<select class="form-control input-sm pull-right" style="width:100px; margin: 15px;">
 				<option>English</option>
 				<option>Thai</option>
 				<option>Chinese</option>
 			</select> -->
-<!-- 		<% if @featured_book %>
+		<% if @featured_book %>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 text-right">
@@ -20,14 +21,13 @@
 					<%= image_tag "#{@featured_book.cover_img.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive pull-left shadow"%>
 				</div>
 			</div>
-
 		</div>
-		<% end %> -->
+		<% end %>
+
 
 		<div class="container-fluid">
 			<!-- <h2 class="text-center">Books</h2> -->
 			<div id="owl-books" class="owl-carousel">
-				<% if @books.count > 0 %>
 				<% @books.each do |book| %>
 				    <div class="havePadding animated fadeIn">
 				    	<a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
@@ -47,28 +47,19 @@
 				    	<h4 class="text-center"><%= book.title %></h4>
 				    </div>
 				<% end %>
-				<% else %>
-
-				<% 10.times do |index| %>
-						<div>
-							<a href="#" class="portfolio-box text-center">
-								<%= image_tag "book#{index+1}.jpg", size: "250x300", class: "lazyOwl img-responsive floatCenter"%>
-								<h4>Book title</h4>
-								<div class="portfolio-box-caption">
-									<div class="portfolio-box-caption-content">
-										<div class="project-category text-faded">
-											Take a look
-										</div>
-										<div class="project-name">
-											Book Title
-										</div>
-									</div>
-								</div>
-							</a>
-						</div>
-				<% end %>
-				<% end %>
 			</div>
 		</div>
 		<a href="/books" class="text-center floatCenter"><p class="white">See All</p></a>
 	</section>
+
+
+	<% else %>
+	
+	<section id="teachings_books" class="container-fluid bg-dark text-center havePadding">
+		<i class="fa fa-circle-thin fa-4x"></i>
+		<h2>No Books Available at this time!</h2>
+	<hr>
+	</section>
+
+	<% end %>
+

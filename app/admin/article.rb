@@ -1,20 +1,6 @@
 ActiveAdmin.register Article do
-		menu priority: 2
 		permit_params :author_ids, :publisher_ids, :publishers_attributes, :featured, :title, :photo, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ]
-
-	# See permitted parameters documentation:
-	# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-	#
-	# permit_params :list, :of, :attributes, :on, :model
-	#
-	# or
-	#
-	# permit_params do
-	#   permitted = [:permitted, :attributes]
-	#   permitted << :other if resource.something?
-	#   permitted
-	# end
-
+		
 	sidebar "Author", :only => :show do
 	    table_for(Article.find(params[:id]).authors) do
 	    	column("Name") {|author| link_to "#{author.name}", admin_author_path(author) }

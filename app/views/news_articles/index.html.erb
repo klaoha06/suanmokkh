@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing News Articles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @news_articles.each do |news_article| %>
+      <tr>
+        <td><%= link_to 'Show', news_article %></td>
+        <td><%= link_to 'Edit', edit_news_article_path(news_article) %></td>
+        <td><%= link_to 'Destroy', news_article, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New News article', new_news_article_path %>

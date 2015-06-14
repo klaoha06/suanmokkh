@@ -1,35 +1,46 @@
+<% if @news_articles && @featured_news_article %>
 <section id="news" style="padding-top:15px;">
 	<h1 class="text-center">News</h1>
 	<hr>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-6">
-				<div class="mainArticle">
+<!-- 				<div class="mainArticle">
 					<%= image_tag "event1.png", size: '150X150',class: "lazyOwl img-responsive floatCenter shadow"%>
 					<div class="caption text-center">
 						<h3>Latest News/Activity Title</h3>
 						<p class="text-justify">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
 						<p><a href="#" class="btn btn-primary" role="button">Read More</a></p>
 					</div>
+				</div> -->
+				<div class="mainArticle">
+					<%= image_tag "#{@featured_news_article.cover_img.url}", size: '150X150',class: "lazyOwl img-responsive floatCenter shadow"%>
+					<div class="caption text-center">
+						<h3><%= @featured_news_article.title %></h3>
+						<p class="text-justify"><%= strip_tags(@featured_news_article.content).first(200) + '...' %></p>
+						<p><a href=<%= '/news_articles/' + @featured_news_article.id.to_s %> class="btn btn-primary" role="button">Read More</a></p>
+					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
-			<% 5.times do |yo| %>
-			<div class="media">
+			<% @news_articles.each do |article| %>
+				<%= link_to(article) do %>
+						<div class="media">
 			      <div class="media-body">
-			        <h4 class="media-heading" id="media-heading"><b>News/Activity Title</b><a class="anchorjs-link" href="#media-heading"><span class="anchorjs-icon"></span></a><small> - <i class="fa fa-clock-o"></i> June 2nd, 2015</small></h4>
-			        <p style="font-weight:500">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis...</p>
+			        <h4 class="media-heading" id="media-heading"><b><%= article.title %></b><small> - <i class="fa fa-clock-o"></i> <%= article.created_at %></small></h4>
+			        <p style="font-weight:500"><%= strip_tags(article.content).first(130)%>...</p>
 			      </div>
 			      <div class="media-right">
-			        <a href="#">
-			          <img class="media-object" data-src="holder.js/64x64" alt="64x64" style="width: 64px; height: 64px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+PGRlZnMvPjxyZWN0IHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjEzLjQ2MDkzNzUiIHk9IjMyIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+NjR4NjQ8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
-			        </a>
+			          <img class="media-object" data-src=<%= article.cover_img.url %> alt="64x64" style="width: 75px; height: auto;" src=<%= article.cover_img.url %> data-holder-rendered="true">
 			      </div>
 			    </div>
-			<% end %>
-		<a class="pull-right"href="">See All</a>
+			    <% end %>
+			  <% end %>
+
+		<a class="pull-right"href="/news">See All</a>
 			</div>
 			</div>
 		</div>
 	</div>
 </section>
+<% end %>

@@ -52,17 +52,19 @@
     	navigation : true,
     	autoPlay : true,
     	stopOnHover : true,
-    	scrollPerPage: true
+    	scrollPerPage: true,
+        slideSpeed: 900
     });
 
     $("#owl-articles").owlCarousel({
     	navigation : true,
     	autoPlay : true,
     	stopOnHover : true,
-    	scrollPerPage: true
+    	scrollPerPage: true,
+        slideSpeed: 900
     });
 
-    $("#owl-demo").owlCarousel({
+    $(".owl-demo").owlCarousel({
         navigation : false, // Show next and prev buttons
         slideSpeed : 300,
         paginationSpeed : 400,
