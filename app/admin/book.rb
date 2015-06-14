@@ -1,5 +1,5 @@
 ActiveAdmin.register Book do
-	menu priority: 2
+	# menu priority: 2
 	permit_params :id, :title, :cover_img, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ]
 
 	# belongs_to :publisher
@@ -107,6 +107,12 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	          f.has_many :authors do |author|
 	             author.inputs
 	          end
+	        end
+	        f.inputs "Audio related to this book.." do
+	          f.input :audios, hint: content_tag(:span, "To create new audio please click on 'Audios' tab on the top navigation bar and click on 'New Audio' on the right. If this book is related to an audio then create this book and find this book under the section 'Book related to this audio' in the audio cretion form")
+	          # f.has_many :audios do |audio|
+	          #    audio.inputs
+	          # end
 	        end
 	        f.inputs 'Book Details' do
 	        	f.input :format

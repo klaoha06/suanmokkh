@@ -1,4 +1,5 @@
 <% if @articles.count > 0 %>
+
 <section id="teachings_articles" class="bg-dark hide">
 		<div class="container-fluid">
 			<!-- <h2 class="text-center">articles</h2> -->
@@ -26,4 +27,13 @@
 		</div>
 		<a href="/articles" class="text-center floatCenter"><p class="white">See All</p></a>
 	</section>
+
+<% else %>
+
+<section id="teachings_articles" class="container-fluid bg-dark text-center havePadding hide">
+	<i class="fa fa-circle-thin fa-4x"></i>
+	<h2>No Articles Available at this time!</h2>
+<hr>
+</section>
+
 <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150604051016) do
+ActiveRecord::Schema.define(version: 20150613091927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -92,19 +92,41 @@ ActiveRecord::Schema.define(version: 20150604051016) do
     t.string   "title"
     t.text     "description"
     t.string   "language"
-    t.integer  "downloads",         default: 0
-    t.integer  "plays",             default: 0
     t.string   "series"
     t.string   "group"
-    t.string   "publisher"
-    t.boolean  "draft",             default: false
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.date     "creation_date"
+    t.string   "duration"
+    t.text     "embeded_audio_link"
+    t.text     "external_link"
+    t.boolean  "draft",              default: false
+    t.boolean  "featured",           default: false
+    t.boolean  "allow_comments",     default: true
+    t.integer  "downloads",          default: 0
+    t.integer  "plays",              default: 0
+    t.integer  "shares",             default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
+
+  create_table "audios_authors", id: false, force: :cascade do |t|
+    t.integer "audio_id"
+    t.integer "author_id"
+  end
+
+  add_index "audios_authors", ["audio_id"], name: "index_audios_authors_on_audio_id", using: :btree
+  add_index "audios_authors", ["author_id"], name: "index_audios_authors_on_author_id", using: :btree
+
+  create_table "audios_books", id: false, force: :cascade do |t|
+    t.integer "audio_id"
+    t.integer "book_id"
+  end
+
+  add_index "audios_books", ["audio_id"], name: "index_audios_books_on_audio_id", using: :btree
+  add_index "audios_books", ["book_id"], name: "index_audios_books_on_book_id", using: :btree
 
   create_table "authors", force: :cascade do |t|
     t.string   "name"
@@ -126,9 +148,11 @@ ActiveRecord::Schema.define(version: 20150604051016) do
   create_table "books", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
+    t.text     "external_link"
     t.string   "language"
     t.string   "series"
     t.string   "group"
+    t.date     "creation_date"
     t.string   "isbn_10"
     t.string   "isbn_13"
     t.date     "publication_date"
@@ -136,11 +160,11 @@ ActiveRecord::Schema.define(version: 20150604051016) do
     t.boolean  "featured",                                       default: false
     t.boolean  "allow_comments",                                 default: true
     t.string   "format"
-    t.integer  "weight"
+    t.float    "weight"
     t.integer  "pages"
     t.decimal  "price",                  precision: 8, scale: 2
     t.integer  "downloads",                                      default: 0
-    t.integer  "views",                                          default: 0
+    t.integer  "views",                                          default: 1
     t.integer  "shares",                                         default: 0
     t.datetime "created_at",                                                     null: false
     t.datetime "updated_at",                                                     null: false
@@ -182,6 +206,42 @@ ActiveRecord::Schema.define(version: 20150604051016) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "news_articles", force: :cascade do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "language"
+    t.integer  "views"
+    t.boolean  "draft",                  default: false
+    t.boolean  "featured",               default: false
+    t.boolean  "allow_comments",         default: true
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
+  end
+
+  create_table "poems", force: :cascade do |t|
+    t.string   "title"
+    t.text     "content"
+    t.string   "author"
+    t.string   "language"
+    t.string   "series"
+    t.string   "group"
+    t.date     "creation_date"
+    t.integer  "views"
+    t.boolean  "draft",                  default: false
+    t.boolean  "featured",               default: false
+    t.boolean  "allow_comments",         default: true
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
+  end
 
   create_table "publishers", force: :cascade do |t|
     t.string   "name"

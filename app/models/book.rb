@@ -14,9 +14,11 @@ class Book < ActiveRecord::Base
   # Associations
   has_and_belongs_to_many :authors, -> { distinct }
   has_and_belongs_to_many :publishers, -> { distinct }
+  has_and_belongs_to_many :audios, -> { distinct }
 
 	accepts_nested_attributes_for :authors, allow_destroy: true
 	accepts_nested_attributes_for :publishers, allow_destroy: true
+	accepts_nested_attributes_for :audios, allow_destroy: true
 
 	def create
 		params.permit!

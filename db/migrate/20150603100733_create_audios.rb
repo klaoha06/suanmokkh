@@ -4,12 +4,21 @@ class CreateAudios < ActiveRecord::Migration
     	t.string :title
     	t.text :description
     	t.string :language
-    	t.integer :downloads, default: 0
-    	t.integer :plays, default: 0
     	t.string :series
     	t.string :group
-    	t.string :publisher
+    	t.date :creation_date
+    	t.string :duration
+
+    	t.text :embeded_audio_link
+    	t.text :external_link
+
     	t.boolean :draft, default: false
+    	t.boolean :featured, default: false
+    	t.boolean :allow_comments, default: true
+
+    	t.integer :downloads, default: 0
+    	t.integer :plays, default: 0
+    	t.integer :shares, default: 0
 
       t.timestamps null: false
     end

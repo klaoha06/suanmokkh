@@ -16,25 +16,34 @@
 </header> -->
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <!-- <hr class="full"> -->
-  <div class="container book_header">
+  <div class="container bg-primary book_header">
     <div class="row">
       <div class="col-md-4">
         <%= image_tag "#{@book.cover_img.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive floatCenter shadow"%>
+        <hr>
+          <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/202787275&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+        <h4 class="text-center">
+        <!-- <i class="fa fa-headphones fa-2x"></i> -->
+        <br> 
+        This book has audio file(s) Available
+        </h4>
+
       </div>
       <div class="col-md-8">
         <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @book.title %></h1>
-        <p style="text-d">
+        <p>
           <% @book.authors.each do |author|%>
             <%= author.name.upcase %>
           <% end %>
         </p>
-        <hr class="full">
-        <span style="color:white !important"><%= @book.description.html_safe %></span>
+        <hr class="full" style="border-color:#725843;">
+        <span style="color:black !important"><%= @book.description.html_safe %></span>
       </div>
     </div>
+    <hr>
       <div class="row">
         <div class="col-md-12">
-          <a href="#start_reading" class="btn btn-default text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em;"><i class="fa fa-book"></i> Start Reading</a>
+          <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em; margin-top:50px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
         </div>
       </div>
 <!--     <h1>Suan Mokkh</h1>
