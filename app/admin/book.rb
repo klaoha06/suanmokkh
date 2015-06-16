@@ -1,7 +1,8 @@
 ActiveAdmin.register Book do
 	# menu priority: 2
-	permit_params :language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
-
+	config.per_page = 12
+	permit_params :language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link ]
+	# config.batch_actions = true
 	# belongs_to :publisher
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -27,6 +28,27 @@ ActiveAdmin.register Book do
 #   belongs_to :book
 #   navigation_menu :book
 # end
+
+# show do
+#   panel "Basic" do
+#   	attributes_table_for book do
+#   	    row :title
+#   	    # row :author
+#   	    # row :publisher
+#   	    row('Published?') { |b| status_tag b.draft? }
+#   	  end
+#   end
+#   panel "Author" do
+#   	attributes_table_for book. do
+#   	    row :title
+#   	    # row :author
+#   	    # row :publisher
+#   	    row('Published?') { |b| status_tag b.draft? }
+#   	  end
+#   end
+#   active_admin_comments
+# end
+
 sidebar "Audio", :only => :show do
 	table_for(book.audios) do
 		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
@@ -64,15 +86,38 @@ scope :featured do |products|
 	products.where(:featured => true)
 end
 
-index as: :grid do |book|
-  # link_to(book.file_file_name, book.file.url)
+index as: :grid, columns: 2 do |book|
+  link_to(book.file_file_name, book.file.url)
   # link_to image_tag(book.cover_img, width: '150'), admin_book_path(book)
-  div :style => 'text-align:center' do
+  panel book.title do
   	a :href => admin_book_path(book) do
-  		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block')
+  		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
   	end
+  	div :style => 'display:inline; text-align:center; padding: 5px;' do
+  		attributes_table_for book do
+  		  row :title, :style => "font-size: 1.3em; font-weight:bold;"
+  		  row 'Authors' do
+  		    book.authors.each do |author|
+  		      a author.name, href: admin_author_path(author)          
+  		    end
+  		  end
+  		  if book.languages.length > 0
+	  		  row 'Language' do
+	  		    book.languages.each do |language|
+	  		      a language.name, href: admin_language_path(language)          
+	  		    end
+	  		  end
+	  		end
+  		  row("Created At", :sortable => :created_at){ pretty_format(book.created_at) }
+  		  attachment_row :file
+	 #  book.authors.each do |author|
+		#   a truncate(author.name), :href => admin_author_path(author), :style => 'display:block; text-align:center; font-size:1em;'
+		end
+		# a :href => admin_book_path(book), :style => 'display:block; text-align:center; font-size:1.3em;' do
+		# 	button 'yoyoyo', :batch_actions
+		# end
+	end
   end
-  a truncate(book.title), :href => admin_book_path(book), :style => 'display:block; text-align:center; font-size:1.3em;'
 end
 
 index do
@@ -119,20 +164,21 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				f.input :series
 				f.input :groups
 				f.has_many :groups do |group|
-					group.input :name
+					group.input :name, :required => true
 				end
 			end
 			f.inputs "Author" do
 				f.input :authors
 				f.has_many :authors do |author|
-					author.input :name
+					author.input :name, :required => true
 				end
 			end
 			f.inputs "Audio related to this book.." do
-	          f.input :audios, hint: content_tag(:span, "Choose among the audios created. If you want to create a new audio, please click on 'Audios' tab on the top navigation bar and click on 'New Audio' on the right. If this book is related to an audio then create this book and find this book under the section 'Audio related to this book' in the audio cretion form or come back and edit this book after you created the audio.")
-	          # f.has_many :audios do |audio|
-	          #    audio.input 
-	          # end
+	          f.input :audios
+	          f.has_many :audios do |audio|
+	             audio.input :title
+	             audio.input :embeded_audio_link, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
+	          end
 	        end
 	        f.inputs 'Book Details' do
 	        	f.input :format
@@ -231,14 +277,14 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			if @existing_audios
 				@book.audios = Audio.where(id: @existing_audios)
 			end
-			# if params[:book][:audios_attributes]
-			# 	params[:book][:audios_attributes].each do |key, audio|
-			# 		if !audio.has_key?("id")
-			# 			new_audio = Audio.where(name: audio[:title]).first_or_create
-			# 			@book.audios << new_audio
-			# 		end
-			# 	end
-			# end
+			if params[:book][:audios_attributes]
+				params[:book][:audios_attributes].each do |key, audio|
+					if !audio.has_key?("id")
+						new_audio = Audio.where(title: audio[:title]).first_or_create
+						@book.audios << new_audio
+					end
+				end
+			end
 
 			if @existing_publishers
 				@book.publishers = Publisher.where(id:  @existing_publishers)

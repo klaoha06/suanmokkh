@@ -21,12 +21,15 @@
       <div class="col-md-4">
         <%= image_tag "#{@book.cover_img.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive floatCenter shadow"%>
         <hr>
-          <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/202787275&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
-        <h4 class="text-center">
-        <!-- <i class="fa fa-headphones fa-2x"></i> -->
-        <br> 
-        This book has audio file(s) Available
-        </h4>
+
+        <% if @book.audios.first %>
+          <small class="text-center floatCenter" >
+          <!-- <i class="fa fa-headphones fa-2x"></i> -->
+          <br> 
+          This book has audio file(s) Available
+          </small>
+          <%= @book.audios.first.embeded_audio_link.html_safe %>
+        <% end %>
 
       </div>
       <div class="col-md-8">
@@ -53,8 +56,8 @@
 </div>
 <div class="container-fluid">
 <div id="start_reading" class="container">
-  <!-- <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object> -->
-  <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
+  <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object>
+  <!-- <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe> -->
 
   <!-- <iframe id="ifr" src="http://docs.google.com/gview?url=#{@book.file.url}&embedded=true" style="width:718px; height:700px;" frameborder="0"> -->
   <!-- <iframe style="height: 1000px; width: 100%;" src=<%= @book.file.url %> /> -->
@@ -72,8 +75,8 @@
   <hr>
   </div> -->
 
-
-<!--   <div id="disqus_thread"></div>
+  <% if @book.allow_comments %>
+  <div id="disqus_thread"></div>
   <script type="text/javascript">
       /* * * CONFIGURATION VARIABLES * * */
       var disqus_shortname = 'suanmokkh';
@@ -85,7 +88,8 @@
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
       })();
   </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript> -->
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  <% end %>
 
 </div>
 </div>

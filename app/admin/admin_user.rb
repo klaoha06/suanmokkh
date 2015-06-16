@@ -1,4 +1,6 @@
 ActiveAdmin.register AdminUser do
+  config.per_page = 15
+
   permit_params :email, :password, :password_confirmation
 
   index do

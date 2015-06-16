@@ -10,6 +10,11 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+    @book = Book.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
+    # @audios_languages = 'in ';
+    # @book.audios.each do |audio|
+    #   @audios_languages + audio.languages.name + " " if audio.language.name
+    # end
   end
 
   # GET /books/new

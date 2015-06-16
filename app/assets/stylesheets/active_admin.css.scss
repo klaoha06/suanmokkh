@@ -21,3 +21,22 @@
 div.cke {
     overflow: hidden;
 }
+
+.panel_contents {
+	display:flex;
+	padding:10px
+}
+
+.grid_img {
+	-webkit-box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.4);
+	box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.4);
+	margin:15px 10px;
+}
+
+.attributes_table table th {
+	width:90px;
+}
+
+body {
+	width: 100%;
+}

@@ -1,5 +1,6 @@
 ActiveAdmin.register Language do
 	permit_params :name, :id
+  config.per_page = 15
 	config.batch_actions = true
 
 	belongs_to :book, optional: true

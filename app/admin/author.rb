@@ -2,6 +2,8 @@ ActiveAdmin.register Author do
 	permit_params :name, :first_name, :last_name, :brief_biography
 	# menu :priority => 4
   config.batch_actions = true
+  config.per_page = 15
+
 
   belongs_to :book, optional: true
   belongs_to :article, optional: true

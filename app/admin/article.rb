@@ -1,4 +1,6 @@
 ActiveAdmin.register Article do
+	config.per_page = 15
+
 		permit_params :author_ids, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ]
 		
 	sidebar "Author", :only => :show do

@@ -1,5 +1,5 @@
 class Audio < ActiveRecord::Base
-	validates :title, presence: true
+	validates :title, presence: true, uniqueness: true
 
 	has_attached_file :file
 	validates_attachment :file, content_type: { content_type: [ 'audio/mpeg', 'audio/x-mpeg', 'audio/mp3', 'audio/x-mp3', 'audio/mpeg3', 'audio/x-mpeg3', 'audio/mpg', 'audio/x-mpg', 'audio/x-mpegaudio' ]}

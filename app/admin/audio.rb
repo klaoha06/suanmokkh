@@ -1,6 +1,8 @@
 ActiveAdmin.register Audio do
 	# menu priority: 3
-	permit_params :id, :language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
+	config.per_page = 15
+	permit_params :id, 
+		:language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
 
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -73,8 +75,8 @@ ActiveAdmin.register Audio do
 		tabs do
 		      tab 'Basic' do
 		        f.inputs 'Basic Details' do
-		        	f.input :audio_code
 		        	f.input :title, :required => true
+		        	f.input :audio_code
 		        	f.input :description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 		        	f.input :languages
 		        	f.has_many :languages do |language|
@@ -110,7 +112,7 @@ ActiveAdmin.register Audio do
 		        f.inputs 'Publish Status' do
 		        	f.input :draft, :label => "Make this a draft?"
 		        	f.input :featured
-		        	f.input :allow_comments, :label => "Allow commenting on this article?"
+		        	f.input :allow_comments, :label => "Allow commenting on this audio track?"
 		        end
 		      end
 		    end
@@ -123,15 +125,15 @@ ActiveAdmin.register Audio do
 			super do |format|
 				params.permit!
 				@existing_authors = params[:audio].delete("author_ids")
-				# @existing_publishers = params[:audio].delete("publisher_ids")
 				@existing_languages = params[:audio].delete("language_ids")
 				@existing_groups = params[:audio].delete("group_ids")
+				@existing_books = params[:audio].delete("book_ids")
 				if @existing_authors
 					@audio.authors << Author.where(id: @existing_authors)
 				end
-				# if @existing_publishers
-				# 	@audio.publishers << Publisher.where(id: @existing_publishers)
-				# end
+				if @existing_books
+					@audio.books << Book.where(id: @existing_books)
+				end
 				if @existing_languages
 					@audio.languages << Language.where(id: @existing_languages)
 				end

@@ -1,4 +1,6 @@
 ActiveAdmin.register Poem do
+	config.per_page = 15
+
 	permit_params :id, :title, :cover_img, :content, :group, :language, :draft, :series, :file, :allow_comments, :featured
 
 

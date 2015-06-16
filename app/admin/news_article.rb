@@ -1,4 +1,6 @@
 ActiveAdmin.register NewsArticle do
+	config.per_page = 15
+
 	permit_params :id, :title, :cover_img, :content, :views, :language, :draft, :file, :allow_comments, :featured
 
 # See permitted parameters documentation:
