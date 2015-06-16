@@ -87,7 +87,7 @@ scope :featured do |products|
 end
 
 index as: :grid, columns: 2 do |book|
-  link_to(book.file_file_name, book.file.url)
+  # link_to(book.file_file_name, book.file.url)
   # link_to image_tag(book.cover_img, width: '150'), admin_book_path(book)
   panel book.title do
   	a :href => admin_book_path(book) do
@@ -113,9 +113,9 @@ index as: :grid, columns: 2 do |book|
 	 #  book.authors.each do |author|
 		#   a truncate(author.name), :href => admin_author_path(author), :style => 'display:block; text-align:center; font-size:1em;'
 		end
-		# a :href => admin_book_path(book), :style => 'display:block; text-align:center; font-size:1.3em;' do
-		# 	button 'yoyoyo', :batch_actions
-		# end
+		a ' Show ', :href => admin_book_path(book), :class => "button"
+		a ' Edit ', :href => '/admin/books/' + book.id.to_s + '/edit', :class => "button"
+		text_node ("<a class='delete_link member_link button' data-confirm='Are you sure you want to delete this?' rel='nofollow' data-method='delete' href='/admin/books/" + book.id.to_s + "'>Delete</a>").html_safe
 	end
   end
 end
@@ -123,8 +123,11 @@ end
 index do
 	selectable_column
 	id_column
-	# image_column :cover_img
 	column :title
+	column "cover_img", :sortable => false do |book|
+	  "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+	end
+	# image_column :cover_img
 	# column :description
 	# column :language
 	# column :publisher
@@ -135,13 +138,13 @@ index do
 	# column :price do |book|
 	# 	number_to_currency book.price
 	# end
+	# column :cover_img
+	# attachment_column :cover_img
+	attachment_column :file
 	column :draft, :sortable => :draft do |book|
 		status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
 	end
 	column :featured
-	# column :cover_img
-	# attachment_column :cover_img
-	attachment_column :file
 	column :created_at
 	actions
 end

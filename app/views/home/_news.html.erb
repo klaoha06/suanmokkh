@@ -27,7 +27,7 @@
 				<%= link_to(article) do %>
 						<div class="media">
 			      <div class="media-body">
-			        <h4 class="media-heading" id="media-heading"><b><%= article.title %></b><small> - <i class="fa fa-clock-o"></i> <%= article.created_at %></small></h4>
+			        <h4 class="media-heading" id="media-heading"><b><%= article.title %></b><small> - <i class="fa fa-clock-o"></i> <%= pretty_format(article.created_at) %></small></h4>
 			        <p style="font-weight:500"><%= strip_tags(article.content).first(130)%>...</p>
 			      </div>
 			      <div class="media-right">
