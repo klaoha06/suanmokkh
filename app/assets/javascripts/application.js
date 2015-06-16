@@ -21,7 +21,7 @@
 //= require creative
 //= require authors
 //= require books
-//= require zwelcome
+//= require home
 //= require_self
 //= stub active_admin/application
 //= stub ckeditor/init

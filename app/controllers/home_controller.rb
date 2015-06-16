@@ -1,4 +1,4 @@
-class WelcomeController < ApplicationController
+class HomeController < ApplicationController
   	@query = nil
   def index
   	@books = Book.where(@query).order('created_at DESC').limit(10)
