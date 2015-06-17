@@ -16,6 +16,96 @@ ActiveAdmin.register Audio do
 #   permitted << :other if resource.something?
 #   permitted
 # end
+
+show do |audio|
+  panel "Basic" do
+  	attributes_table_for audio do
+  	    row :title
+  	    row :audio_code
+  	    row :external_link
+  	    row :created_at
+  	    row :updated_at
+  	    row :series
+  	    row :creation_date
+  	    row "Description" do
+  	    	if audio.description
+	  	    	text_node (audio.description).html_safe
+  	    	end
+  	    end
+  	    row "Audio (from embeded audio link)" do
+  	    	if audio.embeded_audio_link
+	  	    	text_node (audio.embeded_audio_link).html_safe
+	  	    end
+  	    end
+  	  end
+  end
+  panel "Audio Details" do
+  	attributes_table_for audio do
+  	    row :duration
+  	  end
+  end
+  panel "Status" do
+  	attributes_table_for audio do
+  	    row 'allow_comments' do
+  	    	status_tag((audio.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (audio.allow_comments? ? :warning : :ok))
+  	    end
+  	    row 'featured' do
+  	    	status_tag((audio.featured? ? "Not Featured" : "Featured"), (audio.featured? ? :warning : :ok))
+  	    end
+  	    row 'draft' do
+  	    	status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
+  	    end
+  	  end
+  end
+  panel "Stats" do
+  	attributes_table_for audio do
+  	    row :plays
+  	    row :shares
+  	    row :downloads
+  	  end
+  end
+  panel "External Links" do
+  	attributes_table_for audio do
+  	    row :external_url_link
+  	    row :external_cover_img_link
+  	    row :external_file_link
+  	  end
+  end
+  # panel "File" do
+  # 	attributes_table_for audio do
+  # 	    attachment_row:file
+  # 	    row :file_file_name
+  # 	    row :file_content_type
+  # 	    row 'file size (in Megabytes)' do
+  # 	    	para number_to_human_size(audio.file_file_size)
+  # 	    end
+  # 	    row 'file url' do
+  # 	    	para audio.file.url
+  # 	    end
+  # 	    row :file_updated_at
+  # 	  end
+  # end
+	  # panel "Cover Image" do
+	  # 	attributes_table_for audio do
+	  # 	    attachment_row:cover_img
+	  # 	    row :cover_img_file_name
+	  # 	    row :cover_img_content_type
+	  # 	    row 'cover image size (in Megabytes)' do
+	  # 	    	para number_to_human_size(audio.cover_img_file_size)
+	  # 	    end
+	  # 	    row 'cover image url' do
+	  # 	    	para audio.cover_img.url
+	  # 	    end
+	  # 	    row :cover_img_updated_at
+	  # 	  end
+	  # end
+  active_admin_comments
+end
+	sidebar "Admin who create this audio..", :only => :show do
+		table_for(AdminUser.find(Audio.find(params[:id]).admin_user_id)) do
+			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+		end
+	end
 	sidebar "Book related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).books) do
 	    	column("Name") {|book| link_to "#{book.title}", admin_book_path(book) }
@@ -38,36 +128,46 @@ ActiveAdmin.register Audio do
 	end
 
 	scope :all, :default => true
-	scope :published do |products|
-	  products.where(:draft => false)
+	scope :published do |audio|
+	  audio.where(:draft => false)
 	end
-	scope :not_published do |products|
-	  products.where(:draft => true)
+	scope :not_published do |audio|
+	  audio.where(:draft => true)
 	end
+	# scope :related_to_book do |audio|
+	#   audio.where(:draft => true)
+	# end
 
 	index do
 		selectable_column
 		id_column
-		column :audio_code
-		# image_column :cover_img
+		column "audio", :sortable => false do |audio|
+		  (audio.embeded_audio_link).html_safe
+		end
 		column :title
+		column :audio_code
 		# column :description
 		column :series
 		column :creation_date
-		# column :authors do |audio|
-		# 		audio.authors.each do |a|
-		# 			content_tag(:li, a.name)
-		# 		end
-		# end
+		column :authors_related do |audio|
+				audio.authors.each do |author|
+					a :href => admin_author_path(author) do
+						li author.name
+					end
+				end
+		end
+		column :books_related do |audio|
+				audio.books.each do |book|
+					a :href => admin_book_path(book) do
+						li book.title
+					end
+				end
+		end
 		column :draft, :sortable => :draft do |audio|
 	      status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
 	    end
 		column :featured
-		# column :cover_img
-		# attachment_column :cover_img
-		# attachment_column :file
-		# column :file
-		column :created_at
+		# column :created_at
 	  actions
 	end
 
@@ -140,6 +240,8 @@ ActiveAdmin.register Audio do
 				if @existing_groups
 					@audio.groups << Group.where(id: @existing_groups)
 				end
+				@current_admin_user.audios << @audio
+				@current_admin_user.save()
 			end
 		end
 

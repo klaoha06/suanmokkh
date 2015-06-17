@@ -48,6 +48,14 @@ show :title => :name do
       column("Created At", :sortable => :created_at){|audio| pretty_format(audio.created_at) }
     end
   end
+  panel "Poem(s) by this author..." do
+    table_for(author.poems) do
+      column("Poem ID", :sortable => :id) {|poem| link_to "##{poem.id}", admin_poem_path(poem) }
+      column("Title") {|poem| poem.title}
+      column("Draft")                   {|poem| status_tag(poem.draft) }
+      column("Created At", :sortable => :created_at){|poem| pretty_format(poem.created_at) }
+    end
+  end
 end
 
 sidebar "Author Details", :only => :show do

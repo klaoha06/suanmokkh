@@ -9,6 +9,11 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
       t.belongs_to :author, index: true
       t.belongs_to :article, index: true
     end
+    create_table :authors_poems, id: false do |t|
+      t.belongs_to :author, index: true
+      t.belongs_to :poem, index: true
+    end
+
     # Publishers
     create_table :books_publishers, id: false do |t|
       t.belongs_to :publisher, index: true
@@ -68,5 +73,17 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
       t.belongs_to :poem, index: true
       t.belongs_to :language, index: true
     end
+
+    # News Articles
+    create_table :groups_news_articles, id: false do |t|
+      t.belongs_to :group, index: true
+      t.belongs_to :news_article, index: true
+    end
+    create_table :languages_news_articles, id: false do |t|
+      t.belongs_to :language, index: true
+      t.belongs_to :news_article, index: true
+    end
+
+
   end
 end

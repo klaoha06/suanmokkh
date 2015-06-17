@@ -9,10 +9,10 @@ class Audio < ActiveRecord::Base
 	has_and_belongs_to_many :languages, -> { distinct }
 	has_and_belongs_to_many :groups, -> { distinct }
 
-	accepts_nested_attributes_for :books
-	accepts_nested_attributes_for :authors
-	accepts_nested_attributes_for :languages
-	accepts_nested_attributes_for :groups
+	accepts_nested_attributes_for :books, allow_destroy: true
+	accepts_nested_attributes_for :authors, allow_destroy: true
+	accepts_nested_attributes_for :languages, allow_destroy: true
+	accepts_nested_attributes_for :groups, allow_destroy: true
 
 		def create
 			@audio = Audio.new(audio_params)

@@ -2,7 +2,7 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration
   def migrate(direction)
     super
     # Create a default user
-    AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if direction == :up
+    AdminUser.create!(email: 'admin@example.com', username: 'superuser', password: 'password', password_confirmation: 'password') if direction == :up
   end
 
   def change
@@ -10,6 +10,15 @@ class DeviseCreateAdminUsers < ActiveRecord::Migration
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :username, null: false, default: ""
+
+      ## Associations
+      # t.belongs_to :book, index:true
+      # t.belongs_to :article, index:true
+      # t.belongs_to :audio, index:true
+      # t.belongs_to :video, index:true
+      # t.belongs_to :poem, index:true
+      # t.belongs_to :news_article, index:true
 
       ## Recoverable
       t.string   :reset_password_token

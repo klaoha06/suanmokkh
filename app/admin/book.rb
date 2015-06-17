@@ -1,54 +1,106 @@
 ActiveAdmin.register Book do
 	# menu priority: 2
 	config.per_page = 12
-	permit_params :language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link ]
+	permit_params :currency, :language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link ]
 	# config.batch_actions = true
-	# belongs_to :publisher
-# See permitted parameters documentation:
-# https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-#
-# permit_params :list, :of, :attributes, :on, :model
-#
-# or
-#
-# permit_params do
-#   permitted = [:permitted, :attributes]
-#   permitted << :other if resource.something?
-#   permitted
-# end
 
-# belongs_to :author
+show do |book|
+  panel "Basic" do
+  	attributes_table_for book do
+  	    row :title
+  	    row :created_at
+  	    row :updated_at
+  	    row :series
+  	    row :creation_date
+  	    row "Description" do
+  	    	if book.description
+	  	    	text_node (book.description).html_safe
+	  	    end
+  	    end
+  	    # row "File" do
+  	    # 	book.file.url ? text_node("<iframe src='" + book.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe : nil
+  	    # end
+  	  end
+  end
+  panel "Book Details" do
+  	attributes_table_for book do
+  	    row :format
+  	    row :weight
+  	    row :pages
+  	    row :price
+  	    row :currency
+  	  end
+  end
+  panel "Status" do
+  	attributes_table_for book do
+  	    row 'allow_comments' do
+  	    	status_tag((book.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (book.allow_comments? ? :warning : :ok))
+  	    end
+  	    row 'featured' do
+  	    	status_tag((book.featured? ? "Not Featured" : "Featured"), (book.featured? ? :warning : :ok))
+  	    end
+  	    row 'draft' do
+  	    	status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
+  	    end
+  	  end
+  end
+  panel "Publication" do
+  	attributes_table_for book do
+  	    row :publication_date
+  	    row :isbn_10
+  	    row :isbn_13
+  	  end
+  end
+  panel "Stats" do
+  	attributes_table_for book do
+  	    row :views
+  	    row :shares
+  	    row :downloads
+  	  end
+  end
+  panel "External Links" do
+  	attributes_table_for book do
+  	    row :external_url_link
+  	    row :external_cover_img_link
+  	    row :external_file_link
+  	  end
+  end
+  panel "File" do
+  	attributes_table_for book do
+  	    attachment_row:file
+  	    row :file_file_name
+  	    row :file_content_type
+  	    row 'file size (in Megabytes)' do
+  	    	para number_to_human_size(book.file_file_size)
+  	    end
+  	    row 'file url' do
+  	    	para book.file.url
+  	    end
+  	    row :file_updated_at
+  	  end
+  end
+  panel "Cover Image" do
+  	attributes_table_for book do
+  	    attachment_row:cover_img
+  	    row :cover_img_file_name
+  	    row :cover_img_content_type
+  	    row 'cover image size (in Megabytes)' do
+  	    	para number_to_human_size(book.cover_img_file_size)
+  	    end
+  	    row 'cover image url' do
+  	    	para book.cover_img.url
+  	    end
+  	    row :cover_img_updated_at
+  	  end
+  end
+  active_admin_comments
+end
 
-# ActiveAdmin.register Author do
-#   belongs_to :book
-#   navigation_menu :book
-# end
-
-# ActiveAdmin.register Publisher do
-#   belongs_to :book
-#   navigation_menu :book
-# end
-
-# show do
-#   panel "Basic" do
-#   	attributes_table_for book do
-#   	    row :title
-#   	    # row :author
-#   	    # row :publisher
-#   	    row('Published?') { |b| status_tag b.draft? }
-#   	  end
-#   end
-#   panel "Author" do
-#   	attributes_table_for book. do
-#   	    row :title
-#   	    # row :author
-#   	    # row :publisher
-#   	    row('Published?') { |b| status_tag b.draft? }
-#   	  end
-#   end
-#   active_admin_comments
-# end
-
+sidebar "Admin who created this book..", :only => :show do
+	table_for(AdminUser.find(book.admin_user_id)) do
+		column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+	end
+end
 sidebar "Audio", :only => :show do
 	table_for(book.audios) do
 		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
@@ -86,9 +138,7 @@ scope :featured do |products|
 	products.where(:featured => true)
 end
 
-index as: :grid, columns: 2 do |book|
-  # link_to(book.file_file_name, book.file.url)
-  # link_to image_tag(book.cover_img, width: '150'), admin_book_path(book)
+index as: :grid, columns: 3 do |book|
   panel book.title do
   	a :href => admin_book_path(book) do
   		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
@@ -127,20 +177,35 @@ index do
 	column "cover_img", :sortable => false do |book|
 	  "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
 	end
-	# image_column :cover_img
-	# column :description
-	# column :language
-	# column :publisher
-	# column :series
-	# column :group
-	# column :isbn_10
-	# column :isbn_13
-	# column :price do |book|
-	# 	number_to_currency book.price
-	# end
-	# column :cover_img
-	# attachment_column :cover_img
 	attachment_column :file
+	column :groups do |book|
+			book.groups.each do |group|
+				a :href => admin_group_path(group) do
+					li group.name
+				end
+			end
+	end
+	column :languages do |book|
+			book.languages.each do |language|
+				a :href => admin_language_path(language) do
+					li language.name
+				end
+			end
+	end
+	column :authors do |book|
+			book.authors.each do |author|
+				a :href => admin_author_path(author) do
+					li author.name
+				end
+			end
+	end
+	column :audios_related do |book|
+			book.audios.each do |audio|
+				a :href => admin_audio_path(audio) do
+					li audio.title
+				end
+			end
+	end
 	column :draft, :sortable => :draft do |book|
 		status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
 	end
@@ -188,6 +253,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :pages
 	        	f.input :weight
 	        	f.input :price
+	        	f.input :currency
 	        end
 	        f.inputs 'Publication Details' do
 	        	f.input :publishers
@@ -251,7 +317,8 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			if @existing_groups
 	  				@book.groups << Group.where(id: @existing_groups)
 	  			end
-
+	  			@current_admin_user.books << @book
+	  			@current_admin_user.save()
 		end #super
 	end #create
 
@@ -263,7 +330,6 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			@existing_publishers = params[:book].delete("publisher_ids")
 			@existing_languages = params[:book].delete("language_ids")
 			@existing_groups = params[:book].delete("group_ids")
-
 
 			if @existing_authors
 				@book.authors = Author.where(id: @existing_authors)
@@ -324,6 +390,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					end
 				end 
 			end
+
 		end #super
 	end #update
 

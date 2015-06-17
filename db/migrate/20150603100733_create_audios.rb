@@ -3,9 +3,9 @@ class CreateAudios < ActiveRecord::Migration
     create_table :audios do |t|
     	t.string :title
     	t.text :description
-    	t.string :language
+    	# t.string :language
     	t.string :series
-    	t.string :group
+    	# t.string :group
     	t.date :creation_date
     	t.string :duration
     	t.string :audio_code
@@ -20,6 +20,8 @@ class CreateAudios < ActiveRecord::Migration
     	t.integer :downloads, default: 0
     	t.integer :plays, default: 0
     	t.integer :shares, default: 0
+
+        t.belongs_to :admin_user, index:true
 
       t.timestamps null: false
     end

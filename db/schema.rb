@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   create_table "admin_users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
+    t.string   "username",               default: "", null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -51,24 +52,29 @@ ActiveRecord::Schema.define(version: 20150614083634) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
-    t.text     "content"
+    t.text     "content_or_description"
+    t.date     "creation_date"
     t.string   "series"
     t.date     "publication_date"
-    t.boolean  "draft",              default: false
-    t.boolean  "featured",           default: false
-    t.boolean  "allow_comments",     default: true
-    t.integer  "reads",              default: 0
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
+    t.boolean  "draft",                  default: false
+    t.boolean  "featured",               default: false
+    t.boolean  "allow_comments",         default: true
+    t.integer  "views",                  default: 0
+    t.integer  "shares",                 default: 0
+    t.integer  "admin_user_id"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
+
+  add_index "articles", ["admin_user_id"], name: "index_articles_on_admin_user_id", using: :btree
 
   create_table "articles_authors", id: false, force: :cascade do |t|
     t.integer "author_id"
@@ -105,9 +111,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   create_table "audios", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.string   "language"
     t.string   "series"
-    t.string   "group"
     t.date     "creation_date"
     t.string   "duration"
     t.string   "audio_code"
@@ -119,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.integer  "downloads",          default: 0
     t.integer  "plays",              default: 0
     t.integer  "shares",             default: 0
+    t.integer  "admin_user_id"
     t.datetime "created_at",                         null: false
     t.datetime "updated_at",                         null: false
     t.string   "file_file_name"
@@ -126,6 +131,8 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
+
+  add_index "audios", ["admin_user_id"], name: "index_audios_on_admin_user_id", using: :btree
 
   create_table "audios_authors", id: false, force: :cascade do |t|
     t.integer "audio_id"
@@ -176,6 +183,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   add_index "authors_books", ["author_id"], name: "index_authors_books_on_author_id", using: :btree
   add_index "authors_books", ["book_id"], name: "index_authors_books_on_book_id", using: :btree
 
+  create_table "authors_poems", id: false, force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "poem_id"
+  end
+
+  add_index "authors_poems", ["author_id"], name: "index_authors_poems_on_author_id", using: :btree
+  add_index "authors_poems", ["poem_id"], name: "index_authors_poems_on_poem_id", using: :btree
+
   create_table "books", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
@@ -196,9 +211,11 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.float    "weight"
     t.integer  "pages"
     t.decimal  "price",                   precision: 8, scale: 2
+    t.string   "currency"
     t.integer  "downloads",                                       default: 0
-    t.integer  "views",                                           default: 1
+    t.integer  "views",                                           default: 0
     t.integer  "shares",                                          default: 0
+    t.integer  "admin_user_id"
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
     t.string   "cover_img_file_name"
@@ -210,6 +227,8 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
+
+  add_index "books", ["admin_user_id"], name: "index_books_on_admin_user_id", using: :btree
 
   create_table "books_groups", id: false, force: :cascade do |t|
     t.integer "book_id"
@@ -277,6 +296,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   add_index "groups_languages", ["group_id"], name: "index_groups_languages_on_group_id", using: :btree
   add_index "groups_languages", ["language_id"], name: "index_groups_languages_on_language_id", using: :btree
 
+  create_table "groups_news_articles", id: false, force: :cascade do |t|
+    t.integer "group_id"
+    t.integer "news_article_id"
+  end
+
+  add_index "groups_news_articles", ["group_id"], name: "index_groups_news_articles_on_group_id", using: :btree
+  add_index "groups_news_articles", ["news_article_id"], name: "index_groups_news_articles_on_news_article_id", using: :btree
+
   create_table "groups_poems", id: false, force: :cascade do |t|
     t.integer "poem_id"
     t.integer "group_id"
@@ -291,6 +318,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "languages_news_articles", id: false, force: :cascade do |t|
+    t.integer "language_id"
+    t.integer "news_article_id"
+  end
+
+  add_index "languages_news_articles", ["language_id"], name: "index_languages_news_articles_on_language_id", using: :btree
+  add_index "languages_news_articles", ["news_article_id"], name: "index_languages_news_articles_on_news_article_id", using: :btree
+
   create_table "languages_poems", id: false, force: :cascade do |t|
     t.integer "poem_id"
     t.integer "language_id"
@@ -302,12 +337,13 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   create_table "news_articles", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
-    t.string   "language"
     t.string   "author"
-    t.integer  "views"
     t.boolean  "draft",                  default: false
     t.boolean  "featured",               default: false
     t.boolean  "allow_comments",         default: true
+    t.integer  "admin_user_id"
+    t.integer  "views",                  default: 0
+    t.integer  "shares",                 default: 0
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "cover_img_file_name"
@@ -316,16 +352,20 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.datetime "cover_img_updated_at"
   end
 
+  add_index "news_articles", ["admin_user_id"], name: "index_news_articles_on_admin_user_id", using: :btree
+
   create_table "poems", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
     t.string   "author"
     t.string   "series"
     t.date     "creation_date"
-    t.integer  "views"
+    t.integer  "views",                  default: 0
+    t.integer  "shares",                 default: 0
     t.boolean  "draft",                  default: false
     t.boolean  "featured",               default: false
     t.boolean  "allow_comments",         default: true
+    t.integer  "admin_user_id"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.string   "cover_img_file_name"
@@ -333,6 +373,8 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.integer  "cover_img_file_size"
     t.datetime "cover_img_updated_at"
   end
+
+  add_index "poems", ["admin_user_id"], name: "index_poems_on_admin_user_id", using: :btree
 
   create_table "publishers", force: :cascade do |t|
     t.string   "name"
@@ -349,14 +391,12 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   create_table "videos", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
-    t.string   "language"
     t.integer  "downloads",         default: 0
     t.integer  "plays",             default: 0
     t.string   "series"
-    t.string   "group"
-    t.string   "publisher"
     t.boolean  "draft",             default: false
     t.boolean  "featured",          default: false
+    t.integer  "admin_user_id"
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.string   "file_file_name"
@@ -364,5 +404,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
   end
+
+  add_index "videos", ["admin_user_id"], name: "index_videos_on_admin_user_id", using: :btree
 
 end

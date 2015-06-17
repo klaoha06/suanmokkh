@@ -5,6 +5,7 @@ class Group < ActiveRecord::Base
 	validates_attachment :cover_img, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
 
   has_and_belongs_to_many :articles, -> { distinct }
+  has_and_belongs_to_many :news_articles, -> { distinct }
   has_and_belongs_to_many :audios, -> { distinct }
   has_and_belongs_to_many :books, -> { distinct }
   has_and_belongs_to_many :languages, -> { distinct }
@@ -12,6 +13,7 @@ class Group < ActiveRecord::Base
 
 	accepts_nested_attributes_for :audios, allow_destroy: true
 	accepts_nested_attributes_for :articles, allow_destroy: true
+	accepts_nested_attributes_for :news_articles, allow_destroy: true
 	accepts_nested_attributes_for :books, allow_destroy: true
 	accepts_nested_attributes_for :languages, allow_destroy: true
 	accepts_nested_attributes_for :poems, allow_destroy: true
