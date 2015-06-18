@@ -15,11 +15,15 @@ show do |book|
   	    row "Description" do
   	    	if book.description
 	  	    	text_node (book.description).html_safe
+	  	    else
+	  	    	para 'no description'
 	  	    end
   	    end
-  	    # row "File" do
-  	    # 	book.file.url ? text_node("<iframe src='" + book.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe : nil
-  	    # end
+  	    row "File" do
+  	    	if book.file_file_name
+	  	    	text_node ("<iframe src='" + book.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+	  	    end
+  	    end
   	  end
   end
   panel "Book Details" do
@@ -60,39 +64,63 @@ show do |book|
   end
   panel "External Links" do
   	attributes_table_for book do
-  	    row :external_url_link
-  	    row :external_cover_img_link
-  	    row :external_file_link
-  	  end
+	    row :external_url_link do
+	    	a book.external_url_link, :href => book.external_url_link
+	    end
+	    row 'external_cover_img_link' do
+	    	a book.external_cover_img_link, :href => book.external_cover_img_link
+	    end
+	    row 'external_file_link' do
+	    	a book.external_file_link, :href => book.external_file_link
+	    end
+	  end
   end
-  panel "File" do
-  	attributes_table_for book do
-  	    attachment_row:file
-  	    row :file_file_name
-  	    row :file_content_type
-  	    row 'file size (in Megabytes)' do
-  	    	para number_to_human_size(book.file_file_size)
-  	    end
-  	    row 'file url' do
-  	    	para book.file.url
-  	    end
-  	    row :file_updated_at
-  	  end
-  end
-  panel "Cover Image" do
-  	attributes_table_for book do
-  	    attachment_row:cover_img
-  	    row :cover_img_file_name
-  	    row :cover_img_content_type
-  	    row 'cover image size (in Megabytes)' do
-  	    	para number_to_human_size(book.cover_img_file_size)
-  	    end
-  	    row 'cover image url' do
-  	    	para book.cover_img.url
-  	    end
-  	    row :cover_img_updated_at
-  	  end
-  end
+  if book.file_file_name
+	  panel "File" do
+	  	attributes_table_for book do
+	  	    attachment_row:file
+	  	    row :file_file_name
+	  	    row :file_content_type
+	  	    row 'file size (in Megabytes)' do
+	  	    	para number_to_human_size(book.file_file_size)
+	  	    end
+	  	    row 'file url' do
+	  	    	para book.file.url
+	  	    end
+	  	    row :file_updated_at
+	  	  end
+	  end
+	 end
+	 if book.cover_img_file_name
+	  panel "Cover Image" do
+	  	attributes_table_for book do
+		  		row 'cover image preview' do
+			  		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img') if book.cover_img_file_name
+		  		end
+	  	    attachment_row:cover_img
+	  	    row :cover_img_file_name
+	  	    row :cover_img_content_type
+	  	    row 'cover image size (in Megabytes)' do
+	  	    	para number_to_human_size(book.cover_img_file_size)
+	  	    end
+	  	    row 'cover image url' do
+	  	    	para book.cover_img.url
+	  	    end
+	  	    row :cover_img_updated_at
+	  	  end
+		  end
+		else
+	 	panel "Cover Image" do
+	 		attributes_table_for book do
+	  		row 'cover image preview' do
+		  		image_tag(book.external_cover_img_link, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img') if book.external_cover_img_link
+	  		end
+	  		row 'external_cover_img_link' do
+	  			a book.external_cover_img_link.first(50), :href => book.external_cover_img_link
+	  		end
+	 		end
+	 	end
+	 end
   active_admin_comments
 end
 
@@ -140,8 +168,14 @@ end
 
 index as: :grid, columns: 3 do |book|
   panel book.title do
-  	a :href => admin_book_path(book) do
-  		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
+  	if book.cover_img_file_name
+	  	a :href => admin_book_path(book) do
+		  		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
+  		end
+  	else
+	  	a :href => admin_book_path(book) do
+		  		image_tag(book.external_cover_img_link, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
+  		end
   	end
   	div :style => 'display:inline; text-align:center; padding: 5px;' do
   		attributes_table_for book do
@@ -159,7 +193,13 @@ index as: :grid, columns: 3 do |book|
 	  		  end
 	  		end
   		  row("Created At", :sortable => :created_at){ pretty_format(book.created_at) }
-  		  attachment_row :file
+  		  if book.file_file_name
+	  		  attachment_row :file
+	  		else
+	  			row 'external_file_link' do
+	  				a book.external_file_link.first(50), href: book.external_file_link         
+	  			end
+	  		end
 	 #  book.authors.each do |author|
 		#   a truncate(author.name), :href => admin_author_path(author), :style => 'display:block; text-align:center; font-size:1em;'
 		end
@@ -173,11 +213,19 @@ end
 index do
 	selectable_column
 	id_column
-	column :title
 	column "cover_img", :sortable => false do |book|
-	  "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+		if book.cover_img_file_name
+		  "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+		else
+		  "<img src='#{book.external_cover_img_link}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+		 end
 	end
-	attachment_column :file
+	column :title
+	column :file_source do |book|
+		a book.file.url.first(30), :href => book.file.url if book.file.url
+		a book.external_file_link.first(30), :href => book.external_file_link if book.external_file_link
+	end
+		# attachment_column :file
 	column :groups do |book|
 			book.groups.each do |group|
 				a :href => admin_group_path(group) do
@@ -225,6 +273,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			f.inputs 'Basic Details' do
 				f.input :title, :required => true
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
+				f.input :creation_date
 				f.input :languages
 				f.has_many :languages do |language|
 					language.inputs
@@ -234,6 +283,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				f.has_many :groups do |group|
 					group.input :name, :required => true
 				end
+				f.input :external_url_link, :as => :url
 			end
 			f.inputs "Author" do
 				f.input :authors
@@ -245,7 +295,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	          f.input :audios
 	          f.has_many :audios do |audio|
 	             audio.input :title
-	             audio.input :embeded_audio_link, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
+	             audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
 	          end
 	        end
 	        f.inputs 'Book Details' do
@@ -265,10 +315,10 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :publication_date
 	        end
 	        f.inputs 'Actual Files' do
-	        	f.input :file, :required => true, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Upload PDF/EPUB file")
-	        	# f.input :cover_img, :as => :file, :hint => image_tag(f.book.cover_img.url, height: '140') 
-	        	# f.input :cover_img_cache, :as => :hidden 
-	        	f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Upload JPG/PNG/GIF image")
+	        	f.input :file, :required => true, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Please choose ONLY between uploading the file here or give a link to the pdf/epub file below in the external_file_link")
+	        	f.input :external_file_link, :as => :url
+	        	f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+	        	f.input :external_cover_img_link, :as => :url
 	        end
 	        f.inputs 'Post Status' do
 	        	f.input :draft, :label => "Make this a draft?"
@@ -317,6 +367,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			if @existing_groups
 	  				@book.groups << Group.where(id: @existing_groups)
 	  			end
+	  			@book.admin_user_id = @current_admin_user.id
 	  			@current_admin_user.books << @book
 	  			@current_admin_user.save()
 		end #super

@@ -1,6 +1,6 @@
 ActiveAdmin.register Article do
 	config.per_page = 15
-	permit_params :author_ids, :creation_date, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content_or_description, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
+	permit_params :external_file_link, :external_cover_img_link, :author_ids, :creation_date, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content_or_description, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
 	
 	show do |article|
 	  panel "Basic" do
@@ -15,11 +15,11 @@ ActiveAdmin.register Article do
 		  	    	text_node (article.content_or_description).html_safe
 		  	    end
 		  	  end
-	  	    if article.file_file_name
-		  	    row "File" do
+	  	    row "File" do
+	  	    	if article.file_file_name
 		  	    	text_node ("<iframe src='" + article.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
 		  	    end
-		  	  end
+	  	    end
 	  	  end
 	  end
 	  panel "Status" do
@@ -40,6 +40,19 @@ ActiveAdmin.register Article do
 	  	    row :views
 	  	  end
 	  end
+	  panel "External Links" do
+	  	attributes_table_for article do
+  	    row :external_url_link do
+  	    	a article.external_url_link, :href => article.external_url_link
+  	    end
+  	    row 'external_cover_img_link' do
+  	    	a article.external_cover_img_link, :href => article.external_cover_img_link
+  	    end
+  	    row 'external_file_link' do
+  	    	a article.external_file_link, :href => article.external_file_link
+  	    end
+  	  end
+	  end
 	  if article.file_file_name
 		  panel "File" do
 		  	attributes_table_for article do
@@ -56,20 +69,36 @@ ActiveAdmin.register Article do
 		  	  end
 		  end
 		end
-	  panel "Cover Image" do
-	  	attributes_table_for article do
-	  	    attachment_row:cover_img
-	  	    row :cover_img_file_name
-	  	    row :cover_img_content_type
-	  	    row 'cover image size (in Megabytes)' do
-	  	    	para number_to_human_size(article.cover_img_file_size)
-	  	    end
-	  	    row 'cover image url' do
-	  	    	para article.cover_img.url
-	  	    end
-	  	    row :cover_img_updated_at
-	  	  end
-	  end
+		if article.cover_img_file_name
+		  panel "Cover Image" do
+		  	attributes_table_for article do
+  		  		row 'cover image preview' do
+  			  		image_tag(article.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img') if article.cover_img_file_name
+  		  		end
+		  	    attachment_row:cover_img
+		  	    row :cover_img_file_name
+		  	    row :cover_img_content_type
+		  	    row 'cover image size (in Megabytes)' do
+		  	    	para number_to_human_size(article.cover_img_file_size)
+		  	    end
+		  	    row 'cover image url' do
+		  	    	para article.cover_img.url
+		  	    end
+		  	    row :cover_img_updated_at
+		  	  end
+		  end
+		else
+		 	panel "Cover Image" do
+		 		attributes_table_for article do
+		  		row 'cover image preview' do
+			  		image_tag(article.external_cover_img_link, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img') if article.external_cover_img_link
+		  		end
+		  		row 'external_cover_img_link' do
+		  			a article.external_cover_img_link.first(50), :href => article.external_cover_img_link
+		  		end
+		 		end
+		 	end
+		 end
 	  active_admin_comments
 	end
 
@@ -100,14 +129,14 @@ ActiveAdmin.register Article do
 	end
 
 	scope :all, :default => true
-	scope :published do |products|
-	  products.where(:draft => false)
+	scope :published do |articles|
+	  articles.where(:draft => false)
 	end
-	scope :not_published do |products|
-	  products.where(:draft => true)
+	scope :not_published do |articles|
+	  articles.where(:draft => true)
 	end
-	scope :featured do |products|
-	  products.where(:featured => true)
+	scope :featured do |articles|
+	  articles.where(:featured => true)
 	end
 
 
@@ -115,12 +144,45 @@ ActiveAdmin.register Article do
 	index do
 		selectable_column
 		id_column
+		column "cover_img", :sortable => false do |article|
+			if article.cover_img_file_name
+			  "<img src='#{article.cover_img.url}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+			else
+			  "<img src='#{article.external_cover_img_link}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+			 end
+		end
 		column :title
-		column :language
+		# if article.file_file_name
+			# attachment_column :file
+		# end
+		column :file do |article|
+			a article.file.url.first(30), :href => article.file.url if article.file.url
+			a article.external_file_link.first(30), :href => article.external_file_link if article.external_file_link
+		end
+		column :languages do |article|
+				article.languages.each do |language|
+					a :href => admin_language_path(language) do
+						li language.name
+					end
+				end
+		end
 		column :series
-		column :group
-		column :draft, :sortable => :draft do |book|
-	      status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
+		column :groups do |article|
+				article.groups.each do |group|
+					a :href => admin_group_path(group) do
+						li group.name
+					end
+				end
+		end
+		column :authors do |article|
+				article.authors.each do |author|
+					a :href => admin_author_path(author) do
+						li author.name
+					end
+				end
+		end
+		column :draft, :sortable => :draft do |article|
+	      status_tag((article.draft? ? "Not Published" : "Published"), (article.draft? ? :warning : :ok))
 	    end
 		column :featured
 		column :cover_img
@@ -129,10 +191,10 @@ ActiveAdmin.register Article do
 	  actions
 	end
 
-	index as: :blog do
-	  title :title # Calls #my_title on each resource
-	  body  :content_or_description  # Calls #my_body on each resource
-	end
+	# index as: :blog do
+	#   title :title # Calls #my_title on each resource
+	#   body  :content_or_description  # Calls #my_body on each resource
+	# end
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
 #
@@ -151,6 +213,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        f.inputs 'Basic Details' do
 	        	f.input :title, :required => true
 	        	f.input :content_or_description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
+	        	f.input :external_url_link, :as => :url
 	        	f.input :languages
 	        	f.has_many :languages do |language|
 	        	   language.input :name
@@ -175,9 +238,10 @@ form :html => { :enctype => "multipart/form-data" } do |f|
             f.input :publication_date
           end
 	        f.inputs 'Actual Files' do
-	        	f.input :file
-	        	# f.input :photo, hint: f.article.photo? ? image_tag(f.article.photo.url, height: '200') : content_tag(:span, "Upload JPG/PNG/GIF image")
-	        	f.input :cover_img
+	        	f.input :file, hint: content_tag(:span, "Please choose ONLY between uploading the file here or give a link to the pdf/epub file below in the external_file_link")
+	        	f.input :external_file_link, :as => :url
+	        	f.input :cover_img, hint: content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+	        	f.input :external_cover_img_link, :as => :url
 	        end
 	        f.inputs 'Publish Status' do
 	        	f.input :draft, :label => "Make this a draft?"
@@ -210,9 +274,9 @@ controller do
 			if @existing_groups
 				@article.groups << Group.where(id: @existing_groups)
 			end
+			@article.admin_user_id = @current_admin_user.id
 			@current_admin_user.articles << @article
 			@current_admin_user.save()
-
 		end
 	end
 

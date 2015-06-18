@@ -5,7 +5,6 @@ class AdminUser < ActiveRecord::Base
 	has_many :poems
 	has_many :books
 	has_many :audios
-	has_many :videos
 	has_many :articles
 	has_many :news_articles
 

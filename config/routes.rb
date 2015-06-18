@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   resources :authors
   mount Ckeditor::Engine => '/ckeditor'
   resources :articles
-  resources :videos
   resources :audios
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)

@@ -54,16 +54,19 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.string   "title"
     t.text     "content_or_description"
     t.date     "creation_date"
+    t.text     "external_url_link"
+    t.text     "external_cover_img_link"
+    t.text     "external_file_link"
     t.string   "series"
     t.date     "publication_date"
-    t.boolean  "draft",                  default: false
-    t.boolean  "featured",               default: false
-    t.boolean  "allow_comments",         default: true
-    t.integer  "views",                  default: 0
-    t.integer  "shares",                 default: 0
+    t.boolean  "draft",                   default: false
+    t.boolean  "featured",                default: false
+    t.boolean  "allow_comments",          default: true
+    t.integer  "views",                   default: 0
+    t.integer  "shares",                  default: 0
     t.integer  "admin_user_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "cover_img_file_name"
     t.string   "cover_img_content_type"
     t.integer  "cover_img_file_size"
@@ -387,24 +390,5 @@ ActiveRecord::Schema.define(version: 20150614083634) do
 
   add_index "publishers", ["article_id"], name: "index_publishers_on_article_id", using: :btree
   add_index "publishers", ["book_id"], name: "index_publishers_on_book_id", using: :btree
-
-  create_table "videos", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.integer  "downloads",         default: 0
-    t.integer  "plays",             default: 0
-    t.string   "series"
-    t.boolean  "draft",             default: false
-    t.boolean  "featured",          default: false
-    t.integer  "admin_user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
-  end
-
-  add_index "videos", ["admin_user_id"], name: "index_videos_on_admin_user_id", using: :btree
 
 end

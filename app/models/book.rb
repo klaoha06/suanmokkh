@@ -1,15 +1,19 @@
 class Book < ActiveRecord::Base
-	# params.permit!
-	# params.require(:book).permit!
+	# File Attachments
+	has_attached_file :cover_img, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
+	validates_attachment :cover_img, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
+	has_attached_file :file
+  validates_attachment :file, content_type: { content_type: ["application/pdf", "application/epub"] }
 
 	# Validations
 	validates :title, presence: true, uniqueness: true
+	validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
+	validates :external_cover_img_link, url: true,  unless: ->(book){book.external_cover_img_link.blank?}
+  validate :source_of_file
+  validate :source_of_cover_img
 
-	# File Attachments
-	has_attached_file :cover_img, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-	validates_attachment :cover_img, :presence => true, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
-	has_attached_file :file
-  validates_attachment :file, :presence => true, content_type: { content_type: ["application/pdf", "application/epub"] }
+  # validates :external_file_link, presence: true, unless: ->(book){book.file_file_name.present?}
+   # validates :file_file_name, presence: true, unless: ->(book){book.external_file_link.present?}
 
   # Associations
   has_and_belongs_to_many :authors, -> { distinct }
@@ -24,15 +28,39 @@ class Book < ActiveRecord::Base
 	accepts_nested_attributes_for :groups, allow_destroy: true
 	accepts_nested_attributes_for :languages, allow_destroy: true
 
-	def create
-		params.permit!
-		@book = Book.new(book_params)
+	# attr_reader :avatar_remote_url
+	# has_attached_file :avatar
+
+	before_create :create_remote_url
+
+	def create_remote_url
+		if external_file_link && !file
+			self.file = URI.parse(external_file_link)
+			@file_remote_url = external_file_link
+		end
+		if external_cover_img_link && !cover_img
+			self.cover_img = URI.parse(external_cover_img_link)
+			@cover_img_remote_url = external_cover_img_link
+		end
 	end
+
+
+
 
 	private
 
-  def book_params
-    params.require(:book).permit(:language_ids, :group_ids, :author_ids,:audio_ids, :publisher_ids, :language_ids, :languages_attributes, :group_ids, :groups_attributes, :author_ids, :audio_ids, :publisher_ids, :id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name ])
+  def source_of_file
+    if (external_file_link.blank? && file_file_name.blank?)
+      errors.add(:file, "Please upload a file OR give an external link/url to the file")
+      errors.add(:external_file_link, "Please upload a file OR give an external link/url to the file")
+    end
+  end
+
+  def source_of_cover_img
+    if (external_cover_img_link.blank? && cover_img_file_name.blank?)
+      errors.add(:cover_img, "Please upload a cover_img OR give an external link/url to the cover_img")
+      errors.add(:external_cover_img_link, "Please upload a cover_img OR give an external link/url to the cover_img")
+    end
   end
 
 end

@@ -61,15 +61,19 @@ show do |audio|
   	attributes_table_for audio do
   	    row :plays
   	    row :shares
-  	    row :downloads
+  	    # row :downloads
   	  end
   end
   panel "External Links" do
   	attributes_table_for audio do
-  	    row :external_url_link
-  	    row :external_cover_img_link
-  	    row :external_file_link
-  	  end
+	    row :embeded_audio_link
+	    row :external_url_link do
+	    	a audio.external_link, :href => audio.external_link
+	    end
+	    # row 'external_file_link' do
+	    # 	a book.external_file_link, :href => book.external_file_link
+	    # end
+	  end
   end
   # panel "File" do
   # 	attributes_table_for audio do
@@ -146,7 +150,6 @@ end
 		end
 		column :title
 		column :audio_code
-		# column :description
 		column :series
 		column :creation_date
 		column :authors_related do |audio|
@@ -191,8 +194,8 @@ end
 		        	f.input :duration
 		        end
 		        f.inputs "Links" do
-		          f.input :embeded_audio_link, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
-		          f.input :external_link, hint: content_tag(:span, "This will show just a link for user to click")
+		          f.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
+		          f.input :external_link, :as => :url, hint: content_tag(:span, "This will show just a link for user to click")
 		        end
 		        f.inputs "Author" do
 		          f.input :authors

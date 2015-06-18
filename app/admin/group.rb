@@ -19,6 +19,29 @@ ActiveAdmin.register Group do
 #   permitted
 # end
 
+index do
+  selectable_column
+  id_column
+  column :name
+  column :number_of_languages do |group|
+    a group.languages.count, :href => admin_languages_path()
+  end
+  column :number_of_audios do |group|
+    a group.audios.count, :href => admin_audios_path()
+  end
+  column :number_of_articles do |group|
+      a group.articles.count, :href => admin_articles_path()
+  end
+  column :number_of_news_articles do |group|
+    a group.news_articles.count, :href => admin_news_articles_path()
+  end
+  column :number_of_poems do |group|
+    a group.poems.count, :href => admin_poems_path()
+  end
+  column :created_at
+  actions
+end
+
 form :html => { :enctype => "multipart/form-data" } do |f|
 	tabs do
 	      tab 'Basic' do
@@ -34,6 +57,9 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        end
 	        f.inputs "Audios" do
 	          f.input :audios
+	        end
+	        f.inputs "Poems" do
+	          f.input :poems
 	        end
 	        f.inputs "Articles" do
 	          f.input :articles

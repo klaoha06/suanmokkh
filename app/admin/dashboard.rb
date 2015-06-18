@@ -17,18 +17,22 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Books" do
           table_for Book.order('id desc').limit(10) do
-              column "cover_img", :sortable => false do |book|
-                "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:70px; max-height: none;height:100x; display:block; margin:0 auto;'/>".html_safe
-              end
-              column("Title") {|book| book.title}
-              column("Created At") {|book|pretty_format( book.created_at)}
-              column("Status") {|book| status_tag(book.draft? ? "Not Yet Published" : "Published")}
-              column("Actions") {|book| a ' Go to', :href => admin_book_path(book), :class => "button"}
-              # column("Downloads") {|book| book.downloads}
-              # attachment_column :file, truncate: false
-            # column("State")   {|order| status_tag(order.state)                                    }
-            # column("File"){|book| link_to(order.user.email, admin_customer_path(order.user)) }
-            # column("Total")   {|order| number_to_currency order.total_price                       }
+            column "cover_img", :sortable => false do |book|
+              if book.cover_img_file_name
+                "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+              else
+                "<img src='#{book.external_cover_img_link}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+               end
+            end
+            column("Title") {|book| book.title}
+            column("Created At") {|book|pretty_format( book.created_at)}
+            column("Status") {|book| status_tag(book.draft? ? "Not Published" : "Published")}
+            column("Actions") {|book| a ' Go to', :href => admin_book_path(book), :class => "button"}
+            # column("Downloads") {|book| book.downloads}
+            # attachment_column :file, truncate: false
+          # column("State")   {|order| status_tag(order.state)                                    }
+          # column("File"){|book| link_to(order.user.email, admin_customer_path(order.user)) }
+          # column("Total")   {|order| number_to_currency order.total_price                       }
           end
           div :style => 'display:inline; text-align:center; padding: 5px;' do
             para :style => 'display:inline-block; margin:0;' do
@@ -41,12 +45,16 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Articles" do
           table_for Article.order('id desc').limit(10) do
-              column "cover_img", :sortable => false do |article|
-                "<img src='#{article.cover_img.url}' alt='article cover_img' style='width:70px; max-height: none;height:100x; display:block; margin:0 auto;'/>".html_safe
-              end
+            column "cover_img", :sortable => false do |article|
+              if article.cover_img_file_name
+                "<img src='#{article.cover_img.url}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+              else
+                "<img src='#{article.external_cover_img_link}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+               end
+            end
               column("Title") {|article| article.title}
               column("Created At") {|article| pretty_format(article.created_at)}
-              column("Status") {|article| status_tag(article.draft? ? "Not Yet Published" : "Published")}
+              column("Status") {|article| status_tag(article.draft? ? "Not Published" : "Published")}
               column("Actions") {|article| a ' Go to', :href => admin_article_path(article), :class => "button"}
           end
           div :style => 'display:inline; text-align:center; padding: 5px;' do
@@ -65,7 +73,7 @@ ActiveAdmin.register_page "Dashboard" do
             table_for Audio.order('id desc').limit(10) do
                 column("Title") {|audio| audio.title}
                 column("Created At") {|audio| pretty_format(audio.created_at)}
-                column("Status") {|audio| status_tag(audio.draft? ? "Not Yet Published" : "Published")}
+                column("Status") {|audio| status_tag(audio.draft? ? "Not Published" : "Published")}
                 # column("Downloads") {|audio| audio.downloads}
                 column("Actions") {|audio| a ' Go to', :href => admin_audio_path(audio), :class => "button"}
       
@@ -80,27 +88,6 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
         column do
-          panel "Recent Video" do
-            table_for Video.order('id desc').limit(10) do
-                column("Title") {|video| video.title}
-                column("Created At") {|video| pretty_format(video.created_at)}
-                column("Status") {|video| status_tag(video.draft? ? "Not Yet Published" : "Published")}
-                # column("Downloads") {|video| video.downloads}    
-                column("Actions") {|video| a ' Go to', :href => admin_video_path(video), :class => "button"}
-    
-            end
-            div :style => 'display:inline; text-align:center; padding: 5px;' do
-              para :style => 'display:inline-block; margin:0;' do
-                ("Number of Videos in Archieve - <strong>#{Video.count}</strong>").html_safe
-              end
-              a ' See all', :href => admin_videos_path(), :style => 'float:right'
-            end
-          end
-        end
-      end
-
-      columns do
-        column do
           panel "Recent Poems" do
             table_for Poem.order('id desc').limit(10) do
                 # column "cover_img", :sortable => false do |poem|
@@ -108,7 +95,7 @@ ActiveAdmin.register_page "Dashboard" do
                 # end
                 column("Title") {|poem| poem.title}
                 column("Created At") {|poem| pretty_format(poem.created_at)}
-                column("Status") {|poem| status_tag(poem.draft? ? "Not Yet Published" : "Published")}
+                column("Status") {|poem| status_tag(poem.draft? ? "Not Published" : "Published")}
                 column("Actions") {|poem| a ' Go to', :href => admin_poem_path(poem), :class => "button"}
             end
             div :style => 'display:inline; text-align:center; padding: 5px;' do
@@ -119,6 +106,29 @@ ActiveAdmin.register_page "Dashboard" do
             end
           end
         end
+
+      end
+
+      columns do
+        # column do
+        #   panel "Recent Poems" do
+        #     table_for Poem.order('id desc').limit(10) do
+        #         # column "cover_img", :sortable => false do |poem|
+        #         #   "<img src='#{poem.cover_img.url}' alt='poem cover_img' style='width:70px; max-height: none;height:100x; display:block; margin:0 auto;'/>".html_safe
+        #         # end
+        #         column("Title") {|poem| poem.title}
+        #         column("Created At") {|poem| pretty_format(poem.created_at)}
+        #         column("Status") {|poem| status_tag(poem.draft? ? "Not Published" : "Published")}
+        #         column("Actions") {|poem| a ' Go to', :href => admin_poem_path(poem), :class => "button"}
+        #     end
+        #     div :style => 'display:inline; text-align:center; padding: 5px;' do
+        #       para :style => 'display:inline-block; margin:0;' do
+        #        ("Number of poems in Archieve - <strong>#{Poem.count}</strong>").html_safe
+        #       end
+        #        a ' See all', :href => admin_poems_path(), :style => 'float:right'
+        #     end
+        #   end
+        # end
       end
 
   end # content

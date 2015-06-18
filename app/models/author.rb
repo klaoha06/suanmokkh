@@ -5,7 +5,6 @@ class Author < ActiveRecord::Base
 	has_and_belongs_to_many :articles, -> { distinct }
 	has_and_belongs_to_many :audios, -> { distinct }
 	has_and_belongs_to_many :poems, -> { distinct }
-	
 
 	accepts_nested_attributes_for :books, allow_destroy: true
 	accepts_nested_attributes_for :articles, allow_destroy: true

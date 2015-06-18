@@ -4,6 +4,9 @@ class CreateArticles < ActiveRecord::Migration
     	t.string :title
     	t.text :content_or_description
     	t.date :creation_date
+        t.text :external_url_link
+        t.text :external_cover_img_link
+        t.text :external_file_link
         # t.string :language
         t.string :series
         # t.string :group
