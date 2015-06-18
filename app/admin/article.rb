@@ -103,8 +103,10 @@ ActiveAdmin.register Article do
 	end
 
 	sidebar "Admin who create this article..", :only => :show do
-		table_for(AdminUser.find(Article.find(params[:id]).admin_user_id)) do
-			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+		if Article.find(params[:id]).admin_user_id
+			table_for(AdminUser.find(Article.find(params[:id]).admin_user_id)) do
+				column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+			end
 		end
 	end
 	sidebar "Author", :only => :show do

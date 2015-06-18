@@ -1,7 +1,7 @@
 ActiveAdmin.register Book do
 	# menu priority: 2
 	config.per_page = 12
-	permit_params :currency, :language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link ]
+	permit_params :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
 	# config.batch_actions = true
 
 show do |book|
@@ -125,8 +125,12 @@ show do |book|
 end
 
 sidebar "Admin who created this book..", :only => :show do
-	table_for(AdminUser.find(book.admin_user_id)) do
-		column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+	if book.admin_user
+		table_for(book.admin_user) do
+			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+		end
+	else
+		para 'no creator'
 	end
 end
 sidebar "Audio", :only => :show do
@@ -266,7 +270,6 @@ end
 #   title :title # Calls #my_title on each resource
 #   body  :description  # Calls #my_body on each resource
 # end
-
 form :html => { :enctype => "multipart/form-data" } do |f|
 	tabs do
 		tab 'Basic' do
@@ -295,6 +298,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	          f.input :audios
 	          f.has_many :audios do |audio|
 	             audio.input :title
+	             audio.input :admin_user_id, :as => :hidden
 	             audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
 	          end
 	        end
@@ -343,6 +347,12 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	    f.actions
 	  end
 
+	  after_create do
+	  	@book.audios.each do |audio|
+	  		@current_admin_user.audios << audio
+	  	end
+	  end
+
 	  controller do
 	  	def create
 	  		super do |format|
@@ -367,9 +377,10 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			if @existing_groups
 	  				@book.groups << Group.where(id: @existing_groups)
 	  			end
-	  			@book.admin_user_id = @current_admin_user.id
+
+	  			@book.admin_user = @current_admin_user
 	  			@current_admin_user.books << @book
-	  			@current_admin_user.save()
+
 		end #super
 	end #create
 
@@ -381,7 +392,6 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			@existing_publishers = params[:book].delete("publisher_ids")
 			@existing_languages = params[:book].delete("language_ids")
 			@existing_groups = params[:book].delete("group_ids")
-
 			if @existing_authors
 				@book.authors = Author.where(id: @existing_authors)
 			end

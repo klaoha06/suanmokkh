@@ -2,11 +2,11 @@ class AdminUser < ActiveRecord::Base
 	validates :email, presence: true, uniqueness: true
 	validates :username, presence: true, uniqueness: true
 
-	has_many :poems
-	has_many :books
-	has_many :audios
-	has_many :articles
-	has_many :news_articles
+	has_many :poems, inverse_of: :admin_user
+	has_many :books, inverse_of: :admin_user
+	has_many :audios, inverse_of: :admin_user
+	has_many :articles, inverse_of: :admin_user
+	has_many :news_articles, inverse_of: :admin_user
 
 	accepts_nested_attributes_for :books, allow_destroy: true
 	accepts_nested_attributes_for :poems, allow_destroy: true

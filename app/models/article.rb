@@ -10,6 +10,8 @@ class Article < ActiveRecord::Base
 	  has_and_belongs_to_many :publishers, -> { distinct }
 	  has_and_belongs_to_many :groups, -> { distinct }
 	  has_and_belongs_to_many :languages, -> { distinct }
+	  belongs_to :admin_user, inverse_of: :articles
+
 
 	  accepts_nested_attributes_for :authors, allow_destroy: true
 	  accepts_nested_attributes_for :publishers, allow_destroy: true
@@ -23,9 +25,9 @@ class Article < ActiveRecord::Base
 		validate :source_of_cover_img
 
 		# Before create
-		before_create :create_remote_url
+		before_create :before_creation
 
-		def create_remote_url
+		def before_creation
 			if external_file_link && !file
 				self.file = URI.parse(external_file_link)
 				@file_remote_url = external_file_link

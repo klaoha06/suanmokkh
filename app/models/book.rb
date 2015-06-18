@@ -21,6 +21,7 @@ class Book < ActiveRecord::Base
   has_and_belongs_to_many :audios, -> { distinct }
   has_and_belongs_to_many :groups, -> { distinct }
   has_and_belongs_to_many :languages, -> { distinct }
+  belongs_to :admin_user, inverse_of: :books
 
 	accepts_nested_attributes_for :authors, allow_destroy: true
 	accepts_nested_attributes_for :publishers, allow_destroy: true
@@ -43,9 +44,6 @@ class Book < ActiveRecord::Base
 			@cover_img_remote_url = external_cover_img_link
 		end
 	end
-
-
-
 
 	private
 

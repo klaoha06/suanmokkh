@@ -8,6 +8,8 @@ class Audio < ActiveRecord::Base
 	has_and_belongs_to_many :authors, -> { distinct }
 	has_and_belongs_to_many :languages, -> { distinct }
 	has_and_belongs_to_many :groups, -> { distinct }
+	belongs_to :admin_user, inverse_of: :audios
+
 
 	accepts_nested_attributes_for :books, allow_destroy: true
 	accepts_nested_attributes_for :authors, allow_destroy: true

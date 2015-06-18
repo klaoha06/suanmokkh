@@ -52,10 +52,10 @@ ActiveAdmin.register_page "Dashboard" do
                 "<img src='#{article.external_cover_img_link}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
                end
             end
-              column("Title") {|article| article.title}
-              column("Created At") {|article| pretty_format(article.created_at)}
-              column("Status") {|article| status_tag(article.draft? ? "Not Published" : "Published")}
-              column("Actions") {|article| a ' Go to', :href => admin_article_path(article), :class => "button"}
+            column("Title") {|article| article.title}
+            column("Created At") {|article| pretty_format(article.created_at)}
+            column("Status") {|article| status_tag(article.draft? ? "Not Published" : "Published")}
+            column("Actions") {|article| a ' Go to', :href => admin_article_path(article), :class => "button"}
           end
           div :style => 'display:inline; text-align:center; padding: 5px;' do
             para :style => 'display:inline-block; margin:0;' do

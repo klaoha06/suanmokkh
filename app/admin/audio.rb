@@ -1,7 +1,7 @@
 ActiveAdmin.register Audio do
 	# menu priority: 3
 	config.per_page = 15
-	permit_params :id, 
+	permit_params :id, :admin_user_id,
 		:language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
 
 # See permitted parameters documentation:
@@ -106,8 +106,10 @@ show do |audio|
   active_admin_comments
 end
 	sidebar "Admin who create this audio..", :only => :show do
-		table_for(AdminUser.find(Audio.find(params[:id]).admin_user_id)) do
-			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+		if Audio.find(params[:id]).admin_user_id
+			table_for(AdminUser.find(Audio.find(params[:id]).admin_user_id)) do
+				column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+			end
 		end
 	end
 	sidebar "Book related to this audio", :only => :show do
@@ -243,6 +245,7 @@ end
 				if @existing_groups
 					@audio.groups << Group.where(id: @existing_groups)
 				end
+				@audio.admin_user_id = @current_admin_user.id
 				@current_admin_user.audios << @audio
 				@current_admin_user.save()
 			end
