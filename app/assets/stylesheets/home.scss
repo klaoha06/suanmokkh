@@ -227,13 +227,36 @@ aside {
     background-color: transparent;
 }
 .dropdown-menu {
-	min-width: 350px;
+	width: 550px;
 	border:none;
 }
 
 .dropdown-menu li a {
 	text-align: center;
 }
+
+
+
+.dropdown_sitemap > li > a:hover, .dropdown_sitemap > li > a:focus {
+    text-decoration: none;
+    color: #262626;
+    background-color: #f5f5f5;
+}
+
+.dropdown_sitemap li a {
+    text-align: center;
+}
+
+.dropdown_sitemap > li > a {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #333333;
+    white-space: nowrap;
+}
+
 
 .scrollable-menu {
     height: auto;
@@ -242,10 +265,10 @@ aside {
 }
 
 @media(min-width:768px) {
-		.dropdown-menu {
-			width: 100%;
-			border:none;
-		}
+	.dropdown-menu {
+		/*width: 100%;*/
+		border:none;
+	}
     .navbar-default {
         /*border-color: rgba(255,255,255,.3);*/
         background-color: transparent;
