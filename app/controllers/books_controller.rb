@@ -67,14 +67,14 @@ class BooksController < ApplicationController
   #   end
   # end
 
-  # private
-  #   # Use callbacks to share common setup or constraints between actions.
-  #   def set_book
-  #     @book = Book.find(params[:id])
-  #   end
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_book
+      @book = Book.find(params[:id])
+    end
 
-  #   # Never trust parameters from the scary internet, only allow the white list through.
-  #   def book_params
-  #     params.require(:book).permit(:language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids,:id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ])
-  #   end
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def book_params
+      params.require(:book).permit(:language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids,:id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ])
+    end
 end
