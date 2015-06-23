@@ -1,25 +1,85 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
+<% content_for :head do %>
+<title>Poems by Ajahn Buddhadasa - Suan Mokkh</title>
+<% end %>
 
-<h1>Listing Poems</h1>
+<%= render "shared/main_navbar" %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= javascript_include_tag 'poems', 'data-turbolinks-track' => true %>
 
-  <tbody>
-    <% @poems.each do |poem| %>
-      <tr>
-        <td><%= link_to 'Show', poem %></td>
-        <td><%= link_to 'Edit', edit_poem_path(poem) %></td>
-        <td><%= link_to 'Destroy', poem, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container-fluid bg-dark">
+  <div class="container havePadding" style="margin-top: 50px;">
+    <h1 class="text-center">Poetry</h1>
+    <hr>
+    <div class="poem-grid">
+      <div class="poem-grid-sizer"></div>
+      <% 7.times do |i| %>
+        <div class="poem-grid-item">
+          <div class="thumbnail shadow">
+            <!-- <img src="https://placeimg.com/640/480/nature" alt="..."> -->
+            <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
+            <div class="caption">
+              <h2 class="text-center">Poem title</h2>
+              <hr>
+              <p class="light">
+                I offer this life and body to the Buddha,<br><br>
 
-<br>
+                the Buddha is my master, <br><br>
 
-<%= link_to 'New Poem', new_poem_path %>
+                I am the Buddha's servant. <br><br>
+
+                Thus, I am called "Buddhadasa."<br><br>
+              </p>
+   <!--            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+            </div>
+          </div>
+        </div>
+        <div class="poem-grid-item">
+          <div class="thumbnail shadow">
+          <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
+          <div class="caption">
+          <h2 class="text-center">Poem title</h2>
+          <hr>
+          <p class="light">
+            Buddhadasa shall live, there's no dying. <br>
+            Even when the body dies, it will not listen. <br>
+            Whether it is or goes is of no consequence, <br>
+            it is only something passing through time.<br><br>
+
+            Buddhadasa carries on, there's no dying. <br>
+            However good or bad the times, <br>
+            always one with the true teaching. <br>
+            Having offered body and mind in ceaseless service <br>
+            Under Lord Buddha's command.<br><br>
+
+            Buddhadasa lives on, there's no dying. <br>
+            In service to all humanity forever <br>
+            through the Dhamma Proclamations left behind -- <br>
+            O, Friends, can't you see! What dies?<br><br>
+
+            Even when I die and the body ceases <br>
+            my voice still echoes in comrades' ears <br>
+            clear and bright, as loud as ever. <br>
+            Just as if I never died the Dhamma-body lives on.<br><br>
+
+            Treat me as if I never died, <br>
+            as though I am with you all as before. <br>
+            Speak up whatever is on your minds <br>
+            as if I sit with you helping point out the facts.<br><br>
+
+            Treat me as if I never died, then <br>
+            many streams of benefits will accrue. <br>
+            Don't forget the days we set aside for Dhamma discussion; <br>
+            Realize the Absolute and stop dying!<br><br>
+          </p>
+          </div>
+          </div>
+        </div>
+        <% end %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'imagesloaded.pkgd.min', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'isotope.pkgd.min', 'data-turbolinks-track' => true %>
+<%= javascript_include_tag 'poems', 'data-turbolinks-track' => true %>

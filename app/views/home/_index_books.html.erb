@@ -1,0 +1,66 @@
+<% if @books.count > 0 %>
+
+<section id="index-books" class="bg-primary">
+	<h1 class="text-center wow fadeIn">Books</h1>
+	<hr>
+	<p class="text-center floatCenter" style="font-weight: 400; width:400px; padding-bottom: 15px;">No one lights a lamp in order to hide it behind the door: the purpose of light is to create more light, to open people’s eyes, to reveal the marvels around.</p>
+	<div class="container">
+		<div id="owl-books" class="owl-carousel owl-theme">
+			<% @books.each do |book| %>
+			    <div class="havePadding animated fadeIn">
+			    	<a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
+			    		<% if !book.external_cover_img_link.blank? %>
+			    		  <%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+			    		<% else %>
+			    		  <%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+			    		<% end %>
+			    		<div class="portfolio-box-caption">
+			    			<div class="portfolio-box-caption-content">
+			    		<!-- 		<div class="project-category text-faded">
+			    					Take a look
+			    				</div> -->
+			    				<div class="project-name">
+			    				<i class="fa fa-search"></i> 
+			    					Take a look
+			    				</div>
+			    			</div>
+			    		</div>
+			    	</a>
+			    	<h4 class="text-center"><%= book.title %></h4>
+			    </div>
+			<% end %>
+		</div>
+
+<!-- 		<div class="row">
+		<% 6.times do %>
+			<div class="col-md-4 havePadding">
+				<a href="#" class="portfolio-box">
+				<%= image_tag "book1.jpg", style: "height: 300px; width: 65%;", class: "lazyOwl img-responsive floatCenter"%>
+				    <div class="portfolio-box-caption">
+				        <div class="portfolio-box-caption-content">
+				            <div class="project-category text-faded">
+				                Category
+				            </div>
+				            <div class="project-name">
+				                Project Name
+				            </div>
+				        </div>
+				    </div>
+				</a>
+			</div>
+		<% end %>
+		</div> -->
+		<a href="/books" class="btn btn-default btn-xl wow fadeIn text-center floatCenter" role="button" style="width: 200px;">See all</a>
+	</div>
+</section>
+
+<% else %>
+	
+<!-- 	<section id="index-books" class="container-fluid bg-dark text-center havePadding">
+		<i class="fa fa-circle-thin fa-4x"></i>
+		<h2>No Books Available at this time!</h2>
+	<hr>
+	</section> -->
+
+<% end %>
+

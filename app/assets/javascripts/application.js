@@ -16,9 +16,8 @@
 //= require bootstrap-sprockets
 //= require jquery.easing.min
 //= require owl.carousel.min
+//= require wow.min
 //= require creative
-//= require authors
-//= require books
 //= require_self
 //= stub active_admin/application
 //= stub ckeditor/init

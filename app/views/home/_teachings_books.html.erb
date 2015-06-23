@@ -1,5 +1,9 @@
-	<% if @books.count > 0 %>
-	<section id="teachings_books" class="bg-dark">
+
+<% if @books.count > 0 %>
+
+	<section id="index-books" class="bg-dark">
+		<h1 class="text-center">Books</h1>
+		<hr>
 		<div class="container-fluid">
 			<!-- <h2 class="text-center">Books</h2> -->
 			<div id="owl-books" class="owl-carousel">
@@ -31,14 +35,13 @@
 		<a href="/books" class="text-center floatCenter"><p class="white">See All</p></a>
 	</section>
 
-
-	<% else %>
+<% else %>
 	
-	<section id="teachings_books" class="container-fluid bg-dark text-center havePadding">
+	<section id="index-books" class="container-fluid bg-dark text-center havePadding">
 		<i class="fa fa-circle-thin fa-4x"></i>
 		<h2>No Books Available at this time!</h2>
 	<hr>
 	</section>
 
-	<% end %>
+<% end %>
 
