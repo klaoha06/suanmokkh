@@ -125,7 +125,7 @@ p,h1,h2,h3,h4,h5,h6,blockquote {
 
 .text-faded {
     /*color: rgba(255,255,255,.7);*/
-    colr: #725843;
+    color: #725843;
 }
 
 #owl-books .item{
@@ -138,32 +138,7 @@ p,h1,h2,h3,h4,h5,h6,blockquote {
   border-radius: 3px;
   text-align: center;
 }
-.owl-theme .owl-controls .owl-buttons div {
-  padding: 5px 9px;
-}
- 
-.owl-theme .owl-buttons i{
-  margin-top: 2px;
-}
 
-.owl-theme .owl-controls .owl-buttons div {
-  position: absolute;
-}
- 
-.owl-theme .owl-controls .owl-buttons .owl-prev{
-  left: -45px;
-  top: 30%; 
-}
- 
-.owl-theme .owl-controls .owl-buttons .owl-next{
-  right: -45px;
-  top: 30%;
-}
-
-.owl-theme .owl-controls .owl-buttons div {
-    color:black !important;
-    background: none !important;
-}
 .grid-sizer,
 .grid-item { width: 25%; }
 .grid-item--width2 { width: 50%; }

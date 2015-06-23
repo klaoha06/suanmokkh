@@ -69,3 +69,29 @@
   -ms-transform: translate3d(0,0,0);
 }
 
+.owl-theme .owl-controls .owl-buttons div {
+  padding: 5px 9px;
+}
+ 
+.owl-theme .owl-buttons i{
+  margin-top: 2px;
+}
+
+.owl-theme .owl-controls .owl-buttons div {
+  position: absolute;
+}
+ 
+.owl-theme .owl-controls .owl-buttons .owl-prev{
+  left: -45px;
+  top: 30%; 
+}
+ 
+.owl-theme .owl-controls .owl-buttons .owl-next{
+  right: -45px;
+  top: 30%;
+}
+
+.owl-theme .owl-controls .owl-buttons div {
+    color:black !important;
+    background: none !important;
+}
