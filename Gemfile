@@ -8,7 +8,8 @@ gem 'pg'
 # Use Bootstrap for Front-End Framework
 gem 'bootstrap-sass', '~> 3.3.4'
 gem "font-awesome-rails"
-gem 'owlcarousel-rails'
+# gem 'owlcarousel-rails', github: 'acrogenesis/owlcarousel-rails', branch: 'OwlCarousel2'
+# gem 'owlcarousel-rails'
 # Admin Use
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
@@ -17,6 +18,9 @@ gem 'draper'
 gem 'pundit'
 gem 'activeadmin_addons'
 # gem 'activeadmin_associations'
+
+# gem 'filterrific'
+gem 'ransack'
 
 # gem 'rich'
 gem 'ckeditor'

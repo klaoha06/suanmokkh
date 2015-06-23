@@ -1,7 +1,7 @@
 ActiveAdmin.register Book do
 	# menu priority: 2
 	config.per_page = 12
-	permit_params :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
+	permit_params :recommended, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
 	# config.batch_actions = true
 
 show do |book|
@@ -22,6 +22,8 @@ show do |book|
   	    row "File" do
   	    	if book.file_file_name
 	  	    	text_node ("<iframe src='" + book.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+	  	    else
+	  	    	text_node ("<iframe src='" + book.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
 	  	    end
   	    end
   	  end
@@ -42,6 +44,9 @@ show do |book|
   	    end
   	    row 'featured' do
   	    	status_tag((book.featured? ? "Not Featured" : "Featured"), (book.featured? ? :warning : :ok))
+  	    end
+  	    row 'recommended' do
+  	    	status_tag((book.recommended? ? "Not recommended" : "Recommended"), (book.recommended? ? :warning : :ok))
   	    end
   	    row 'draft' do
   	    	status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
@@ -327,6 +332,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        f.inputs 'Post Status' do
 	        	f.input :draft, :label => "Make this a draft?"
 	        	f.input :featured
+	        	f.input :recommended
 	        	f.input :allow_comments, :label => "Allow commenting on this book?"
 	        end
 	      end

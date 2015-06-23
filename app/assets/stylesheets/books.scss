@@ -12,3 +12,15 @@
 	padding: 45px;
 	border: 10px solid white;
 }
+
+.book-grid {
+	height:400px;
+}
+
+.pagination > li > a, .pagination > li > span {
+	color: #333333;
+}
+
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+    color: black;
+}

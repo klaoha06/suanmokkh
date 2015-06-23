@@ -1,7 +1,7 @@
 ActiveAdmin.register Audio do
 	# menu priority: 3
 	config.per_page = 15
-	permit_params :id, :admin_user_id,
+	permit_params :id, :admin_user_id, :recommended,
 		:language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
 
 # See permitted parameters documentation:
@@ -51,6 +51,9 @@ show do |audio|
   	    end
   	    row 'featured' do
   	    	status_tag((audio.featured? ? "Not Featured" : "Featured"), (audio.featured? ? :warning : :ok))
+  	    end
+  	    row 'recommended' do
+  	    	status_tag((audio.recommended? ? "Not recommended" : "Recommended"), (audio.recommended? ? :warning : :ok))
   	    end
   	    row 'draft' do
   	    	status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
@@ -217,6 +220,7 @@ end
 		        f.inputs 'Publish Status' do
 		        	f.input :draft, :label => "Make this a draft?"
 		        	f.input :featured
+		        	f.input :recommended
 		        	f.input :allow_comments, :label => "Allow commenting on this audio track?"
 		        end
 		      end

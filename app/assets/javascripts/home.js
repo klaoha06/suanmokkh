@@ -49,15 +49,27 @@
 
     // Start Owl Carousel
     $("#owl-books").owlCarousel({
-    	navigation : true,
-    	autoPlay : true,
-    	stopOnHover : true,
+    	// nav : true,
+    	// autoPlay : true,
+    	// stopOnHover : true,
     	scrollPerPage: true,
-        slideSpeed: 900
+     //    slideSpeed: 900
+     // dots: true,
+     // responsive:{
+     //     0:{
+     //         items:1
+     //     },
+     //     600:{
+     //         items:3
+     //     },
+     //     1000:{
+     //         items:5
+     //     }
+     // }
     });
 
     $("#owl-articles").owlCarousel({
-    	navigation : true,
+    	nav : true,
     	autoPlay : true,
     	stopOnHover : true,
     	scrollPerPage: true,
@@ -65,11 +77,12 @@
     });
 
     $(".owl-demo").owlCarousel({
-        navigation : false, // Show next and prev buttons
+        nav : false, // Show next and prev buttons
         slideSpeed : 300,
         paginationSpeed : 400,
         singleItem:true,
     });
+    
 
     //Switch to Articles
     $('#switch_to_articles').click(function (event) {

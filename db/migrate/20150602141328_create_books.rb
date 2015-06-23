@@ -18,6 +18,7 @@ class CreateBooks < ActiveRecord::Migration
       t.boolean :draft, default: false
       t.boolean :featured, default: false
       t.boolean :allow_comments, default: true
+      t.boolean :recommended, default: false
       
       t.string :format
       t.float :weight

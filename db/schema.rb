@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.date     "publication_date"
     t.boolean  "draft",                   default: false
     t.boolean  "featured",                default: false
+    t.boolean  "recommended",             default: false
     t.boolean  "allow_comments",          default: true
     t.integer  "views",                   default: 0
     t.integer  "shares",                  default: 0
@@ -122,6 +123,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.text     "external_link"
     t.boolean  "draft",              default: false
     t.boolean  "featured",           default: false
+    t.boolean  "recommended",        default: false
     t.boolean  "allow_comments",     default: true
     t.integer  "downloads",          default: 0
     t.integer  "plays",              default: 0
@@ -210,6 +212,7 @@ ActiveRecord::Schema.define(version: 20150614083634) do
     t.boolean  "draft",                                           default: false
     t.boolean  "featured",                                        default: false
     t.boolean  "allow_comments",                                  default: true
+    t.boolean  "recommended",                                     default: false
     t.string   "format"
     t.float    "weight"
     t.integer  "pages"
