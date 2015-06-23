@@ -15,11 +15,8 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require jquery.easing.min
-//= require cbpAnimatedHeader
-//= require classie
 //= require owl.carousel.min
 //= require creative
-//= require home
 //= require authors
 //= require books
 //= require_self
