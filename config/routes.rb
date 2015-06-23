@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   resources :books
   get 'home/index'
+  # get 'gallery'
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -3,8 +3,27 @@ class BooksController < ApplicationController
 
   # GET /books
   # GET /books.json
+  @query = nil
+
   def index
-    @books = Book.all
+      @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
+      @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
+      # @featured_book = Book.order('created_at DESC').find_by(featured: true)
+      # if !@featured_book
+      #   @featured_book = @books.first
+      # end
+      # @filterrific = initialize_filterrific(
+      #   Book,
+      #   params[:filterrific]
+      # ) or return
+      # @books = @filterrific.find.page(params[:page])
+
+      # respond_to do |format|
+      #   format.html
+      #   format.js
+      # end
+      @search = Book.search(params[:q])
+      @books = @search.result
   end
 
   # GET /books/1

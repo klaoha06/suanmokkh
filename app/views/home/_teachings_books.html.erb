@@ -1,37 +1,20 @@
-	<% if @books.count > 0 %>
-	<section id="teachings_books" class="bg-dark">
-<!-- 			<select class="form-control input-sm pull-right" style="width:100px; margin: 15px;">
-				<option>English</option>
-				<option>Thai</option>
-				<option>Chinese</option>
-			</select> -->
-<!-- 		<% if @featured_book %>
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 text-right">
-					<h1><%= @featured_book.title %></h1>
-					<p style="text-d">
-					  <% @featured_book.authors.each do |author|%>
-					    <%= author.name %>
-					  <% end %>
-					</p>
-					<span style="color:white !important"><%= @featured_book.description.html_safe %></span>
-				</div>
-				<div class="col-md-6">
-					<%= image_tag "#{@featured_book.cover_img.url}", width: "90%", class: "coverImgShowBook lazyOwl img-responsive pull-left shadow"%>
-				</div>
-			</div>
-		</div>
-		<% end %> -->
 
+<% if @books.count > 0 %>
 
+	<section id="index-books" class="bg-dark">
+		<h1 class="text-center">Books</h1>
+		<hr>
 		<div class="container-fluid">
 			<!-- <h2 class="text-center">Books</h2> -->
 			<div id="owl-books" class="owl-carousel">
 				<% @books.each do |book| %>
 				    <div class="havePadding animated fadeIn">
 				    	<a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
-				    		<%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow"%>
+				    		<% if !book.external_cover_img_link.blank? %>
+				    		  <%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+				    		<% else %>
+				    		  <%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+				    		<% end %>
 				    		<div class="portfolio-box-caption">
 				    			<div class="portfolio-box-caption-content">
 				    		<!-- 		<div class="project-category text-faded">
@@ -52,14 +35,13 @@
 		<a href="/books" class="text-center floatCenter"><p class="white">See All</p></a>
 	</section>
 
-
-	<% else %>
+<% else %>
 	
-	<section id="teachings_books" class="container-fluid bg-dark text-center havePadding">
+	<section id="index-books" class="container-fluid bg-dark text-center havePadding">
 		<i class="fa fa-circle-thin fa-4x"></i>
 		<h2>No Books Available at this time!</h2>
 	<hr>
 	</section>
 
-	<% end %>
+<% end %>
 

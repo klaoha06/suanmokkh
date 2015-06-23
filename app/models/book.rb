@@ -29,7 +29,7 @@ class Book < ActiveRecord::Base
 	accepts_nested_attributes_for :groups, allow_destroy: true
 	accepts_nested_attributes_for :languages, allow_destroy: true
 
-	# attr_reader :avatar_remote_url
+	attr_reader :cover_img_remote_url
 	# has_attached_file :avatar
 
 	before_create :create_remote_url
@@ -37,13 +37,32 @@ class Book < ActiveRecord::Base
 	def create_remote_url
 		if external_file_link && !file
 			self.file = URI.parse(external_file_link)
-			@file_remote_url = external_file_link
+			# self.file.url = external_file_link
+			# @file_remote_url = external_file_link
 		end
 		if external_cover_img_link && !cover_img
 			self.cover_img = URI.parse(external_cover_img_link)
-			@cover_img_remote_url = external_cover_img_link
+			# self.cover_img.url = external_cover_img_link
+			# @cover_img_remote_url = external_cover_img_link
 		end
 	end
+
+	# filterrific(
+	#   available_filters: [
+	#     :with_languages,
+	#     # :with_created_at_gte
+	#   ]
+	# )
+
+	# scope :with_languages, lambda {
+	#   where(
+	#     'EXISTS (SELECT 1 from books, comments WHERE books.id = languages.book_id)'
+	#   )
+	# }
+
+	# scope :with_created_at_gte, lambda { |ref_date|
+	#   where('books.created_at >= ?', ref_date)
+	# }
 
 	private
 

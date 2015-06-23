@@ -38,6 +38,10 @@ hr.full {
 	margin:0;
 }
 
+.text-indent {
+    text-indent: 50px;
+}
+
 a {
 		font-size: 16px;
     color: #725843;
@@ -75,13 +79,17 @@ h4,
 h5,
 h6 {
     font-family:font10, 'Open Sans','Helvetica Neue',Arial,sans-serif;
-    font-weight: 900;
+    font-weight: 500;
 }
 
 p {
     margin-bottom: 20px;
     font-size: 19px;
     line-height: 1.5;
+}
+
+p.light {
+    font-weight: 300;
 }
 
 p,h1,h2,h3,h4,h5,h6,blockquote {
@@ -117,8 +125,23 @@ p,h1,h2,h3,h4,h5,h6,blockquote {
 
 .text-faded {
     /*color: rgba(255,255,255,.7);*/
-    colr: #725843;
+    color: #725843;
 }
+
+#owl-books .item{
+  display: block;
+  padding: 30px 0px;
+  margin: 5px;
+  color: #FFF;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.grid-sizer,
+.grid-item { width: 25%; }
+.grid-item--width2 { width: 50%; }
 
 section {
     padding: 25px 0;
@@ -227,7 +250,7 @@ aside {
     background-color: transparent;
 }
 .dropdown-menu {
-	width: 550px;
+	width: 320px;
 	border:none;
 }
 
@@ -495,7 +518,7 @@ header .header-content .header-content-inner p {
 
 .btn-default {
     border-color: #fff;
-    color: #222;
+    color: #725843;
     background-color: #fff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
@@ -547,7 +570,7 @@ fieldset[disabled] .btn-default.active {
 }
 
 .btn-primary {
-    border: 1px solid #725843;
+    border: none;
     color: #fff;
     background-color: #725843;
     -webkit-transition: all .35s;
@@ -561,7 +584,7 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-    border: 1px solid black;
+    border: none;
     color: black;
     background-color: white;
 }
@@ -607,7 +630,7 @@ fieldset[disabled] .btn-primary.active {
     font-weight: 700;
 }
 
-.btn-xl {
+.btn-xl wow fadeIn {
     padding: 15px 30px;
 }
 
@@ -699,6 +722,11 @@ body {
 .haveBorder {
 	border: 1px solid;
 	border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+}
+
+.haveMargin {
+    margin-top:15px;
+    margin-bottom:15px;
 }
 
 #owl-demo .item img{

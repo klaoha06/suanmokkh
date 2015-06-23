@@ -31,12 +31,13 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </head>
 <body>
 
 <%= yield %>
 
-	<footer class="bg-dark">
+	<footer id="footer" class="bg-dark">
 
 		<div class="row" style="padding-top:50px;padding-bottom:50px; margin:0;">
 			<div class="col-md-4 text-center">
@@ -56,19 +57,26 @@
 				<h4>SUBSCRIBE TO OUR NEWSLETTER</h4>
 				<hr>
 				<!-- <input type="email" maxlength="70" placeholder="Your Email Here..." style="font-size:2em;"> -->
-				<form class="form-inline">
+<!-- 				<form class="form-inline">
 				<div class="form-group">
 				  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Your Email Here...">
 				</div>
-				</form>
+				</form> -->
+				<div class="input-group" style="width:300px; margin:0 auto;">
+				      <input type="text" class="form-control" placeholder="Your Email Here...">
+				      <span class="input-group-btn">
+				        <button class="btn btn-default" type="button">submit</button>
+				      </span>
+		    </div><!-- /input-group -->
 			</div>
 		</div>
 		<div class="col-md-12 text-center bg-dark" style="padding:10px 0;">
-		<p>Copyright© 2015 Suan Mokkh</p>
+		<p class="light">Copyright© 2015 Suan Mokkh</p>
 		</div>
 		
 	</footer>
+  <%= javascript_include_tag 'classie', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'cbpAnimatedHeader', 'data-turbolinks-track' => true %>
 
-<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </body>
 </html>

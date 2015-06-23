@@ -4,48 +4,49 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-(function($) {
+// (function($) {
     // "use strict"; // Start of use strict
 
-    // jQuery for page scrolling feature - requires jQuery Easing plugin
-    $('a.page-scroll').bind('click', function(event) {
-        var $anchor = $(this);
-        $('html, body').stop().animate({
-            scrollTop: ($($anchor.attr('href')).offset().top - 50)
-        }, 1250, 'easeInOutExpo');
-        event.preventDefault();
-    });
+   //  // jQuery for page scrolling feature - requires jQuery Easing plugin
+   //  $('a.page-scroll').bind('click', function(event) {
+   //      var $anchor = $(this);
+   //      $('html, body').stop().animate({
+   //          scrollTop: ($($anchor.attr('href')).offset().top - 50)
+   //      }, 1250, 'easeInOutExpo');
+   //      event.preventDefault();
+   //  });
 
-    // Highlight the top nav as scrolling occurs
-    $('body').scrollspy({
-        target: '.navbar-fixed-top',
-        offset: 51
-    })
+   //  // Highlight the top nav as scrolling occurs
+   //  $('body').scrollspy({
+   //      target: '.navbar-fixed-top',
+   //      offset: 51
+   //  })
 
-    // Closes the Responsive Menu on Menu Item Click
-    // $('.navbar-collapse ul li a').click(function() {
-    //     $('.navbar-toggle:visible').click();
-    // });
+   //  // Closes the Responsive Menu on Menu Item Click
+   //  // $('.navbar-collapse ul li a').click(function() {
+   //  //     $('.navbar-toggle:visible').click();
+   //  // });
 
-    // Fit Text Plugin for Main Header
-    $("h1").fitText(
-        1.2, {
-            minFontSize: '35px',
-            maxFontSize: '65px'
-        }
-    );
+   //  // Fit Text Plugin for Main Header
+   //  $("h1").fitText(
+   //      1.2, {
+   //          minFontSize: '35px',
+   //          maxFontSize: '65px'
+   //      }
+   //  );
 
-    // Offset for Main Navigation
-    $('#mainNav').affix({
-        offset: {
-            top: 100
-        }
-    });
+   //  // Offset for Main Navigation
+   //  $('#mainNav').affix({
+   //      offset: {
+   //          top: 100
+   //      }
+   //  });
 
+   // $('.dropdown-toggle').dropdown();
+   
     // Initialize WOW.js Scrolling Animations
-    // new WOW().init();
+    new WOW().init();
 
-   $('.dropdown-toggle').dropdown();
 
     // Start Owl Carousel
     $("#owl-books").owlCarousel({
@@ -53,11 +54,16 @@
     	autoPlay : true,
     	stopOnHover : true,
     	scrollPerPage: true,
-        slideSpeed: 900
+      slideSpeed: 900,
+      items: 4,
+      navigationText: [
+        "<i class='fa fa-angle-left fa-4x'></i>",
+        "<i class='fa fa-angle-right fa-4x'></i>",
+        ],
     });
 
     $("#owl-articles").owlCarousel({
-    	navigation : true,
+    	nav : true,
     	autoPlay : true,
     	stopOnHover : true,
     	scrollPerPage: true,
@@ -65,26 +71,59 @@
     });
 
     $(".owl-demo").owlCarousel({
-        navigation : false, // Show next and prev buttons
+        nav : false, // Show next and prev buttons
         slideSpeed : 300,
         paginationSpeed : 400,
         singleItem:true,
     });
 
-    //Switch to Articles
-    $('#switch_to_articles').click(function (event) {
-      event.preventDefault(); // Prevent link from following its href
-      $('#teachings_books').addClass("hide");
-      $('#teachings_articles').removeClass("hide");
+    $("#owl-poetry").owlCarousel({
+        items: 1,
+        navigation:true,
+        // autoPlay : true,
+        // animateOut: 'fadeOut',
+        // animateIn: 'fadeIn',
+        // loop: true,
+        navigationText: [
+        "<i class='fa fa-angle-left fa-4x'></i>",
+        "<i class='fa fa-angle-right fa-4x'></i>",
+          ],
+        transitionStyle : "fade",
+        autoHeight:true
     });
 
-    //Switch to Books
-    $('#switch_to_books').click(function (event) {
-      event.preventDefault(); // Prevent link from following its href
-      $('#teachings_articles').addClass("hide");
-      $('#teachings_books').removeClass("hide");
+
+    var $grid = $('.grid').isotope({
+      // options...
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      masonry: {
+        // use element for option
+        columnWidth: '.grid-sizer'
+      }
+      // layoutMode: 'packery'
+    });
+    // layout Isotope after each image loads
+    $grid.imagesLoaded().progress( function() {
+      $grid.isotope('layout');
     });
 
+    
+
+    // //Switch to Articles
+    // $('#switch_to_articles').click(function (event) {
+    //   event.preventDefault(); // Prevent link from following its href
+    //   $('#teachings_books').addClass("hide");
+    //   $('#teachings_articles').removeClass("hide");
+    // });
+
+    // //Switch to Books
+    // $('#switch_to_books').click(function (event) {
+    //   event.preventDefault(); // Prevent link from following its href
+    //   $('#teachings_articles').addClass("hide");
+    //   $('#teachings_books').removeClass("hide");
+    // });
 
 
-})(jQuery); // End of use strict
+
+// })(jQuery); // End of use strict

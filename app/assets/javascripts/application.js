@@ -10,18 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require turbolinks
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
 //= require jquery.easing.min
-//= require cbpAnimatedHeader
-//= require classie
-//= require owl.carousel
+//= require owl.carousel.min
+//= require wow.min
 //= require creative
-//= require authors
-//= require books
-//= require home
 //= require_self
 //= stub active_admin/application
 //= stub ckeditor/init
