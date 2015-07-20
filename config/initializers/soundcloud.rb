@@ -1,4 +1,4 @@
-# require 'soundcloud'
+require 'soundcloud'
 
 Rails.application.config.after_initialize do
   # create client object with app and user credentials
