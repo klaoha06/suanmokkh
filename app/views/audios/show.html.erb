@@ -1,4 +1,17 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p>
 
 <%= link_to 'Edit', edit_audio_path(@audio) %> |
 <%= link_to 'Back', audios_path %>
+ -->
+
+ <% content_for :head do %>
+ <title><%= @audio.title %> <%= "by"+@audio.authors.first.name if @audio.authors.first %> - Suan Mokkh</title>
+ <% end %>
+
+ <%= render "shared/main_navbar" %>
+
+ <div class="container-fluid bg-dark" style="min-height: 100%;">
+ 	<div class="container" style="margin-top: 75px;">
+		<%= @audio.embeded_audio_link.html_safe %>
+ 	</div>
+ </div>

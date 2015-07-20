@@ -1,25 +1,27 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
 
-<h1>Listing Audios</h1>
+<% content_for :head do %>
+<title>Audios Library - Suan Mokkh</title>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<%= render "shared/main_navbar" %>
 
-  <tbody>
-    <% @audios.each do |audio| %>
-      <tr>
-        <td><%= link_to 'Show', audio %></td>
-        <td><%= link_to 'Edit', edit_audio_path(audio) %></td>
-        <td><%= link_to 'Destroy', audio, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container-fluid bg-dark" >
+  <div class="container bg-primary" style="margin-top: 75px;">
+    <h1 class="text-center">Audios</h1>
+    <hr>
 
-<br>
+      <%= @audios.each do |audio| %>
+    <div class="row">
+      <div class="col-md-8">
+        <%= audio.embeded_audio_link.html_safe %>
+      </div>
+      <div class="col-md-4">
+        <a href=<%= "/audios/" + audio.id.to_s %>><p>View</p></a>
+      </div>
+    </div>
+      <% end %>
 
-<%= link_to 'New Audio', new_audio_path %>
+    <hr>
+  </div>
+</div>

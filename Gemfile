@@ -22,6 +22,8 @@ gem 'activeadmin_addons'
 # gem 'filterrific'
 gem 'ransack'
 
+gem 'soundcloud'
+
 # gem 'rich'
 gem 'ckeditor'
 # For Uploading Files
