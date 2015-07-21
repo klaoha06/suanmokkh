@@ -19,6 +19,25 @@ class AudiosController < InheritedResources::Base
 	    # end
 	    @search =  Audio.search(params[:q])
 	    @audios = @search.result
+
+			@sc_tracks_with_pagination_link = $sc_consumer.get('/users/159428232/tracks', :order => 'created_at', :limit => 20,
+                    :linked_partitioning => 1)
+
+			@sc_tracks_with_pagination_link.each_with_index do |object, index|
+				if index == 0
+					@sc_info = object[0]
+					@sc_tracks = object[1]
+				end
+				if index == 1
+					@sc_pagination_link = object[1]
+				end
+			end
+
+			# puts $sc_user
+			# @number_of_tracks = $sc_user.track_count
+			# @number_of_playlist = $sc_user.playlist_count
+
+
 	end
 
 	# GET /audios/1

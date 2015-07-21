@@ -29,10 +29,10 @@
                   <%= link_to "Books", books_path %>
                 </li>
                 <li>
-                  <%= link_to "Audios", audios_path %>
+                  <%= link_to "Poetry", poems_path %>
                 </li>
                 <li>
-                  <%= link_to "Poetry", poems_path %>
+                  <%= link_to "Audios", audios_path %>
                 </li>
                 <li>
                     <a href="/gallery">Gallery</a>
@@ -54,10 +54,11 @@
                     <li><a href="/gallery">Gallery</a></li>
                     <li class="divider"></li>
                     <h4 class="text-center brown"><i class="fa fa-book brown"></i> Ajarn's Teachings</h4>                 
-                    <li><a href="/books">Books</a></li>
-                    <li><a href="/poems">Poetry</a></li>
-                    <li><a href="#">Audio</a></li>
-                    <li><a href="#">Video</a></li>
+                    <li><%= link_to "Books", books_path %></li>
+                    <li><%= link_to "Poetry", poems_path %></li>
+                    <!-- <li><%= link_to "Audios", audios_path %></li> -->
+                    <li><a href="https://www.soundcloud.com/buddhadasa">Audios</a></li>
+                    <li><a href="https://www.youtube.com/user/buddhadasaarchives">Video</a></li>
                     <li><a href="#">Santikaro's Work</a></li>
                     <li class="divider"></li>
                     <h4 class="text-center brown"><i class="fa fa-pagelines brown"></i> Suan Mokkh</h4>
