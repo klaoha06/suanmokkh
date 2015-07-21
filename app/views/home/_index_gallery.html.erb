@@ -2,7 +2,7 @@
 	<section id="index-gallery" class="bg-dark">
 		<h1 class="text-center wow fadeIn">Gallery</h1>
 		<hr>
-	    <div class="container bg-primary havePadding">
+	    <div class="container bg-primary" style="max-height: 900px; overflow: hidden; padding:0; border:5px solid white;">
 	        <div class="grid">
 	        	<div class="grid-sizer"></div>
 	        	<% 15.times do |i| %>
@@ -23,10 +23,10 @@
 	            </div>
 							<% end %>
 	        </div>
-	        <div class="col-md-12">
+	    </div>
+	        <div class="col-md-12 haveMargin" style="margin-bottom: 30px;">
 	        <a href="/gallery" class="btn btn-default btn-xl wow fadeIn text-center floatCenter haveMargin" style="width: 200px;">See all</a>
 	        </div>
-	    </div>
 	</section>
 
 <% else %>

@@ -37,44 +37,8 @@
 
 <%= yield %>
 
-	<footer id="footer" class="bg-dark">
+	<%= render "layouts/footer" %>
 
-		<div class="row" style="padding-top:50px;padding-bottom:50px; margin:0;">
-			<div class="col-md-4 text-center">
-				<h4>NEED HELP? CALL US</h4>
-				<hr>
-				<h3>081-906-1590</h3>
-			</div>
-			<div id="followFooter"class="col-md-4 text-center">
-				<h4>FOLLOW US</h4>
-				<hr>
-				<i class="fa fa-facebook"></i>
-				<i class="fa fa-twitter"></i>
-				<i class="fa fa-instagram"></i>
-				<i class="fa fa-youtube"></i>
-			</div>
-			<div class="col-md-4 text-center">
-				<h4>SUBSCRIBE TO OUR NEWSLETTER</h4>
-				<hr>
-				<!-- <input type="email" maxlength="70" placeholder="Your Email Here..." style="font-size:2em;"> -->
-<!-- 				<form class="form-inline">
-				<div class="form-group">
-				  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Your Email Here...">
-				</div>
-				</form> -->
-				<div class="input-group" style="width:300px; margin:0 auto;">
-				      <input type="text" class="form-control" placeholder="Your Email Here...">
-				      <span class="input-group-btn">
-				        <button class="btn btn-default" type="button">submit</button>
-				      </span>
-		    </div><!-- /input-group -->
-			</div>
-		</div>
-		<div class="col-md-12 text-center bg-dark" style="padding:10px 0;">
-		<p class="light">Copyright© 2015 Suan Mokkh</p>
-		</div>
-		
-	</footer>
   <%= javascript_include_tag 'classie', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'cbpAnimatedHeader', 'data-turbolinks-track' => true %>
 
