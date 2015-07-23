@@ -6,8 +6,12 @@
 #
 default: &default
   adapter: postgresql
+  encoding: unicode
   pool: 5
   timeout: 5000
+  host: localhost
+  username: rails
+  password: NTciiMSpIr
 
 development:
   <<: *default
