@@ -1,0 +1,2 @@
+class BiaController < ApplicationController
+end

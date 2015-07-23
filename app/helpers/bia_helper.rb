@@ -1,0 +1,2 @@
+module BiaHelper
+end

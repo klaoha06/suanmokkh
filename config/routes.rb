@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'teachings' => 'pages#teachings'
+
   resources :languages
   resources :groups
   resources :news_articles
@@ -13,6 +15,11 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   resources :books
   get 'home/index'
+  get 'buddhadasa' => 'buddhadasa'
+  get 'gallery' => 'gallery'
+  get 'suanmokkh' => 'suanmokkh'
+  get 'contact' => 'contact'
+
   # get 'gallery'
 
 
