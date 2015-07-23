@@ -1,0 +1,2 @@
+class SuanmokkhController < ApplicationController
+end

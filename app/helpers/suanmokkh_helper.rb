@@ -1,0 +1,2 @@
+module SuanmokkhHelper
+end
