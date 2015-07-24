@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'gallery' => 'gallery'
   get 'suanmokkh' => 'suanmokkh'
   get 'contact' => 'contact'
+  get 'retreats' => 'retreats'
 
   # get 'gallery'
 
