@@ -34,6 +34,8 @@ class Book < ActiveRecord::Base
 
 	before_create :create_remote_url
 
+	paginates_per 12
+
 	def create_remote_url
 		if external_file_link && !file
 			self.file = URI.parse(external_file_link)
