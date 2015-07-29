@@ -6,7 +6,8 @@ class BooksController < ApplicationController
   @query = nil
 
   def index
-      @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
+      # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
+      @books = Book.includes(:authors, :groups, :languages).order('created_at DESC').page params[:page]
       @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
       # @featured_book = Book.order('created_at DESC').find_by(featured: true)
       # if !@featured_book
@@ -22,8 +23,8 @@ class BooksController < ApplicationController
       #   format.html
       #   format.js
       # end
-      @search = Book.search(params[:q])
-      @books = @search.result
+      # @search = Book.search(params[:q])
+      # @books = @search.result
   end
 
   # GET /books/1
