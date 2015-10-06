@@ -14,12 +14,16 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :books
+  resources :retreat_talks
+
   get 'home/index'
   get 'buddhadasa' => 'buddhadasa'
   get 'gallery' => 'gallery'
   get 'suanmokkh' => 'suanmokkh'
   get 'contact' => 'contact'
   get 'retreats' => 'retreats'
+  # get 'retreat_talks' => 'retreat_tralks'
+
 
   # get 'gallery'
 

@@ -779,7 +779,8 @@ a.footer-icon:hover {
     text-indent: 50px;
     font-family: font10;
     font-weight: 500;
-    font-size: 1.4em;
+    font-size: 1.1em;
+    text-align: justify;
 }
 
 .list-dark li a {
@@ -835,4 +836,12 @@ a.footer-icon:hover {
     color: #262626;
     background-color: #f5f5f5;
     border-color: #ddd;
+}
+
+.article_image {
+    margin: 15px 25px;
+}
+
+.float_inherit {
+    float: inherit;
 }

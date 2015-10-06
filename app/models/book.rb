@@ -17,6 +17,7 @@ class Book < ActiveRecord::Base
 
   # Associations
   has_and_belongs_to_many :authors, -> { distinct }
+  has_and_belongs_to_many :retreat_talks, -> { distinct }
   has_and_belongs_to_many :publishers, -> { distinct }
   has_and_belongs_to_many :audios, -> { distinct }
   has_and_belongs_to_many :groups, -> { distinct }
@@ -24,6 +25,7 @@ class Book < ActiveRecord::Base
   belongs_to :admin_user, inverse_of: :books
 
 	accepts_nested_attributes_for :authors, allow_destroy: true
+	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
 	accepts_nested_attributes_for :publishers, allow_destroy: true
 	accepts_nested_attributes_for :audios, allow_destroy: true
 	accepts_nested_attributes_for :groups, allow_destroy: true

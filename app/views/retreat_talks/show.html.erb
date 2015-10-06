@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @retreat_talk.name %>
+</p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @retreat_talk.code %>
+</p>
+
+<%= link_to 'Edit', edit_retreat_talk_path(@retreat_talk) %> |
+<%= link_to 'Back', retreat_talks_path %>
