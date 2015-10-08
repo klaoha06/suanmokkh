@@ -1,4 +1,3 @@
-
 	var style = document.documentElement.style;
 	support3d = (style.webkitTransition !== undefined ||
 	             style.MozTransition !== undefined ||
@@ -18,6 +17,4 @@ $("#owl-featured-books").owlCarousel({
     // loop: true,
     transitionStyle : "fade",
     autoHeight:true
-});
-// debugger;
- 
+}); 

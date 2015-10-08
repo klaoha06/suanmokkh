@@ -7,6 +7,11 @@ class BooksController < ApplicationController
 
   def index
       # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
+      # @books = Book.search(params[:q]).result
+
+      # @q = Book.search(params[:q])
+      # @books = @q.result(distinct: true)
+
       @books = Book.includes(:authors, :groups, :languages).order('created_at DESC').page params[:page]
       @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
       # @featured_book = Book.order('created_at DESC').find_by(featured: true)

@@ -11,6 +11,7 @@ show do |retreat_talk|
   	    row :created_at
   	    row :updated_at
   	    row :series
+  	    row :format
   	    row "Description" do
   	    	if retreat_talk.description
 	  	    	text_node (retreat_talk.description).html_safe
@@ -18,30 +19,29 @@ show do |retreat_talk|
 	  	    	para 'no description'
 	  	    end
   	    end
-  	    row "File" do
-  	    	if retreat_talk.file_file_name
-	  	    	text_node ("<iframe src='" + retreat_talk.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
-	  	    else
-	  	    	text_node ("<iframe src='" + retreat_talk.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
-	  	    end
-  	    end
+  	    # row "File" do
+  	    # 	if retreat_talk.file_file_name
+	  	   #  	text_node ("<iframe src='" + retreat_talk.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+	  	   #  else
+	  	   #  	text_node ("<iframe src='" + retreat_talk.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+	  	   #  end
+  	    # end
   	  end
   end
-  panel "retreat_talk Details" do
-  	attributes_table_for retreat_talk do
-  	    row :format
-  	  end
-  end
+  # panel "retreat_talk Details" do
+  # 	attributes_table_for retreat_talk do
+  # 	  end
+  # end
   panel "Status" do
   	attributes_table_for retreat_talk do
   	    row 'allow_comments' do
-  	    	status_tag((retreat_talk.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (retreat_talk.allow_comments? ? :warning : :ok))
+  	    	status_tag((retreat_talk.allow_comments? ? "Commenting Allowed" : "No Commenting Allowed"), (retreat_talk.allow_comments? ? :ok : :warning))
   	    end
   	    row 'featured' do
-  	    	status_tag((retreat_talk.featured? ? "Not Featured" : "Featured"), (retreat_talk.featured? ? :warning : :ok))
+  	    	status_tag((retreat_talk.featured? ? "Featured" : "Not Featured"), (retreat_talk.featured? ? :ok : :warning))
   	    end
   	    row 'recommended' do
-  	    	status_tag((retreat_talk.recommended? ? "Not recommended" : "Recommended"), (retreat_talk.recommended? ? :warning : :ok))
+  	    	status_tag((retreat_talk.recommended? ? "Recommended" : "Not Recommended"), (retreat_talk.recommended? ? :ok : :warning))
   	    end
   	    row 'draft' do
   	    	status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
@@ -68,9 +68,9 @@ show do |retreat_talk|
 	    row 'external_cover_img_link' do
 	    	a retreat_talk.external_cover_img_link, :href => retreat_talk.external_cover_img_link
 	    end
-	    row 'external_file_link' do
-	    	a retreat_talk.external_file_link, :href => retreat_talk.external_file_link
-	    end
+	    # row 'external_file_link' do
+	    # 	a retreat_talk.external_file_link, :href => retreat_talk.external_file_link
+	    # end
 	  end
   end
 
@@ -136,6 +136,11 @@ sidebar "Group", :only => :show do
 		column("Name") {|group| link_to "#{group.name}", admin_group_path(group) }
 	end
 end
+sidebar "Book", :only => :show do
+	table_for(retreat_talk.books) do
+		column("Title") {|book| link_to "#{book.title}", admin_book_path(book) }
+	end
+end
 
 scope :all, :default => true
 scope :published do |products|
@@ -148,100 +153,36 @@ scope :featured do |products|
 	products.where(:featured => true)
 end
 
-index as: :grid, columns: 3 do |retreat_talk|
-  panel retreat_talk.title do
-  	if retreat_talk.cover_img_file_name
-	  	a :href => admin_retreat_talk_path(retreat_talk) do
-		  		image_tag(retreat_talk.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
-  		end
-  	else
-	  	a :href => admin_retreat_talk_path(retreat_talk) do
-		  		image_tag(retreat_talk.external_cover_img_link, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
-  		end
-  	end
-  	div :style => 'display:inline; text-align:center; padding: 5px;' do
-  		attributes_table_for retreat_talk do
-  		  row :title, :style => "font-size: 1.3em; font-weight:bold;"
-  		  row 'Authors' do
-  		    retreat_talk.authors.each do |author|
-  		      a author.name, href: admin_author_path(author)          
-  		    end
-  		  end
-  		  if retreat_talk.languages.length > 0
-	  		  row 'Language' do
-	  		    retreat_talk.languages.each do |language|
-	  		      a language.name, href: admin_language_path(language)          
-	  		    end
-	  		  end
-	  		end
-  		  row("Created At", :sortable => :created_at){ pretty_format(retreat_talk.created_at) }
-  		  if retreat_talk.file_file_name
-	  		  attachment_row :file
-	  		else
-	  			row 'external_file_link' do
-	  				a retreat_talk.external_file_link.first(50), href: retreat_talk.external_file_link         
-	  			end
-	  		end
-	 #  retreat_talk.authors.each do |author|
-		#   a truncate(author.name), :href => admin_author_path(author), :style => 'display:block; text-align:center; font-size:1em;'
-		end
-		a ' Show ', :href => admin_retreat_talk_path(retreat_talk), :class => "button"
-		a ' Edit ', :href => '/admin/retreat_talks/' + retreat_talk.id.to_s + '/edit', :class => "button"
-		text_node ("<a class='delete_link member_link button' data-confirm='Are you sure you want to delete this?' rel='nofollow' data-method='delete' href='/admin/retreat_talks/" + retreat_talk.id.to_s + "'>Delete</a>").html_safe
-	end
-  end
-end
-
 index do
 	selectable_column
 	id_column
-	column "cover_img", :sortable => false do |retreat_talk|
-		if retreat_talk.cover_img_file_name
-		  "<img src='#{retreat_talk.cover_img.url}' alt='retreat_talk cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
-		else
-		  "<img src='#{retreat_talk.external_cover_img_link}' alt='retreat_talk cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
-		 end
-	end
+	# column "retreat_talk", :sortable => false do |retreat_talk|
+	#   (retreat_talk.embeded_retreat_talk_link).html_safe
+	# end
 	column :title
-	column :file_source do |retreat_talk|
-		a retreat_talk.file.url.first(30), :href => retreat_talk.file.url if retreat_talk.file.url
-		a retreat_talk.external_file_link.first(30), :href => retreat_talk.external_file_link if retreat_talk.external_file_link
-	end
-		# attachment_column :file
-	column :groups do |retreat_talk|
-			retreat_talk.groups.each do |group|
-				a :href => admin_group_path(group) do
-					li group.name
-				end
-			end
-	end
-	column :languages do |retreat_talk|
-			retreat_talk.languages.each do |language|
-				a :href => admin_language_path(language) do
-					li language.name
-				end
-			end
-	end
-	column :authors do |retreat_talk|
+	column :retreat_talk_code
+	column :series
+	column :creation_date
+	column :authors_related do |retreat_talk|
 			retreat_talk.authors.each do |author|
 				a :href => admin_author_path(author) do
 					li author.name
 				end
 			end
 	end
-	column :audios_related do |retreat_talk|
-			retreat_talk.audios.each do |audio|
-				a :href => admin_audio_path(audio) do
-					li audio.title
+	column :books_related do |retreat_talk|
+			retreat_talk.books.each do |book|
+				a :href => admin_book_path(book) do
+					li book.title
 				end
 			end
 	end
 	column :draft, :sortable => :draft do |retreat_talk|
-		status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
-	end
+      status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
+    end
 	column :featured
-	column :created_at
-	actions
+	# column :created_at
+  actions
 end
 
 # index as: :blog do
@@ -259,11 +200,13 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					language.inputs
 				end
 				f.input :series
+				f.input :format
 				f.input :groups
 				f.has_many :groups do |group|
 					group.input :name, :required => true
 				end
 				f.input :external_url_link, :as => :url
+				f.input :publication_date
 			end
 			f.inputs "Author" do
 				f.input :authors
@@ -271,7 +214,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					author.input :name, :required => true
 				end
 			end
-			f.inputs "Audio related to this retreat_talk.." do
+			f.inputs "Audio related to this retreat talk" do
 	          f.input :audios
 	          f.has_many :audios do |audio|
 	             audio.input :title
@@ -279,12 +222,17 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	             audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
 	          end
 	        end
-	        f.inputs 'retreat_talk Details' do
-	        	f.input :format
-	        end
-	        f.inputs 'Publication Details' do
-	        	f.input :publication_date
-	        end
+
+	    		f.inputs "Book related to this retreat_talk" do
+	              f.input :books
+	              # f.has_many :books do |book|
+	              #    book.input :title
+	              #    book.input :admin_user_id, :as => :hidden
+	              #    # audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
+	              # end
+	            end
+
+
 	        f.inputs 'Actual Files' do
 	        	f.input :cover_img, :required => true, hint: f.retreat_talk.cover_img? ? image_tag(f.retreat_talk.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
 	        	f.input :external_cover_img_link, :as => :url
@@ -324,11 +272,15 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  		super do |format|
 	  			params.permit!
 	  			@existing_authors = params[:retreat_talk].delete("author_ids")
+	  			@existing_books = params[:retreat_talk].delete("book_ids")
 					@existing_audios = params[:retreat_talk].delete("audio_ids")	  			
 	  			@existing_languages = params[:retreat_talk].delete("language_ids")
 	  			@existing_groups = params[:retreat_talk].delete("group_ids")
 	  			if @existing_authors
 	  				@retreat_talk.authors << Author.where(id: @existing_authors)
+	  			end
+	  			if @existing_books
+	  				@retreat_talk.books << Book.where(id: @existing_books)
 	  			end
 	  			if @existing_audios
 	  				@retreat_talk.audios << Audio.where(id: @existing_audios)
@@ -350,6 +302,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 		super do |format|
 			params.permit!
 			@existing_authors = params[:retreat_talk].delete("author_ids")
+			@existing_books = params[:retreat_talk].delete("book_ids")
 			@existing_audios = params[:retreat_talk].delete("audio_ids")	  			
 			@existing_languages = params[:retreat_talk].delete("language_ids")
 			@existing_groups = params[:retreat_talk].delete("group_ids")
@@ -373,6 +326,18 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					if !audio.has_key?("id")
 						new_audio = Audio.where(title: audio[:title]).first_or_create
 						@retreat_talk.audios << new_audio
+					end
+				end
+			end
+
+			if @existing_books
+				@retreat_talk.books = Book.where(id: @existing_books)
+			end
+			if params[:retreat_talk][:books_attributes]
+				params[:retreat_talk][:books_attributes].each do |key, book|
+					if !book.has_key?("id")
+						new_book = Book.where(title: book[:title]).first_or_create
+						@retreat_talk.books << new_book
 					end
 				end
 			end

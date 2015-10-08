@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151006072812) do
+ActiveRecord::Schema.define(version: 20151006114801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,11 +173,11 @@ ActiveRecord::Schema.define(version: 20151006072812) do
 
   create_table "audios_retreat_talks", id: false, force: :cascade do |t|
     t.integer "audio_id"
-    t.integer "retreat_talks_id"
+    t.integer "retreat_talk_id"
   end
 
   add_index "audios_retreat_talks", ["audio_id"], name: "index_audios_retreat_talks_on_audio_id", using: :btree
-  add_index "audios_retreat_talks", ["retreat_talks_id"], name: "index_audios_retreat_talks_on_retreat_talks_id", using: :btree
+  add_index "audios_retreat_talks", ["retreat_talk_id"], name: "index_audios_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "authors", force: :cascade do |t|
     t.string   "name"
@@ -206,11 +206,11 @@ ActiveRecord::Schema.define(version: 20151006072812) do
 
   create_table "authors_retreat_talks", id: false, force: :cascade do |t|
     t.integer "author_id"
-    t.integer "retreat_talks_id"
+    t.integer "retreat_talk_id"
   end
 
   add_index "authors_retreat_talks", ["author_id"], name: "index_authors_retreat_talks_on_author_id", using: :btree
-  add_index "authors_retreat_talks", ["retreat_talks_id"], name: "index_authors_retreat_talks_on_retreat_talks_id", using: :btree
+  add_index "authors_retreat_talks", ["retreat_talk_id"], name: "index_authors_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -276,6 +276,14 @@ ActiveRecord::Schema.define(version: 20151006072812) do
   add_index "books_publishers", ["book_id"], name: "index_books_publishers_on_book_id", using: :btree
   add_index "books_publishers", ["publisher_id"], name: "index_books_publishers_on_publisher_id", using: :btree
 
+  create_table "books_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "retreat_talk_id"
+  end
+
+  add_index "books_retreat_talks", ["book_id"], name: "index_books_retreat_talks_on_book_id", using: :btree
+  add_index "books_retreat_talks", ["retreat_talk_id"], name: "index_books_retreat_talks_on_retreat_talk_id", using: :btree
+
   create_table "catagories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -335,12 +343,12 @@ ActiveRecord::Schema.define(version: 20151006072812) do
   add_index "groups_poems", ["poem_id"], name: "index_groups_poems_on_poem_id", using: :btree
 
   create_table "groups_retreat_talks", id: false, force: :cascade do |t|
-    t.integer "retreat_talks_id"
+    t.integer "retreat_talk_id"
     t.integer "group_id"
   end
 
   add_index "groups_retreat_talks", ["group_id"], name: "index_groups_retreat_talks_on_group_id", using: :btree
-  add_index "groups_retreat_talks", ["retreat_talks_id"], name: "index_groups_retreat_talks_on_retreat_talks_id", using: :btree
+  add_index "groups_retreat_talks", ["retreat_talk_id"], name: "index_groups_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "languages", force: :cascade do |t|
     t.string   "name"
@@ -365,12 +373,12 @@ ActiveRecord::Schema.define(version: 20151006072812) do
   add_index "languages_poems", ["poem_id"], name: "index_languages_poems_on_poem_id", using: :btree
 
   create_table "languages_retreat_talks", id: false, force: :cascade do |t|
-    t.integer "retreat_talks_id"
+    t.integer "retreat_talk_id"
     t.integer "language_id"
   end
 
   add_index "languages_retreat_talks", ["language_id"], name: "index_languages_retreat_talks_on_language_id", using: :btree
-  add_index "languages_retreat_talks", ["retreat_talks_id"], name: "index_languages_retreat_talks_on_retreat_talks_id", using: :btree
+  add_index "languages_retreat_talks", ["retreat_talk_id"], name: "index_languages_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "news_articles", force: :cascade do |t|
     t.string   "title"
@@ -449,6 +457,10 @@ ActiveRecord::Schema.define(version: 20151006072812) do
     t.integer  "admin_user_id"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
   end
 
   add_index "retreat_talks", ["admin_user_id"], name: "index_retreat_talks_on_admin_user_id", using: :btree

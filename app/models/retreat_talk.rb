@@ -37,11 +37,6 @@ class RetreatTalk < ActiveRecord::Base
 		paginates_per 12
 
 		def create_remote_url
-			if external_file_link && !file
-				self.file = URI.parse(external_file_link)
-				# self.file.url = external_file_link
-				# @file_remote_url = external_file_link
-			end
 			if external_cover_img_link && !cover_img
 				self.cover_img = URI.parse(external_cover_img_link)
 				# self.cover_img.url = external_cover_img_link

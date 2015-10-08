@@ -1,29 +1,120 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p> -->
+<% content_for :head do %>
+<title>Retreat Talks - Suan Mokkh</title>
+<% end %>
 
-<h1>Listing Retreat Talks</h1>
+<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
+  <div class="container bg-primary" style="border: none; margin-top: 30px;">
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Code</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="container animated fadeIn" style="border: none; margin-top: 40px;">
+      <div id="owl-featured-retreat_talks" class="owl-carousel">
+        <% @featured_retreat_talks.each do |retreat_talk| %>
+        <div class="item row container">
+          <div class="col-md-6 text-center">
+            <h1><%= retreat_talk.title %></h1>
+            <hr class="full">
+            <p style="text-d">
+              <% retreat_talk.authors.each do |author|%>
+                <%= author.name %>
+              <% end %>
+            </p>
+          </div>
+          <div class="col-md-6">
+           <% if !retreat_talk.external_cover_img_link.blank? %>
+             <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:70%;" %>
+           <% else %>
+             <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:70%;" %>
+           <% end %>
+           <h1><%= retreat_talk.title %></h1>
+          </div>
+        </div>
+      <% end %>
+      </div>
+      <div class="clearfix"></div>
+      <div class='container-fluid'>
+        <div class="container">
+        <h2>Playlist</h2>
+        <div id="owl-recommended-retreat_talks" class="owl-carousel">
+          <% @retreat_talks.each do |retreat_talk| %>
+              <div class="havePadding animated fadeIn">
+                <a href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
+                  <% if !retreat_talk.external_cover_img_link.blank? %>
+                    <%= image_tag "#{retreat_talk.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+                  <% else %>
+                    <%= image_tag "#{retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+                  <% end %>
+                  <div class="portfolio-box-caption">
+                    <div class="portfolio-box-caption-content">
+                     <div class="project-category text-faded">
+                        Take a look
+                      </div>
+                      <div class="project-name">
+                      <i class="fa fa-search"></i> 
+                        Take a look
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <h4 class="text-center"><%= retreat_talk.title %></h4>
+                <p class="text-center"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></p>
+              </div>
+          <% end %>
+        </div>
+      </div>
+      </div>
+    </div>
 
-  <tbody>
+
+    <div class="row havePadding">
+    <h1 class="text-center">Retreat Talks</h1>
+    <hr>
     <% @retreat_talks.each do |retreat_talk| %>
-      <tr>
-        <td><%= retreat_talk.name %></td>
-        <td><%= retreat_talk.code %></td>
-        <td><%= link_to 'Show', retreat_talk %></td>
-        <td><%= link_to 'Edit', edit_retreat_talk_path(retreat_talk) %></td>
-        <td><%= link_to 'Destroy', retreat_talk, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <div class="col-md-4 retreat_talk-grid">
+      <a href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
+        <% if !retreat_talk.external_cover_img_link.blank? %>
+          <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+        <% else %>
+          <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+        <% end %>
+      </a>
+      <h4 class="text-center"><%= retreat_talk.title %></h4>
+      <p class="text-center"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></p>
+    </div>
     <% end %>
-  </tbody>
-</table>
+    </div>
+    <div class="col-md-12">
+    <p class="text-center"><%= page_entries_info @retreat_talks %></p>
 
-<br>
+    <nav class="text-center">
+    <%= paginate @retreat_talks, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
+    </nav>
+    <br>
+    </div>
+  </div>
 
-<%= link_to 'New Retreat talk', new_retreat_talk_path %>
+  <div class="clearfix"></div>
+
+</div>
+
+<script type="text/javascript">
+    var style = document.documentElement.style;
+  support3d = (style.webkitTransition !== undefined ||
+               style.MozTransition !== undefined ||
+               style.OTransition !== undefined ||
+               style.transition !== undefined);
+ 
+  var owl = $("#owl-featured-retreat_talks");
+
+  $('#owl-recommended-retreat_talks').owlCarousel({
+      items: 5,
+  });
+
+$("#owl-featured-retreat_talks").owlCarousel({
+    items: 1,
+    // animateOut: 'fadeOut',
+    animateIn: 'fadeIn',
+    // loop: true,
+    transitionStyle : "fade",
+    autoHeight:true
+});   
+</script>
