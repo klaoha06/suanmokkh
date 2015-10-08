@@ -1,41 +1,41 @@
 <!-- <p id="notice"><%= notice %></p> -->
 <% content_for :head do %>
-<title>Books Library - Suan Mokkh</title>
+  <title>Books Library - Suan Mokkh</title>
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <div class="container animated fadeIn" style="border: none; margin-top: 30px;">
     <div id="owl-featured-books" class="owl-carousel">
       <% @featured_books.each do |book| %>
-      <div class="item row container">
-        <div class="col-md-6 text-center">
-          <h1><%= book.title %></h1>
-          <hr class="full">
-          <p style="text-d">
-            <% book.authors.each do |author|%>
-              <%= author.name %>
+        <div class="item row container">
+          <div class="col-md-6 text-center">
+            <h1><%= book.title %></h1>
+            <hr class="full">
+            <p style="text-d">
+              <% book.authors.each do |author|%>
+                <%= author.name %>
+              <% end %>
+            </p>
+            <p style="color:white !important; font-size:1.3em;" class="text-justify text-indent"><%= strip_tags(book.description).first(530) + '...' %></p>
+          </div>
+          <div class="col-md-6">
+            <% if !book.external_cover_img_link.blank? %>
+              <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
+            <% else %>
+              <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
             <% end %>
-          </p>
-          <p style="color:white !important; font-size:1.3em;" class="text-justify text-indent"><%= strip_tags(book.description).first(530) + '...' %></p>
+          </div>
         </div>
-        <div class="col-md-6">
-         <% if !book.external_cover_img_link.blank? %>
-           <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
-         <% else %>
-           <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
-         <% end %>
-        </div>
-      </div>
-    <% end %>
+      <% end %>
     </div>
   </div>
 
   <div class="clearfix"></div>
   <div class='container-fluid bg-dark'>
     <div class="container">
-    <h2>Recommended</h2>
-    <div id="owl-recommended-books" class="owl-carousel">
-      <% @books.each do |book| %>
+      <h2>Recommended</h2>
+      <div id="owl-recommended-books" class="owl-carousel">
+        <% @featured_books.each do |book| %>
           <div class="havePadding animated fadeIn">
             <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
               <% if !book.external_cover_img_link.blank? %>
@@ -45,11 +45,11 @@
               <% end %>
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">
-                 <div class="project-category text-faded">
+                  <div class="project-category text-faded">
                     Take a look
                   </div>
                   <div class="project-name">
-                  <i class="fa fa-search"></i> 
+                    <i class="fa fa-search"></i> 
                     Take a look
                   </div>
                 </div>
@@ -58,42 +58,28 @@
             <h4 class="text-center"><%= book.title %></h4>
             <p class="text-center"><%= book.authors.first.name if book.authors.first %></p>
           </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
-  </div>
-  
+
 
   <div class="container bg-primary">
-    <div class="row havePadding">
-    <h1 class="text-center">Books in Archive</h1>
-    <hr>
-    <% @books.each do |book| %>
-    <div class="col-md-4 book-grid">
-      <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
-        <% if !book.external_cover_img_link.blank? %>
-          <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
-        <% else %>
-          <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
-        <% end %>
-      </a>
-      <h4 class="text-center"><%= book.title %></h4>
-      <p class="text-center"><%= book.authors.first.name if book.authors.first %></p>
-    </div>
+    <%= form_tag("/books", method: "get", remote: true) do %>
+      <%= label_tag(:language, "Language: ") %>
+      <%= text_field_tag(:language) %>
+      <%= label_tag(:author, "Author (first name): ") %>
+      <%= text_field_tag(:author) %>
+      <%= label_tag(:series, "Series: ") %>
+      <%= text_field_tag(:series) %>
+      <%= submit_tag("Search") %>
     <% end %>
-    </div>
-    <div class="col-md-12">
-    <p class="text-center"><%= page_entries_info @books %></p>
-
-    <nav class="text-center">
-    <%= paginate @books, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
-    </nav>
-    <br>
+    <div id="books_grid">
+      <%= render "book" %>
     </div>
   </div>
 
   <div class="clearfix"></div>
-
 </div>
 
 <%= javascript_include_tag 'books', 'data-turbolinks-track' => true %>

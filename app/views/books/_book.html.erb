@@ -1,0 +1,25 @@
+<div class="row havePadding">
+  <h1 class="text-center">Books in Archive</h1>
+  <hr>
+  <% @books.each do |book| %>
+    <div class="col-md-4 book-grid">
+      <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
+        <% if !book.external_cover_img_link.blank? %>
+          <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+        <% else %>
+          <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+        <% end %>
+      </a>
+      <h4 class="text-center"><%= book.title %></h4>
+      <p class="text-center"><%= book.authors.first.name if book.authors.first %></p>
+    </div>
+  <% end %>
+</div>
+<div class="col-md-12">
+  <p class="text-center"><%= page_entries_info @books %></p>
+
+  <nav class="text-center">
+    <%= paginate @books, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
+  </nav>
+  <br>
+</div>

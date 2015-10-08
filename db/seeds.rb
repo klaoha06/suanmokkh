@@ -10,13 +10,27 @@ require 'faker'
 
 Author.delete_all
 Book.delete_all
+["Thai", "English", "Spanish"].each do |language|
+  Language.create({name: language});
+end
 
-10.times do 
-	author = Author.create({ name: Faker::Name.name, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, brief_biography: Faker::Lorem.paragraph })
-	2.times do 
-		author.books.create({title: Faker::Commerce.product_name, description: Faker::Lorem.paragraph })
-		# Book.create!({ title: Faker::Commerce.product_name })
-	end
+10.times do
+  author = Author.create({ name: Faker::Name.name, first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, brief_biography: Faker::Lorem.paragraph })
+  2.times do
+    book = author.books.new({
+      title: Faker::Commerce.product_name,
+      description: Faker::Lorem.paragraph,
+      external_file_link: Faker::Internet.url,
+      external_cover_img_link: Faker::Internet.url,
+      featured: [true, false].sample(1)[0],
+      series: ["1", "2"].sample(1)[0]
+    })
+
+    book.languages << Language.all.sample(1)
+    book.save!
+    author.books << book
+    author.save!
+  end
 end
 
 # Author.create!([{ name: 'Ajarn Buddhadasa' }, { name: 'YOYOYO' },{ name: 'Ajarn Jayasaro'}, { name: 'Thich Nhat Han' }])
