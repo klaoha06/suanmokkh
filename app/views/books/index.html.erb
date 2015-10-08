@@ -68,6 +68,10 @@
     <%= form_tag("/books", method: "get", remote: true) do %>
       <%= label_tag(:language, "Language: ") %>
       <%= text_field_tag(:language) %>
+      <%= label_tag(:author, "Author (first name): ") %>
+      <%= text_field_tag(:author) %>
+      <%= label_tag(:series, "Series: ") %>
+      <%= text_field_tag(:series) %>
       <%= submit_tag("Search") %>
     <% end %>
     <div id="books_grid">

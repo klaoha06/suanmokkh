@@ -22,11 +22,14 @@ end
       description: Faker::Lorem.paragraph,
       external_file_link: Faker::Internet.url,
       external_cover_img_link: Faker::Internet.url,
-      featured: [true, false].sample(1)
+      featured: [true, false].sample(1)[0],
+      series: ["1", "2"].sample(1)[0]
     })
 
     book.languages << Language.all.sample(1)
     book.save!
+    author.books << book
+    author.save!
   end
 end
 
