@@ -6,25 +6,34 @@ class BooksController < ApplicationController
   @query = nil
 
   def index
-      # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
-      @books = Book.includes(:authors, :groups, :languages).order('created_at DESC').page params[:page]
-      @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
-      # @featured_book = Book.order('created_at DESC').find_by(featured: true)
-      # if !@featured_book
-      #   @featured_book = @books.first
-      # end
-      # @filterrific = initialize_filterrific(
-      #   Book,
-      #   params[:filterrific]
-      # ) or return
-      # @books = @filterrific.find.page(params[:page])
+    # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
+    @books = Book.includes(:authors, :groups, :languages)
+      .where({ languages: { name: params[:language] }})
+      .order('books.created_at DESC').page params[:page]
 
-      # respond_to do |format|
-      #   format.html
-      #   format.js
-      # end
-      # @search = Book.search(params[:q])
-      # @books = @search.result
+    @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
+    # @featured_book = Book.order('created_at DESC').find_by(featured: true)
+    # if !@featured_book
+    #   @featured_book = @books.first
+    # end
+    # @filterrific = initialize_filterrific(
+    #   Book,
+    #   params[:filterrific]
+    # ) or return
+    # @books = @filterrific.find.page(params[:page])
+
+    # respond_to do |format|
+    #   format.html
+    #   format.js
+    # end
+    # @search = Book.search(params[:q])
+    # @books = @search.result
+    #
+
+    respond_to do |format|
+      format.html { render :index }
+      format.js
+    end
   end
 
   # GET /books/1
@@ -88,13 +97,13 @@ class BooksController < ApplicationController
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_book
-      @book = Book.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_book
+    @book = Book.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def book_params
-      params.require(:book).permit(:language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids,:id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def book_params
+    params.require(:book).permit(:language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids,:id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ])
+  end
 end
