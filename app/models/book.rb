@@ -51,28 +51,66 @@ class Book < ActiveRecord::Base
     end
   end
 
-  def self.search language, author, series
-    query_obj = includes(:authors, :groups, :languages)
-    query_obj = query_obj.where({languages: { name: language}}) unless language.blank?
-    query_obj = query_obj.where({authors: { first_name: author}}) unless author.blank?
-    query_obj = query_obj.where(series: series) unless series.blank?
+  # def self.search language, author, series
+  #   query_obj = includes(:authors, :groups, :languages)
+  #   query_obj = query_obj.where({languages: { name: language}}) unless language.blank?
+  #   query_obj = query_obj.where({authors: { first_name: author}}) unless author.blank?
+  #   query_obj = query_obj.where(series: series) unless series.blank?
 
-    query_obj
-  end
+  #   query_obj
+  # end
 
 
   filterrific(
     available_filters: [
+      :search_query,
       :with_language_id,
+      :with_author_id,
+      :with_series,
     ]
   )
 
+  scope :search_query, lambda { |query|
+     return nil  if query.blank?
+     # condition query, parse into individual keywords
+     terms = query.downcase.split(/\s+/)
+     # replace "*" with "%" for wildcard searches,
+     # append '%', remove duplicate '%'s
+     terms = terms.map { |e|
+       (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+     }
+     # configure number of OR conditions for provision
+     # of interpolation arguments. Adjust this if you
+     # change the number of OR conditions.
+     num_or_conditions = 2
+     where(
+       terms.map {
+         or_clauses = [
+           "LOWER(books.title) LIKE ?",
+           "LOWER(books.description) LIKE ?",
+           # "LOWER(books.authors.name) LIKE ?",
+         ].join(' OR ')
+         "(#{ or_clauses })"
+       }.join(' AND '),
+       *terms.map { |e| [e] * num_or_conditions }.flatten
+     )
+   }
+
   def self.with_language_id language_id
-    Language.find(language_id).books
+    joins(:languages).where(languages: { id: language_id })
   end
-  # scope :with_language_id, lambda { |language_ids|
-    
-  # }
+
+  def self.with_author_id author_id
+    joins(:authors).where(authors: { id: author_id })
+  end
+
+  def self.with_series series
+    where(series: series)
+  end
+
+  def self.options_for_series
+    where.not('series' => '').pluck(:series)
+  end
 
   private
 

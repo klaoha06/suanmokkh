@@ -37,8 +37,13 @@ class BooksController < ApplicationController
       Book,
       params[:filterrific],
       :select_options => {
-        with_language_id: Language.options_for_select
-      }
+        with_language_id: Language.options_for_select,
+        with_author_id: Author.options_for_select,
+        with_series: Book.options_for_series,
+      },
+      persistence_id: 'shared_key',
+      # default_filter_params: {},
+      # available_filters: [],
     ) or return
     @books = @filterrific.find.page(params[:page])
 

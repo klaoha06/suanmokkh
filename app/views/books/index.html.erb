@@ -65,17 +65,58 @@
 
 
   <div class="container bg-primary">
+    <h1 class="text-center">Books in Archive</h1>
+    <hr>
     <%= form_for_filterrific @filterrific do |f| %>
-      <div>
-        Language
+    <div class="row well well-sm">
+      <div class="col-md-3">
+        <p>Search</p>
+        <div class="input-group">
+        <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+        <%= f.text_field(
+          :search_query,
+          class: 'filterrific-periodically-observed form-control'
+        ) %>
+        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Language</p>
         <%= f.select(
           :with_language_id,
           @filterrific.select_options[:with_language_id],
-          { include_blank: '- Any -' }
+          { include_blank: '- Any -' },
+          { :class => 'form-control' }
         ) %>
+        </div>
       </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Author</p>
+        <%= f.select(
+          :with_author_id,
+          @filterrific.select_options[:with_author_id],
+          { include_blank: '- Any -' },
+          { :class => 'form-control' }
+        ) %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Series</p>
+        <%= f.select(
+          :with_series,
+          @filterrific.select_options[:with_series],
+          { include_blank: '- Any -' },
+          { :class => 'form-control' }
+        ) %>
+        </div>
+      </div>
+    </div>
       <%# add an automated spinner to your form when the list is refreshed %>
-      <%= render_filterrific_spinner %>
+      <h1 class="text-center"><%= render_filterrific_spinner %></h1>
     <% end %>
 
 

@@ -19,4 +19,8 @@ class Group < ActiveRecord::Base
 	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
 	accepts_nested_attributes_for :languages, allow_destroy: true
 	accepts_nested_attributes_for :poems, allow_destroy: true
+
+	def self.options_for_select
+	  order('LOWER(name)').map { |e| [e.name, e.id] }
+	end
 end
