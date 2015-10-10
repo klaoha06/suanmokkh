@@ -82,13 +82,13 @@ class Book < ActiveRecord::Base
      # configure number of OR conditions for provision
      # of interpolation arguments. Adjust this if you
      # change the number of OR conditions.
-     num_or_conditions = 2
-     where(
+     num_or_conditions = 3
+     joins(:authors).where(
        terms.map {
          or_clauses = [
            "LOWER(books.title) LIKE ?",
            "LOWER(books.description) LIKE ?",
-           # "LOWER(books.authors.name) LIKE ?",
+           "LOWER(authors.name) LIKE ?",
          ].join(' OR ')
          "(#{ or_clauses })"
        }.join(' AND '),
