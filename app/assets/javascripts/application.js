@@ -18,6 +18,7 @@
 //= require owl.carousel.min
 //= require wow.min
 //= require creative
+//= require filterrific/filterrific-jquery
 //= require_self
 //= stub active_admin/application
 //= stub ckeditor/init

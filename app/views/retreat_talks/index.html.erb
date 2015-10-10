@@ -4,13 +4,13 @@
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-  <div class="container bg-primary" style="border: none; margin-top: 30px;">
-
     <div class="container animated fadeIn" style="border: none; margin-top: 40px;">
+    <h1 class="text-center">Retreat Talks</h1>
+    <hr>
       <div id="owl-featured-retreat_talks" class="owl-carousel">
         <% @featured_retreat_talks.each do |retreat_talk| %>
         <div class="item row container">
-          <div class="col-md-6 text-center">
+<!--           <div class="col-md-6 text-center">
             <h1><%= retreat_talk.title %></h1>
             <hr class="full">
             <p style="text-d">
@@ -18,12 +18,12 @@
                 <%= author.name %>
               <% end %>
             </p>
-          </div>
-          <div class="col-md-6">
+          </div> -->
+          <div class="col-md-12">
            <% if !retreat_talk.external_cover_img_link.blank? %>
-             <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:70%;" %>
+             <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:100%;" %>
            <% else %>
-             <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:70%;" %>
+             <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:100%;" %>
            <% end %>
            <h1><%= retreat_talk.title %></h1>
           </div>
@@ -31,9 +31,9 @@
       <% end %>
       </div>
       <div class="clearfix"></div>
-      <div class='container-fluid'>
+      <div class='container-fluid animated fadeIn'>
         <div class="container">
-        <h2>Playlist</h2>
+   <!--      <h2>Playlist</h2>
         <div id="owl-recommended-retreat_talks" class="owl-carousel">
           <% @retreat_talks.each do |retreat_talk| %>
               <div class="havePadding animated fadeIn">
@@ -59,15 +59,17 @@
                 <p class="text-center"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></p>
               </div>
           <% end %>
-        </div>
+        </div> -->
       </div>
       </div>
     </div>
+  <div class="container bg-primary" style="border: none; margin-top: 30px;">
+
 
 
     <div class="row havePadding">
-    <h1 class="text-center">Retreat Talks</h1>
-    <hr>
+<!--     <h1 class="text-center">Retreat Talks</h1>
+    <hr> -->
     <% @retreat_talks.each do |retreat_talk| %>
     <div class="col-md-4 retreat_talk-grid">
       <a href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
@@ -110,7 +112,7 @@
   });
 
 $("#owl-featured-retreat_talks").owlCarousel({
-    items: 1,
+    items: 3,
     // animateOut: 'fadeOut',
     animateIn: 'fadeIn',
     // loop: true,

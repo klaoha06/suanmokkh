@@ -65,18 +65,33 @@
 
 
   <div class="container bg-primary">
-    <%= form_tag("/books", method: "get", remote: true) do %>
+    <%= form_for_filterrific @filterrific do |f| %>
+      <div>
+        Language
+        <%= f.select(
+          :with_language_id,
+          @filterrific.select_options[:with_language_id],
+          { include_blank: '- Any -' }
+        ) %>
+      </div>
+      <%# add an automated spinner to your form when the list is refreshed %>
+      <%= render_filterrific_spinner %>
+    <% end %>
+
+
+<!--     <%= form_tag(books_path, method: "get", remote: true) do %>
       <%= label_tag(:language, "Language: ") %>
-      <%= text_field_tag(:language) %>
       <%= label_tag(:author, "Author (first name): ") %>
       <%= text_field_tag(:author) %>
       <%= label_tag(:series, "Series: ") %>
       <%= text_field_tag(:series) %>
       <%= submit_tag("Search") %>
     <% end %>
-    <div id="books_grid">
-      <%= render "book" %>
-    </div>
+ -->
+    <%= render(
+      partial: 'books/book',
+      locals: { books: @books }
+    ) %>
   </div>
 
   <div class="clearfix"></div>

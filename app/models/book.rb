@@ -60,21 +60,18 @@ class Book < ActiveRecord::Base
     query_obj
   end
 
-  # filterrific(
-  #   available_filters: [
-  #     :with_languages,
-  #     # :with_created_at_gte
-  #   ]
-  # )
 
-  # scope :with_languages, lambda {
-  #   where(
-  #     'EXISTS (SELECT 1 from books, comments WHERE books.id = languages.book_id)'
-  #   )
-  # }
+  filterrific(
+    available_filters: [
+      :with_language_id,
+    ]
+  )
 
-  # scope :with_created_at_gte, lambda { |ref_date|
-  #   where('books.created_at >= ?', ref_date)
+  def self.with_language_id language_id
+    Language.find(language_id).books
+  end
+  # scope :with_language_id, lambda { |language_ids|
+    
   # }
 
   private
