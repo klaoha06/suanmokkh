@@ -5,7 +5,7 @@
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
     <div class="container animated fadeIn" style="border: none; margin-top: 40px;">
-    <h1 class="text-center">Retreat Talks</h1>
+    <h1 class="text-center">Selected Retreat Talks</h1>
     <hr>
       <div id="owl-featured-retreat_talks" class="owl-carousel">
         <% @featured_retreat_talks.each do |retreat_talk| %>
@@ -91,6 +91,7 @@
     <%= paginate @retreat_talks, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
     </nav>
     <br>
+    <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
     </div>
   </div>
 

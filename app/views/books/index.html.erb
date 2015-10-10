@@ -5,7 +5,7 @@
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <div class="featured container-fluid">
-  <div class="container animated fadeIn" style="border: none; margin-top: 30px;">
+  <div class="container" style="border: none; margin-top: 30px;">
     <div id="owl-featured-books" class="owl-carousel">
       <% @featured_books.each do |book| %>
         <div class="item row container">
@@ -21,14 +21,14 @@
           </div>
           <div class="col-md-6">
             <% if !book.external_cover_img_link.blank? %>
-              <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
+              <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:55%;" %>
             <% else %>
-              <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
+              <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:55%;" %>
             <% end %>
           </div>
           <br>
           <div class="col-md-12">
-          <a href=<%= '/books/' + book.id.to_s %> class="btn btn-default btn-xl wow fadeIn text-center floatCenter haveMargin" style="width: 200px;">Learn More</a>
+          <a href=<%= '/books/' + book.id.to_s %> class="btn btn-default btn-xl text-center floatCenter haveMargin" style="width: 200px;">Learn More</a>
           </div>
         </div>
       <% end %>
@@ -42,7 +42,7 @@
       <h2>Recommended</h2>
       <div id="owl-recommended-books" class="owl-carousel">
         <% @featured_books.each do |book| %>
-          <div class="havePadding animated fadeIn">
+          <div class="havePadding">
             <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
               <% if !book.external_cover_img_link.blank? %>
                 <%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
