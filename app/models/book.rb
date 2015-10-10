@@ -17,17 +17,19 @@ class Book < ActiveRecord::Base
 
   # Associations
   has_and_belongs_to_many :authors, -> { distinct }
+  has_and_belongs_to_many :retreat_talks, -> { distinct }
   has_and_belongs_to_many :publishers, -> { distinct }
   has_and_belongs_to_many :audios, -> { distinct }
   has_and_belongs_to_many :groups, -> { distinct }
   has_and_belongs_to_many :languages, -> { distinct }
   belongs_to :admin_user, inverse_of: :books
 
-  accepts_nested_attributes_for :authors, allow_destroy: true
-  accepts_nested_attributes_for :publishers, allow_destroy: true
-  accepts_nested_attributes_for :audios, allow_destroy: true
-  accepts_nested_attributes_for :groups, allow_destroy: true
-  accepts_nested_attributes_for :languages, allow_destroy: true
+	accepts_nested_attributes_for :authors, allow_destroy: true
+	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
+	accepts_nested_attributes_for :publishers, allow_destroy: true
+	accepts_nested_attributes_for :audios, allow_destroy: true
+	accepts_nested_attributes_for :groups, allow_destroy: true
+	accepts_nested_attributes_for :languages, allow_destroy: true
 
   attr_reader :cover_img_remote_url
   # has_attached_file :avatar
@@ -49,31 +51,66 @@ class Book < ActiveRecord::Base
     end
   end
 
-  def self.search language, author, series
-    query_obj = includes(:authors, :groups, :languages)
-    query_obj = query_obj.where({languages: { name: language}}) unless language.blank?
-    query_obj = query_obj.where({authors: { first_name: author}}) unless author.blank?
-    query_obj = query_obj.where(series: series) unless series.blank?
+  # def self.search language, author, series
+  #   query_obj = includes(:authors, :groups, :languages)
+  #   query_obj = query_obj.where({languages: { name: language}}) unless language.blank?
+  #   query_obj = query_obj.where({authors: { first_name: author}}) unless author.blank?
+  #   query_obj = query_obj.where(series: series) unless series.blank?
 
-    query_obj
+  #   query_obj
+  # end
+
+
+  filterrific(
+    available_filters: [
+      :search_query,
+      :with_language_id,
+      :with_author_id,
+      :with_series,
+    ]
+  )
+
+  scope :search_query, lambda { |query|
+     return nil  if query.blank?
+     # condition query, parse into individual keywords
+     terms = query.downcase.split(/\s+/)
+     # replace "*" with "%" for wildcard searches,
+     # append '%', remove duplicate '%'s
+     terms = terms.map { |e|
+       (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+     }
+     # configure number of OR conditions for provision
+     # of interpolation arguments. Adjust this if you
+     # change the number of OR conditions.
+     num_or_conditions = 2
+     where(
+       terms.map {
+         or_clauses = [
+           "LOWER(books.title) LIKE ?",
+           "LOWER(books.description) LIKE ?",
+           # "LOWER(books.authors.name) LIKE ?",
+         ].join(' OR ')
+         "(#{ or_clauses })"
+       }.join(' AND '),
+       *terms.map { |e| [e] * num_or_conditions }.flatten
+     )
+   }
+
+  def self.with_language_id language_id
+    joins(:languages).where(languages: { id: language_id })
   end
 
-  # filterrific(
-  #   available_filters: [
-  #     :with_languages,
-  #     # :with_created_at_gte
-  #   ]
-  # )
+  def self.with_author_id author_id
+    joins(:authors).where(authors: { id: author_id })
+  end
 
-  # scope :with_languages, lambda {
-  #   where(
-  #     'EXISTS (SELECT 1 from books, comments WHERE books.id = languages.book_id)'
-  #   )
-  # }
+  def self.with_series series
+    where(series: series)
+  end
 
-  # scope :with_created_at_gte, lambda { |ref_date|
-  #   where('books.created_at >= ?', ref_date)
-  # }
+  def self.options_for_series
+    where.not('series' => '').pluck(:series)
+  end
 
   private
 

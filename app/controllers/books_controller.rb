@@ -6,9 +6,13 @@ class BooksController < ApplicationController
   @query = nil
 
   def index
-    # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
-    @books = Book.search(params[:language], params[:author], params[:series]).order('books.created_at DESC').page params[:page]
+      # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
+      # @books = Book.search(params[:q]).result
 
+      # @q = Book.search(params[:q])
+      # @books = @q.result(distinct: true)
+
+    # @books = Book.search(params[:language], params[:author], params[:series]).order('books.created_at DESC').page params[:page]
     @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
     # @featured_book = Book.order('created_at DESC').find_by(featured: true)
     # if !@featured_book
@@ -27,6 +31,21 @@ class BooksController < ApplicationController
     # @search = Book.search(params[:q])
     # @books = @search.result
     #
+    # @languages = Language.all
+
+    @filterrific = initialize_filterrific(
+      Book,
+      params[:filterrific],
+      :select_options => {
+        with_language_id: Language.options_for_select,
+        with_author_id: Author.options_for_select,
+        with_series: Book.options_for_series,
+      },
+      persistence_id: 'shared_key',
+      # default_filter_params: {},
+      # available_filters: [],
+    ) or return
+    @books = @filterrific.find.page(params[:page])
 
     respond_to do |format|
       format.html { render :index }
@@ -38,7 +57,7 @@ class BooksController < ApplicationController
   # GET /books/1.json
   def show
     @book = Book.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
-    # @audios_languages = 'in ';
+    @audio_languages = ''
     # @book.audios.each do |audio|
     #   @audios_languages + audio.languages.name + " " if audio.language.name
     # end

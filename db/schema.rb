@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150614083634) do
+ActiveRecord::Schema.define(version: 20151006114801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -171,6 +171,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   add_index "audios_languages", ["audio_id"], name: "index_audios_languages_on_audio_id", using: :btree
   add_index "audios_languages", ["language_id"], name: "index_audios_languages_on_language_id", using: :btree
 
+  create_table "audios_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "audio_id"
+    t.integer "retreat_talk_id"
+  end
+
+  add_index "audios_retreat_talks", ["audio_id"], name: "index_audios_retreat_talks_on_audio_id", using: :btree
+  add_index "audios_retreat_talks", ["retreat_talk_id"], name: "index_audios_retreat_talks_on_retreat_talk_id", using: :btree
+
   create_table "authors", force: :cascade do |t|
     t.string   "name"
     t.string   "first_name"
@@ -195,6 +203,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
 
   add_index "authors_poems", ["author_id"], name: "index_authors_poems_on_author_id", using: :btree
   add_index "authors_poems", ["poem_id"], name: "index_authors_poems_on_poem_id", using: :btree
+
+  create_table "authors_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "retreat_talk_id"
+  end
+
+  add_index "authors_retreat_talks", ["author_id"], name: "index_authors_retreat_talks_on_author_id", using: :btree
+  add_index "authors_retreat_talks", ["retreat_talk_id"], name: "index_authors_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "books", force: :cascade do |t|
     t.string   "title"
@@ -260,6 +276,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   add_index "books_publishers", ["book_id"], name: "index_books_publishers_on_book_id", using: :btree
   add_index "books_publishers", ["publisher_id"], name: "index_books_publishers_on_publisher_id", using: :btree
 
+  create_table "books_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "retreat_talk_id"
+  end
+
+  add_index "books_retreat_talks", ["book_id"], name: "index_books_retreat_talks_on_book_id", using: :btree
+  add_index "books_retreat_talks", ["retreat_talk_id"], name: "index_books_retreat_talks_on_retreat_talk_id", using: :btree
+
   create_table "catagories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -318,6 +342,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
   add_index "groups_poems", ["group_id"], name: "index_groups_poems_on_group_id", using: :btree
   add_index "groups_poems", ["poem_id"], name: "index_groups_poems_on_poem_id", using: :btree
 
+  create_table "groups_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "retreat_talk_id"
+    t.integer "group_id"
+  end
+
+  add_index "groups_retreat_talks", ["group_id"], name: "index_groups_retreat_talks_on_group_id", using: :btree
+  add_index "groups_retreat_talks", ["retreat_talk_id"], name: "index_groups_retreat_talks_on_retreat_talk_id", using: :btree
+
   create_table "languages", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -339,6 +371,14 @@ ActiveRecord::Schema.define(version: 20150614083634) do
 
   add_index "languages_poems", ["language_id"], name: "index_languages_poems_on_language_id", using: :btree
   add_index "languages_poems", ["poem_id"], name: "index_languages_poems_on_poem_id", using: :btree
+
+  create_table "languages_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "retreat_talk_id"
+    t.integer "language_id"
+  end
+
+  add_index "languages_retreat_talks", ["language_id"], name: "index_languages_retreat_talks_on_language_id", using: :btree
+  add_index "languages_retreat_talks", ["retreat_talk_id"], name: "index_languages_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "news_articles", force: :cascade do |t|
     t.string   "title"
@@ -393,5 +433,36 @@ ActiveRecord::Schema.define(version: 20150614083634) do
 
   add_index "publishers", ["article_id"], name: "index_publishers_on_article_id", using: :btree
   add_index "publishers", ["book_id"], name: "index_publishers_on_book_id", using: :btree
+
+  create_table "retreat_talks", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "series"
+    t.string   "duration"
+    t.string   "audio_code"
+    t.text     "embeded_audio_link"
+    t.text     "external_url_link"
+    t.text     "external_cover_img_link"
+    t.string   "language"
+    t.string   "group"
+    t.date     "publication_date"
+    t.boolean  "draft",                   default: false
+    t.boolean  "featured",                default: false
+    t.boolean  "allow_comments",          default: true
+    t.boolean  "recommended",             default: false
+    t.string   "format"
+    t.integer  "downloads",               default: 0
+    t.integer  "views",                   default: 0
+    t.integer  "shares",                  default: 0
+    t.integer  "admin_user_id"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
+  end
+
+  add_index "retreat_talks", ["admin_user_id"], name: "index_retreat_talks_on_admin_user_id", using: :btree
 
 end

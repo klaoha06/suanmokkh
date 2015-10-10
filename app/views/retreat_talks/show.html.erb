@@ -1,0 +1,93 @@
+<% content_for :head do %>
+<title><%= "Retreat Talk on '"+@retreat_talk.title %><%= "' by "+@retreat_talk.authors.first.name if @retreat_talk.authors.first %> - Suan Mokkh</title>
+<% end %>
+
+<!-- <p id="notice"><%= notice %></p> -->
+<!-- <header class="showretreat_talk">
+  <div class="header-content">
+    <div class="header-content-inner wow fadeIn">
+      <h1>Suan Mokkh</h1>
+      <h1>Garden of Liberation</h1>
+      <hr>
+      <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
+    </div>
+  </div>
+</header> -->
+<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
+  <!-- <hr class="full"> -->
+  <div class="container bg-primary retreat_talk_header">
+    <div class="row">
+      <div class="col-md-4">
+      <% if !@retreat_talk.external_cover_img_link.blank? %>
+        <%= image_tag "#{@retreat_talk.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+      <% else %>
+        <%= image_tag "#{@retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+      <% end %>
+        <hr>
+        <% if @retreat_talk.audios.first %>
+          <small class="text-center floatCenter" >
+          <!-- <i class="fa fa-headphones fa-2x"></i> -->
+          <br> 
+          This retreat_talk has audio file(s) Available
+          </small>
+          <%= @retreat_talk.audios.first.embeded_audio_link.html_safe %>
+        <% end %>
+
+      </div>
+      <div class="col-md-8">
+        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @retreat_talk.title %></h1>
+        <p>
+          <% @retreat_talk.authors.each do |author|%>
+            <%= author.name.upcase %>
+          <% end %>
+        </p>
+        <hr class="full" style="border-color:#725843;">
+        <span style="color:black !important"><%= @retreat_talk.description.html_safe %></span>
+      </div>
+    </div>
+    <hr>
+      <div class="row">
+        <div class="col-md-12">
+          <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em; margin-top:50px;" role="button"><i class="fa fa-retreat_talk"></i> Start Reading</a>
+        </div>
+      </div>
+<!--     <h1>Suan Mokkh</h1>
+    <h1>Garden of Liberation</h1>
+    <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
+  </div>
+</div>
+<div class="container-fluid">
+
+
+</div>
+
+<% if @retreat_talk.allow_comments %>
+<div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
+  <div class="container">
+    <div class="row">
+    <h1 class="text-center">
+      <small class="white">Downloads</small>
+      <%= @retreat_talk.downloads %>
+      <small class="white">Views</small>
+      <%= @retreat_talk.views %>
+      <small class="white">Shares</small>
+      <%= @retreat_talk.shares %>
+    </h1>
+    <hr>
+    </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+      /* * * CONFIGURATION VARIABLES * * */
+      var disqus_shortname = 'suanmokkh';
+      
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  </div>
+</div>
+<% end %>

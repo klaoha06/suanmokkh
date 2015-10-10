@@ -30,7 +30,13 @@
           <br> 
           This book has audio file(s) Available
           </small>
-          <%= @book.audios.first.embeded_audio_link.html_safe %>
+          <% @book.audios.first.embeded_audio_link.html_safe %>
+          <% @book.audios.each do |audio| %>
+            <% audio.languages.each do |lang| %>
+              <% @audio_languages << lang.name + " " %>
+            <% end %>
+            <%= link_to audio.title + " in " + @audio_languages, audio %>
+          <% end %>
         <% end %>
 
       </div>

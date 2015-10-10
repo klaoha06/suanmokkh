@@ -15,7 +15,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "Recent Books" do
+        panel "Books" do
           table_for Book.order('id desc').limit(10) do
             column "cover_img", :sortable => false do |book|
               if book.cover_img_file_name
@@ -43,25 +43,25 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
       column do
-        panel "Recent Articles" do
-          table_for Article.order('id desc').limit(10) do
-            column "cover_img", :sortable => false do |article|
-              if article.cover_img_file_name
-                "<img src='#{article.cover_img.url}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+        panel "Retreat Talks" do
+          table_for RetreatTalk.order('id desc').limit(10) do
+            column "cover_img", :sortable => false do |retreat_talk|
+              if retreat_talk.cover_img_file_name
+                "<img src='#{retreat_talk.cover_img.url}' alt='retreat_talk cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
               else
-                "<img src='#{article.external_cover_img_link}' alt='article cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+                "<img src='#{retreat_talk.external_cover_img_link}' alt='retreat_talk cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
                end
             end
-            column("Title") {|article| article.title}
-            column("Created At") {|article| pretty_format(article.created_at)}
-            column("Status") {|article| status_tag(article.draft? ? "Not Published" : "Published")}
-            column("Actions") {|article| a ' Go to', :href => admin_article_path(article), :class => "button"}
+            column("Title") {|retreat_talk| retreat_talk.title}
+            column("Created At") {|retreat_talk| pretty_format(retreat_talk.created_at)}
+            column("Status") {|retreat_talk| status_tag(retreat_talk.draft? ? "Not Published" : "Published")}
+            column("Actions") {|retreat_talk| a ' Go to', :href => admin_retreat_talk_path(retreat_talk), :class => "button"}
           end
           div :style => 'display:inline; text-align:center; padding: 5px;' do
             para :style => 'display:inline-block; margin:0;' do
-             ("Number of Articles in Archieve - <strong>#{Article.count}</strong>").html_safe
+             ("Number of Retreat Talks in Archieve - <strong>#{RetreatTalk.count}</strong>").html_safe
             end
-             a ' See all', :href => admin_articles_path(), :style => 'float:right'
+             a ' See all', :href => admin_retreat_talks_path(), :style => 'float:right'
           end
         end
       end
@@ -69,7 +69,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
         column do
-          panel "Recent Audio" do
+          panel "Audio" do
             table_for Audio.order('id desc').limit(10) do
                 column("Title") {|audio| audio.title}
                 column("Created At") {|audio| pretty_format(audio.created_at)}
@@ -88,7 +88,7 @@ ActiveAdmin.register_page "Dashboard" do
           end
         end
         column do
-          panel "Recent Poems" do
+          panel "Poems" do
             table_for Poem.order('id desc').limit(10) do
                 # column "cover_img", :sortable => false do |poem|
                 #   "<img src='#{poem.cover_img.url}' alt='poem cover_img' style='width:70px; max-height: none;height:100x; display:block; margin:0 auto;'/>".html_safe

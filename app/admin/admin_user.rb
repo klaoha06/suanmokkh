@@ -20,18 +20,18 @@ ActiveAdmin.register AdminUser do
         a ' See all', :href => admin_books_path(), :style => 'float:right'
       end
     end
-    panel "Article(s) created by this admin user..." do
-      table_for(admin_user.articles) do
-        column("Article ID", :sortable => :id) {|article| link_to "##{article.id}", admin_article_path(article) }
-        column("Title") {|article| article.title}
-        column :draft, :sortable => :draft do |article|
-          status_tag((article.draft? ? "Not Published" : "Published"), (article.draft? ? :warning : :ok))
+    panel "Retreat Talk(s) created by this admin user..." do
+      table_for(admin_user.retreat_talks) do
+        column("Retreat Talk ID", :sortable => :id) {|retreat_talk| link_to "##{retreat_talk.id}", admin_article_path(article) }
+        column("Title") {|retreat_talk| retreat_talk.title}
+        column :draft, :sortable => :draft do |retreat_talk|
+          status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
         end
-        column("Created At", :sortable => :created_at){|article| pretty_format(article.created_at) }
+        column("Created At", :sortable => :created_at){|retreat_talk| pretty_format(retreat_talk.created_at) }
       end
       div :style => 'display:inline; text-align:center; padding: 5px;' do
         para :style => 'display:inline-block; margin:0;' do
-          ("Number of Books in Archieve - <strong>#{admin_user.articles.count}</strong>").html_safe
+          ("Number of Books in Archieve - <strong>#{admin_user.retreat_talks.count}</strong>").html_safe
         end
         a ' See all', :href => admin_articles_path(), :style => 'float:right'
       end
@@ -52,22 +52,22 @@ ActiveAdmin.register AdminUser do
         a ' See all', :href => admin_audios_path(), :style => 'float:right'
       end
     end
-    panel "News Article(s) created by this admin user..." do
-      table_for(admin_user.news_articles) do
-        column("News Article ID", :sortable => :id) {|article| link_to "##{article.id}", admin_news_article_path(article) }
-        column("Title") {|article| article.title}
-        column :draft, :sortable => :draft do |article|
-          status_tag((article.draft? ? "Not Published" : "Published"), (article.draft? ? :warning : :ok))
-        end
-        column("Created At", :sortable => :created_at){|article| pretty_format(article.created_at) }
-      end
-      div :style => 'display:inline; text-align:center; padding: 5px;' do
-        para :style => 'display:inline-block; margin:0;' do
-          ("Number of Books in Archieve - <strong>#{admin_user.news_articles.count}</strong>").html_safe
-        end
-        a ' See all', :href => admin_news_articles_path(), :style => 'float:right'
-      end
-    end
+    # panel "News Article(s) created by this admin user..." do
+    #   table_for(admin_user.news_articles) do
+    #     column("News Article ID", :sortable => :id) {|article| link_to "##{article.id}", admin_news_article_path(article) }
+    #     column("Title") {|article| article.title}
+    #     column :draft, :sortable => :draft do |article|
+    #       status_tag((article.draft? ? "Not Published" : "Published"), (article.draft? ? :warning : :ok))
+    #     end
+    #     column("Created At", :sortable => :created_at){|article| pretty_format(article.created_at) }
+    #   end
+    #   div :style => 'display:inline; text-align:center; padding: 5px;' do
+    #     para :style => 'display:inline-block; margin:0;' do
+    #       ("Number of Books in Archieve - <strong>#{admin_user.news_articles.count}</strong>").html_safe
+    #     end
+    #     a ' See all', :href => admin_news_articles_path(), :style => 'float:right'
+    #   end
+    # end
     panel "Poem(s) created by this admin user..." do
       table_for(admin_user.poems) do
         column("Poem ID", :sortable => :id) {|poem| link_to "##{poem.id}", admin_poem_path(poem) }

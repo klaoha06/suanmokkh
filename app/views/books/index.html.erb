@@ -65,18 +65,74 @@
 
 
   <div class="container bg-primary">
-    <%= form_tag("/books", method: "get", remote: true) do %>
+    <h1 class="text-center">Books in Archive</h1>
+    <hr>
+    <%= form_for_filterrific @filterrific do |f| %>
+    <div class="row well well-sm">
+      <div class="col-md-3">
+        <p>Search</p>
+        <div class="input-group">
+        <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+        <%= f.text_field(
+          :search_query,
+          class: 'filterrific-periodically-observed form-control'
+        ) %>
+        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+        </div>
+
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Language</p>
+        <%= f.select(
+          :with_language_id,
+          @filterrific.select_options[:with_language_id],
+          { include_blank: '- Any -' },
+          { :class => 'form-control' }
+        ) %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Author</p>
+        <%= f.select(
+          :with_author_id,
+          @filterrific.select_options[:with_author_id],
+          { include_blank: '- Any -' },
+          { :class => 'form-control' }
+        ) %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Series</p>
+        <%= f.select(
+          :with_series,
+          @filterrific.select_options[:with_series],
+          { include_blank: '- Any -' },
+          { :class => 'form-control' }
+        ) %>
+        </div>
+      </div>
+    </div>
+      <%# add an automated spinner to your form when the list is refreshed %>
+      <h1 class="text-center"><%= render_filterrific_spinner %></h1>
+    <% end %>
+
+
+<!--     <%= form_tag(books_path, method: "get", remote: true) do %>
       <%= label_tag(:language, "Language: ") %>
-      <%= text_field_tag(:language) %>
       <%= label_tag(:author, "Author (first name): ") %>
       <%= text_field_tag(:author) %>
       <%= label_tag(:series, "Series: ") %>
       <%= text_field_tag(:series) %>
       <%= submit_tag("Search") %>
     <% end %>
-    <div id="books_grid">
-      <%= render "book" %>
-    </div>
+ -->
+    <%= render(
+      partial: 'books/book',
+      locals: { books: @books }
+    ) %>
   </div>
 
   <div class="clearfix"></div>

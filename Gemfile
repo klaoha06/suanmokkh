@@ -19,7 +19,7 @@ gem 'pundit'
 gem 'activeadmin_addons'
 # gem 'activeadmin_associations'
 
-# gem 'filterrific'
+gem 'filterrific'
 gem 'ransack'
 
 gem 'soundcloud'

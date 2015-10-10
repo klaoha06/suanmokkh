@@ -5,6 +5,10 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
       t.belongs_to :author, index: true
       t.belongs_to :book, index: true
     end
+    create_table :authors_retreat_talks, id: false do |t|
+      t.belongs_to :author, index: true
+      t.belongs_to :retreat_talk, index: true
+    end
     create_table :articles_authors, id: false do |t|
       t.belongs_to :author, index: true
       t.belongs_to :article, index: true
@@ -28,6 +32,10 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
       t.belongs_to :audio, index: true
       t.belongs_to :book, index: true
     end
+    create_table :audios_retreat_talks, id: false do |t|
+      t.belongs_to :audio, index: true
+      t.belongs_to :retreat_talk, index: true
+    end
     create_table :audios_authors, id: false do |t|
       t.belongs_to :audio, index: true
       t.belongs_to :author, index: true
@@ -36,6 +44,10 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
     # Group
     create_table :books_groups, id: false do |t|
       t.belongs_to :book, index: true
+      t.belongs_to :group, index: true
+    end
+    create_table :groups_retreat_talks, id: false do |t|
+      t.belongs_to :retreat_talk, index: true
       t.belongs_to :group, index: true
     end
     create_table :articles_groups, id: false do |t|
@@ -65,6 +77,10 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
       t.belongs_to :book, index: true
       t.belongs_to :language, index: true
     end
+    create_table :languages_retreat_talks, id: false do |t|
+      t.belongs_to :retreat_talk, index: true
+      t.belongs_to :language, index: true
+    end
     create_table :articles_languages, id: false do |t|
       t.belongs_to :article, index: true
       t.belongs_to :language, index: true
@@ -82,6 +98,12 @@ class CreateJoinTableAuthorBook < ActiveRecord::Migration
     create_table :languages_news_articles, id: false do |t|
       t.belongs_to :language, index: true
       t.belongs_to :news_article, index: true
+    end
+
+    #Retreat Talks
+    create_table :books_retreat_talks, id: false do |t|
+      t.belongs_to :book, index: true
+      t.belongs_to :retreat_talk, index: true
     end
 
 
