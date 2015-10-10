@@ -4,6 +4,7 @@
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
+  <div class="featured container-fluid">
   <div class="container animated fadeIn" style="border: none; margin-top: 30px;">
     <div id="owl-featured-books" class="owl-carousel">
       <% @featured_books.each do |book| %>
@@ -25,13 +26,18 @@
               <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:55%;" %>
             <% end %>
           </div>
+          <br>
+          <div class="col-md-12">
+          <a href=<%= '/books/' + book.id.to_s %> class="btn btn-default btn-xl wow fadeIn text-center floatCenter haveMargin" style="width: 200px;">Learn More</a>
+          </div>
         </div>
       <% end %>
     </div>
   </div>
+  </div>
 
   <div class="clearfix"></div>
-  <div class='container-fluid bg-dark'>
+  <div class='container-fluid bg-primary'>
     <div class="container">
       <h2>Recommended</h2>
       <div id="owl-recommended-books" class="owl-carousel">
@@ -64,11 +70,11 @@
   </div>
 
 
-  <div class="container bg-primary">
+  <div class="container bg-dark">
     <h1 class="text-center">Books in Archive</h1>
     <hr>
     <%= form_for_filterrific @filterrific do |f| %>
-    <div class="row well well-sm">
+    <div class="row">
       <div class="col-md-3">
         <p>Search</p>
         <div class="input-group">

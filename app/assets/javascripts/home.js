@@ -85,8 +85,8 @@
         // animateIn: 'fadeIn',
         // loop: true,
         navigationText: [
-        "<i class='fa fa-angle-left fa-4x'></i>",
-        "<i class='fa fa-angle-right fa-4x'></i>",
+        "<i class='fa fa-angle-left fa-4x white'></i>",
+        "<i class='fa fa-angle-right fa-4x white'></i>",
           ],
         transitionStyle : "fade",
         autoHeight:true
