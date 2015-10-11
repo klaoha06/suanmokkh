@@ -108,16 +108,6 @@
       $grid.isotope('layout');
     });
 
-    $('#new_user').on('ajax:error', function(event, xhr, status, error) {
-      $('#new_user').append(xhr.responseText);
-      console.log('yes')
-    }).on('ajax:success', function(e, xhr, status, error){
-       $("#new_user").append("<p>ERROR</p>");
-       console.log('no')
-    });
-
-    
-
     // //Switch to Articles
     // $('#switch_to_articles').click(function (event) {
     //   event.preventDefault(); // Prevent link from following its href
