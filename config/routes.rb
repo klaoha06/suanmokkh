@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  resources :users
+  # devise_for :users
   get 'teachings' => 'pages#teachings'
 
+  resources :users
   resources :languages
   resources :groups
   resources :news_articles

@@ -108,8 +108,6 @@
       $grid.isotope('layout');
     });
 
-    
-
     // //Switch to Articles
     // $('#switch_to_articles').click(function (event) {
     //   event.preventDefault(); // Prevent link from following its href

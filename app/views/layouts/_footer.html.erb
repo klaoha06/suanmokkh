@@ -17,18 +17,16 @@
 			<div class="col-md-4 text-center">
 				<h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
 				<hr>
-				<!-- <input type="email" maxlength="70" placeholder="Your Email Here..." style="font-size:2em;"> -->
-<!-- 				<form class="form-inline">
-				<div class="form-group">
-				  <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Your Email Here...">
-				</div>
-				</form> -->
-				<div class="input-group" style="width:300px; margin:0 auto;">
-				      <input type="text" class="form-control" placeholder="Your Email Here...">
-				      <span class="input-group-btn">
-				        <button class="btn btn-default" type="button">submit</button>
-				      </span>
-		    </div><!-- /input-group -->
+
+		    <%= form_for(User.new, remote: true, html: { class: "input-group new_user", id: "new_user", style: "width:300px; margin:0 auto;" }) do |f| %>
+		        <%= f.email_field :email, :class => 'form-control', :placeholder => "Your Email Here..." %>
+		        <span class="input-group-btn">
+		        <%= f.submit 'submit', :class => 'btn btn-default' %>
+		        </span>
+		    <% end %>
+		    <div id="reportalert"></div>
+
+
 			</div>
 		</div>
 		<div class="col-md-12 text-center bg-dark" style="padding:10px 0;">
@@ -36,3 +34,16 @@
 		</div>
 		
 	</footer>
+
+	<script>
+	  $(document).ready(function(){
+	    $('#new_user')
+	    .on('ajax:send', function(e,d,s,x) {
+	    	$('#reportalert').html('<br><i class="fa fa-2x fa-circle-o-notch fa-spin"></i>');
+	    })
+	    .on('ajax:complete',function(e, data, status, xhr){
+	    	$('#user_email').val('');
+	      $('#reportalert').html('<br><span>Thank you!</span>');
+	 		});
+	  });
+	</script>
