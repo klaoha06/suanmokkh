@@ -10,8 +10,9 @@ class CreateAudios < ActiveRecord::Migration
     	t.string :duration
     	t.string :audio_code
 
-    	t.text :embeded_audio_link
-    	t.text :external_link
+        t.text :embeded_audio_link
+    	t.string :secret_uri
+    	t.string :external_link
 
     	t.boolean :draft, default: false
         t.boolean :featured, default: false

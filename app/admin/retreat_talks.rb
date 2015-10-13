@@ -194,6 +194,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 		tab 'Basic' do
 			f.inputs 'Basic Details' do
 				f.input :title, :required => true
+				f.input :audio_code
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 				f.input :languages
 				f.has_many :languages do |language|
@@ -205,7 +206,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				f.has_many :groups do |group|
 					group.input :name, :required => true
 				end
-				f.input :external_url_link, :as => :url
+				# f.input :external_url_link, :as => :url
 				f.input :publication_date
 			end
 			f.inputs "Author" do
@@ -214,36 +215,29 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					author.input :name, :required => true
 				end
 			end
-			f.inputs "Audio related to this retreat talk" do
-	          f.input :audios
-	          f.has_many :audios do |audio|
-	             audio.input :title
-	             audio.input :admin_user_id, :as => :hidden
-	             audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
-	          end
-	        end
-
-	    		f.inputs "Book related to this retreat_talk" do
-	              f.input :books
-	              # f.has_many :books do |book|
-	              #    book.input :title
-	              #    book.input :admin_user_id, :as => :hidden
-	              #    # audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
-	              # end
-	            end
-
-
-	        f.inputs 'Actual Files' do
-	        	f.input :cover_img, :required => true, hint: f.retreat_talk.cover_img? ? image_tag(f.retreat_talk.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
-	        	f.input :external_cover_img_link, :as => :url
-	        end
-	        f.inputs 'Post Status' do
-	        	f.input :draft, :label => "Make this a draft?"
-	        	f.input :featured
-	        	f.input :recommended
-	        	f.input :allow_comments, :label => "Allow commenting on this retreat_talk?"
-	        end
-	      end
+			f.inputs "Audio related to this book" do
+        f.input :audios
+        f.has_many :audios do |audio|
+        	audio.input :title, :required => true
+        	audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
+        	audio.input :admin_user_id, :as => :hidden
+        	audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
+        end
+	    end
+			f.inputs "Book related to this retreat_talk" do
+	          f.input :books
+	    end
+	    f.inputs 'Actual Files' do
+	    	f.input :cover_img, :required => true, hint: f.retreat_talk.cover_img? ? image_tag(f.retreat_talk.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+	    	f.input :external_cover_img_link, :as => :url
+	    end
+	    f.inputs 'Post Status' do
+	    	f.input :draft, :label => "Make this a draft?"
+	    	f.input :featured
+	    	f.input :recommended
+	    	f.input :allow_comments, :label => "Allow commenting on this retreat_talk?"
+	    end
+	  end
 
 	      # tab 'Publication' do
 	      #   f.inputs 'Publication Details' do
@@ -265,6 +259,17 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  	@retreat_talk.audios.each do |audio|
 	  		@current_admin_user.audios << audio
 	  	end
+
+	  	audios = @_params[:retreat_talk][:audios_attributes]
+	  	if audios != nil
+	  		audios.each do |k,v|
+		  		if Language.where(id: v[:language_ids]) && (Audio.find_by title: v[:title])
+				  	(Audio.find_by title: v[:title]).languages << Language.where(id: v[:language_ids])
+				  else
+				  	break
+				  end
+		  	end
+		  end
 	  end
 
 	  controller do

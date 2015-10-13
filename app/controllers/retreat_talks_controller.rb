@@ -30,6 +30,7 @@ class RetreatTalksController < InheritedResources::Base
 	  # @retreat_talk.audios.each do |audio|
 	  #   @audios_languages + audio.languages.name + " " if audio.language.name
 	  # end
+	  @book = @retreat_talk.books.first
 	end
 
   private

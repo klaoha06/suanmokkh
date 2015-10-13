@@ -1,7 +1,7 @@
 ActiveAdmin.register Book do
 	menu priority: 2
 	config.per_page = 12
-	permit_params :recommended, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
+	permit_params :recommended, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :language_ids, :title, :embeded_audio_link, :admin_user_id ]
 	# config.batch_actions = true
 
 show do |book|
@@ -136,6 +136,11 @@ sidebar "Admin who created this book..", :only => :show do
 		end
 	else
 		para 'no creator'
+	end
+end
+sidebar "Retreat Talk", :only => :show do
+	table_for(book.retreat_talks) do
+		column("Title") {|retreat_talk| link_to "#{retreat_talk.title}", admin_retreat_talk_path(retreat_talk) }
 	end
 end
 sidebar "Audio", :only => :show do
@@ -302,7 +307,8 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			f.inputs "Audio related to this book" do
 	          f.input :audios
 	          f.has_many :audios do |audio|
-	             audio.input :title
+	             audio.input :title, :required => true
+	             audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
 	             audio.input :admin_user_id, :as => :hidden
 	             audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
 	          end
@@ -361,23 +367,52 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	    f.actions
 	  end
 
-	  after_create do
+	  after_create do	  	
 	  	@book.audios.each do |audio|
 	  		@current_admin_user.audios << audio
 	  	end
+
+	  	audios = @_params[:book][:audios_attributes]
+	  	if audios != nil
+	  		audios.each do |k,v|
+		  		if Language.where(id: v[:language_ids]) && (Audio.find_by title: v[:title])
+				  	(Audio.find_by title: v[:title]).languages << Language.where(id: v[:language_ids])
+				  else
+				  	break
+				  end
+		  	end
+		  end
+
 	  end
 
-	  controller do
+	  before_create do	
+	  	super do |format|  	
+		  	audios = @_params[:book][:audios_attributes]
+		  	if audios != nil
+			  	audios.each do |k,v|
+			  		if !Language.where(id: v[:language_ids]) && !(Audio.find_by title: v[:title])
+					  	break
+					  end
+			  	end
+			  end
+			end
+	  end #before_create
+
+  controller do
 	  	def create
 	  		super do |format|
 	  			params.permit!
 	  			@existing_authors = params[:book].delete("author_ids")
-					@existing_audios = params[:book].delete("audio_ids")	  			
+	  			@existing_retreat_talks = params[:book].delete("retreat_talk_ids")
+	  			@existing_audios = params[:book].delete("audio_ids")	  			
 	  			@existing_publishers = params[:book].delete("publisher_ids")
 	  			@existing_languages = params[:book].delete("language_ids")
 	  			@existing_groups = params[:book].delete("group_ids")
 	  			if @existing_authors
 	  				@book.authors << Author.where(id: @existing_authors)
+	  			end
+	  			if @existing_retreat_talks
+	  				@book.retreat_talks << RetreatTalk.where(id: @existing_retreat_talks)
 	  			end
 	  			if @existing_audios
 	  				@book.audios << Audio.where(id: @existing_audios)
@@ -395,17 +430,19 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			@book.admin_user = @current_admin_user
 	  			@current_admin_user.books << @book
 
-		end #super
-	end #create
+				end #super
+			end #create
 
 	def update
 		super do |format|
 			params.permit!
 			@existing_authors = params[:book].delete("author_ids")
+			@existing_retreat_talks = params[:book].delete("retreat_talk_ids")
 			@existing_audios = params[:book].delete("audio_ids")	  			
 			@existing_publishers = params[:book].delete("publisher_ids")
 			@existing_languages = params[:book].delete("language_ids")
 			@existing_groups = params[:book].delete("group_ids")
+
 			if @existing_authors
 				@book.authors = Author.where(id: @existing_authors)
 			end
@@ -414,6 +451,18 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					if !author.has_key?("id")
 						new_author = Author.where(name: author[:name]).first_or_create
 						@book.authors << new_author
+					end
+				end
+			end
+
+			if @existing_retreat_talks
+				@book.retreat_talks = RetreatTalk.where(id: @existing_retreat_talks)
+			end
+			if params[:book][:retreat_talks_attributes]
+				params[:book][:retreat_talks_attributes].each do |key, retreat_talk|
+					if !retreat_talk.has_key?("id")
+						new_retreat_talk = RetreatTalk.where(name: retreat_talk[:name]).first_or_create
+						@book.retreat_talks << new_retreat_talk
 					end
 				end
 			end

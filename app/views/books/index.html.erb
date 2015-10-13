@@ -41,7 +41,7 @@
     <div class="container">
       <h2>Recommended</h2>
       <div id="owl-recommended-books" class="owl-carousel">
-        <% @featured_books.each do |book| %>
+        <% @recommended_books.each do |book| %>
           <div class="havePadding">
             <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
               <% if !book.external_cover_img_link.blank? %>

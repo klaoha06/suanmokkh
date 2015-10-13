@@ -120,7 +120,8 @@ ActiveRecord::Schema.define(version: 20151011073648) do
     t.string   "duration"
     t.string   "audio_code"
     t.text     "embeded_audio_link"
-    t.text     "external_link"
+    t.string   "secret_uri"
+    t.string   "external_link"
     t.boolean  "draft",              default: false
     t.boolean  "featured",           default: false
     t.boolean  "recommended",        default: false
@@ -440,17 +441,15 @@ ActiveRecord::Schema.define(version: 20151011073648) do
     t.string   "series"
     t.string   "duration"
     t.string   "audio_code"
-    t.text     "embeded_audio_link"
-    t.text     "external_url_link"
+    t.string   "format"
+    t.string   "group"
     t.text     "external_cover_img_link"
     t.string   "language"
-    t.string   "group"
     t.date     "publication_date"
     t.boolean  "draft",                   default: false
     t.boolean  "featured",                default: false
     t.boolean  "allow_comments",          default: true
     t.boolean  "recommended",             default: false
-    t.string   "format"
     t.integer  "downloads",               default: 0
     t.integer  "views",                   default: 0
     t.integer  "shares",                  default: 0

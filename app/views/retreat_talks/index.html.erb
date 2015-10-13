@@ -4,12 +4,12 @@
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-    <div class="container animated fadeIn" style="border: none; margin-top: 40px;">
-    <h1 class="text-center">Selected Retreat Talks</h1>
-    <hr>
+    <div class="container-fluid" id="retreat_talk_banner">
+<!--     <h1 class="text-center">Selected Retreat Talks</h1>
+    <hr> -->
       <div id="owl-featured-retreat_talks" class="owl-carousel">
         <% @featured_retreat_talks.each do |retreat_talk| %>
-        <div class="item row container">
+        <div class="item">
 <!--           <div class="col-md-6 text-center">
             <h1><%= retreat_talk.title %></h1>
             <hr class="full">
@@ -19,14 +19,14 @@
               <% end %>
             </p>
           </div> -->
-          <div class="col-md-12">
+          <!-- <div class="col-md-12"> -->
            <% if !retreat_talk.external_cover_img_link.blank? %>
              <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:100%;" %>
            <% else %>
              <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:100%;" %>
            <% end %>
            <h1><%= retreat_talk.title %></h1>
-          </div>
+          <!-- </div> -->
         </div>
       <% end %>
       </div>
@@ -63,7 +63,7 @@
       </div>
       </div>
     </div>
-  <div class="container bg-primary" style="border: none; margin-top: 30px;">
+  <div class="container" style="border: none; margin-top: 30px;">
 
 
 
@@ -113,7 +113,7 @@
   });
 
 $("#owl-featured-retreat_talks").owlCarousel({
-    items: 3,
+    items: 4,
     // animateOut: 'fadeOut',
     animateIn: 'fadeIn',
     // loop: true,

@@ -33,9 +33,9 @@ show do |audio|
   	    	end
   	    end
   	    row "Audio (from embeded audio link)" do
-  	    	if audio.embeded_audio_link
-	  	    	text_node (audio.embeded_audio_link).html_safe
-	  	    end
+  	    	if audio.secret_uri
+		  	    text_node ("<iframe width='100%' height='150' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=" + audio.secret_uri + "&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false></iframe>").html_safe
+		  	  end
   	    end
   	  end
   end
@@ -60,13 +60,13 @@ show do |audio|
   	    end
   	  end
   end
-  panel "Stats" do
-  	attributes_table_for audio do
-  	    row :plays
-  	    row :shares
-  	    # row :downloads
-  	  end
-  end
+  # panel "Stats" do
+  # 	attributes_table_for audio do
+  # 	    row :plays
+  # 	    row :shares
+  # 	    # row :downloads
+  # 	  end
+  # end
   panel "External Links" do
   	attributes_table_for audio do
 	    row :embeded_audio_link
@@ -151,7 +151,8 @@ end
 		selectable_column
 		id_column
 		column "audio", :sortable => false do |audio|
-		  (audio.embeded_audio_link).html_safe
+			text_node (audio.embeded_audio_link_strip).html_safe
+			# <iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/222701360%3Fsecret_token%3Ds-x3YEY&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
 		end
 		column :title
 		column :audio_code
@@ -186,7 +187,7 @@ end
 		        	f.input :title, :required => true
 		        	f.input :audio_code
 		        	f.input :description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
-		        	f.input :languages
+		        	f.input :languages, :required => true
 		        	f.has_many :languages do |language|
 		        	   language.inputs
 		        	end
@@ -209,7 +210,7 @@ end
 		          end
 		        end
 		        f.inputs "Book relating to this audio.." do
-		          f.input :books, hint: content_tag(:span, "To create new book please click on 'Books' tab on the top navigation bar and click on 'New Book' on the right. If this book is related to an book then create this book and find this book under the section 'Audio related to this book' in the book cretion form")
+		          f.input :books, hint: content_tag(:span, "To create new book please create this audio first then click on 'Books' tab on the top navigation bar and click on 'New Book' on the right. If this book is related to an book then create this book and find this book under the section 'Audio related to this book' in the book cretion form")
 		          # f.has_many :books do |book|
 		          #    book.inputs
 		          # end

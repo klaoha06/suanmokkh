@@ -14,6 +14,8 @@ class BooksController < ApplicationController
 
     # @books = Book.search(params[:language], params[:author], params[:series]).order('books.created_at DESC').page params[:page]
     @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
+    @recommended_books = Book.includes(:authors).where(recommended: true).order('created_at DESC').limit(15)
+
     # @featured_book = Book.order('created_at DESC').find_by(featured: true)
     # if !@featured_book
     #   @featured_book = @books.first
