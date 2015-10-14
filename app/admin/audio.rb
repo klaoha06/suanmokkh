@@ -157,6 +157,7 @@ end
 		end
 		column :title
 		column :audio_code
+		column :part
 		column :series
 		column :creation_date
 		column :authors_related do |audio|
@@ -170,6 +171,13 @@ end
 				audio.books.each do |book|
 					a :href => admin_book_path(book) do
 						li book.title
+					end
+				end
+		end
+		column :retreat_talks_related do |audio|
+				audio.retreat_talks.each do |retreat_talk|
+					a :href => admin_retreat_talk_path(retreat_talk) do
+						li retreat_talk.title
 					end
 				end
 		end

@@ -39,35 +39,67 @@ require 'faker'
 Language.create!([{name: 'English'}, {name: 'Thai'}, {name: 'German'}, {name: 'Chinese'}, {name: 'Russian'}, {name: 'Japanese'}, {name: 'French'}, {name: 'Korean'}])
 Author.create!([{name: 'Buddhadasa'}])
 
+def seed_tracks(sc_tracks)
+  sc_tracks.each do |track|
+
+    a_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
+    if track.artwork_url != nil
+      a_cover_img = track.artwork_url.gsub('large', 't300x300')
+    else
+      a_cover_img = 'ajarn-lan-'+ (Random.rand(5)+1).to_s + '.jpg'
+    end
+
+    english = Language.where(name: 'English')
+    buddhadasa = Author.where(name: 'Buddhadasa')
+
+    a = Audio.create({ title: a_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+    a.languages << english
+    a.authors << buddhadasa
+
+    retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: true})
+    retreat_talk.languages << english
+    retreat_talk.authors << buddhadasa
+
+    a.retreat_talks << retreat_talk
+  end
+end
+
 
 @sc_tracks = $sc_consumer.get('/users/159428232/tracks', :order => 'created_at', limit: 200)
 @sc_tracks1 = $sc_consumer.get('/users/159428232/tracks', :order => 'created_at', limit: 200, offset: 200)
 
-@sc_tracks.each do |track|
-  # p track.title
-  a_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
-  # a_code = track.title.match(/\d{6}/)[0]
-  if track.artwork_url.length > 7
-    a_cover_img = track.artwork_url.gsub('large', 't300x300')
-  else
-    a_cover_img = '/assets/ajarn3.jpg'
-  end
-  a = Audio.create({ title: a_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
-  a.languages << Language.where(name: 'English')
-  a.retreat_talks << RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: true})
-end
+seed_tracks(@sc_tracks)
+seed_tracks(@sc_tracks1)
 
-@sc_tracks1.each do |track|
-  b_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
-  if track.artwork_url.length > 7
-    b_cover_img = track.artwork_url.gsub('large', 't300x300')
-  else
-    b_cover_img = '/assets/ajarn3.jpg'
-  end
-  b = Audio.create({ title: b_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
-  b.languages << Language.where(name: 'English')
-  b.retreat_talks << RetreatTalk.create({title: b_title, description: track.description, external_cover_img_link: b_cover_img, draft: true})
-end
+# @sc_tracks.each do |track|
+#   a_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
+#   if track.artwork_url != nil
+#     a_cover_img = track.artwork_url.gsub('large', 't300x300')
+#   else
+#     a_cover_img = 'ajarn-lan-'+ (Random.rand(5)+1).to_s + '.jpg'
+#   end
+#   english = Language.where(name: 'English')
+#   a = Audio.create({ title: a_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+#   a.languages << english
+#   retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: true})
+#   retreat_talk.languages << english
+#   a.retreat_talks << retreat_talk
+# end
+
+# @sc_tracks1.each do |track|
+#   b_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
+#   if track.artwork_url != nil
+#     b_cover_img = track.artwork_url.gsub('large', 't300x300')
+#   else
+#     b_cover_img = 'ajarn-lan-'+ (Random.rand(5)+1).to_s + '.jpg'
+#   end
+#   english = Language.where(name: 'English')
+#   b = Audio.create({ title: b_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+#   b.languages << english
+#   retreat_talk = RetreatTalk.create({title: b_title, description: track.description, external_cover_img_link: b_cover_img, draft: true})
+#   retreat_talk.languages << english
+#   b.retreat_talks << retreat_talk
+# end
 
 # RetreatTalk.create!({})
 

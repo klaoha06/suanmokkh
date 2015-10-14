@@ -97,11 +97,11 @@ class RetreatTalk < ActiveRecord::Base
 		}
 
 		def self.with_language_id language_id
-		  joins(:languages).where(languages: { id: language_id })
+		  joins(:languages).where(languages: {id: language_id})
 		end
 
 		def self.with_author_id author_id
-		  joins(:authors).where(authors: { id: author_id })
+		  joins(:authors).where(authors: {id: author_id})
 		end
 
 		def self.with_series series

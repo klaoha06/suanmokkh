@@ -30,12 +30,15 @@ index do
   column :number_of_audios do |language|
     a language.audios.count, :href => admin_audios_path()
   end
-  column :number_of_articles do |language|
-      a language.articles.count, :href => admin_articles_path()
+  column :number_of_retreat_talks do |language|
+    a language.retreat_talks.count, :href => admin_retreat_talks_path()
   end
-  column :number_of_news_articles do |language|
-    a language.news_articles.count, :href => admin_news_articles_path()
-  end
+  # column :number_of_articles do |language|
+  #     a language.articles.count, :href => admin_articles_path()
+  # end
+  # column :number_of_news_articles do |language|
+  #   a language.news_articles.count, :href => admin_news_articles_path()
+  # end
   column :number_of_poems do |language|
     a language.poems.count, :href => admin_poems_path()
   end
