@@ -30,7 +30,7 @@ class RetreatTalksController < InheritedResources::Base
 	        with_series: RetreatTalk.options_for_series,
 	      },
 	      # persistence_id: 'shared_key',
-	      default_filter_params: {draft: false},
+	      # default_filter_params: {draft: false},
 	      # available_filters: [],
 	    ) or return
 	    @retreat_talks = @filter.find.page(params[:page])

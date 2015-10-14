@@ -71,50 +71,6 @@ end
 seed_tracks(@sc_tracks)
 seed_tracks(@sc_tracks1)
 
-# @sc_tracks.each do |track|
-#   a_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
-#   if track.artwork_url != nil
-#     a_cover_img = track.artwork_url.gsub('large', 't300x300')
-#   else
-#     a_cover_img = 'ajarn-lan-'+ (Random.rand(5)+1).to_s + '.jpg'
-#   end
-#   english = Language.where(name: 'English')
-#   a = Audio.create({ title: a_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
-#   a.languages << english
-#   retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: true})
-#   retreat_talk.languages << english
-#   a.retreat_talks << retreat_talk
-# end
-
-# @sc_tracks1.each do |track|
-#   b_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
-#   if track.artwork_url != nil
-#     b_cover_img = track.artwork_url.gsub('large', 't300x300')
-#   else
-#     b_cover_img = 'ajarn-lan-'+ (Random.rand(5)+1).to_s + '.jpg'
-#   end
-#   english = Language.where(name: 'English')
-#   b = Audio.create({ title: b_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
-#   b.languages << english
-#   retreat_talk = RetreatTalk.create({title: b_title, description: track.description, external_cover_img_link: b_cover_img, draft: true})
-#   retreat_talk.languages << english
-#   b.retreat_talks << retreat_talk
-# end
-
-# RetreatTalk.create!({})
-
-# Audio.order("RAND()").first
-
-# @sc_tracks_with_pagination_link.each_with_index do |object, index|
-# if index == 0
-#   @sc_info = object[0]
-#   @sc_tracks = object[1]
-# end
-# if index == 1
-#   @sc_pagination_link = object[1]
-# end
-# end
-
 # Author.create!([{ name: 'Ajarn Buddhadasa' }, { name: 'YOYOYO' },{ name: 'Ajarn Jayasaro'}, { name: 'Thich Nhat Han' }])
 
 # user.products.create(:name => 'Apple', :store => walmart)
