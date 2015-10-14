@@ -50,6 +50,7 @@ class RetreatTalksController < InheritedResources::Base
 	  # @retreat_talk.audios.each do |audio|
 	  #   @audios_languages + audio.languages.name + " " if audio.language.name
 	  # end
+	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code})
 	  @book = @retreat_talk.books.first
 	end
 

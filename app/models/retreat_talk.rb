@@ -77,17 +77,18 @@ class RetreatTalk < ActiveRecord::Base
 		  # replace "*" with "%" for wildcard searches,
 		  # append '%', remove duplicate '%'s
 		  terms = terms.map { |e|
-		    (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+		    ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
 		  }
+		  p terms
 		  # configure number of OR conditions for provision
 		  # of interpolation arguments. Adjust this if you
 		  # change the number of OR conditions.
-		  num_or_conditions = 2
+		  num_or_conditions = 1
 		  where(
 		    terms.map {
 		      or_clauses = [
 		        "LOWER(retreat_talks.title) LIKE ?",
-		        "LOWER(retreat_talks.description) LIKE ?",
+		        # "LOWER(retreat_talks.description) LIKE ?",
 		        # "LOWER(students.email) LIKE ?"
 		      ].join(' OR ')
 		      "(#{ or_clauses })"
