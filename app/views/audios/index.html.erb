@@ -8,16 +8,18 @@
   <div class="container bg-primary" style="margin-top: 75px;">
     <h1 class="text-center">Audios</h1>
     <hr>
-      <% @sc_tracks.each do |track| %>
+<!--     <iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/222701360%3Fsecret_token%3Ds-x3YEY&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
+      <% @audios.each do |track| %>
         <div class="row">
-          <div class="col-md-10">        
-            <iframe width="100%" height="166" scrolling="no" frameborder="no" src=<%= "https://w.soundcloud.com/player/?url=#{track.secret_uri}&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false" %>></iframe>
+          <div class="col-md-10">
+          <%= track %>
+          <hr>    
+          <!--    <iframe width="100%" height="166" scrolling="no" frameborder="no" src=<%= "https://w.soundcloud.com/player/?url=#{track.secret_uri}&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false" %>></iframe> -->
+
+
           </div>
           <div class="col-md-2 text-center">
           <br>
-          <a href=<%= track.permalink_url %>><p>View</p></a>
-          <a href=<%= track.download_url + "?client_id=b9c8c034db8701f526690a750d16e6c2" %>><p>Download</p></a>
-          <a href=<%= track.stream_url + "?client_id=b9c8c034db8701f526690a750d16e6c2" %>><p>Stream</p></a>
 
           </div>
         </div>

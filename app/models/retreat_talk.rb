@@ -1,16 +1,16 @@
 class RetreatTalk < ActiveRecord::Base
 		# File Attachments
 		has_attached_file :cover_img, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
-		validates_attachment :cover_img, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
+		# validates_attachment :cover_img, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
 		# has_attached_file :file
 	  # validates_attachment :file, content_type: { content_type: ["application/pdf", "application/epub"] }
 
 		# Validations
-		validates :title, presence: true, uniqueness: true
+		validates :title, presence: true
 		# validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
-		validates :external_cover_img_link, url: true,  unless: ->(retreat_talk){retreat_talk.external_cover_img_link.blank?}
+		# validates :external_cover_img_link, url: true,  unless: ->(retreat_talk){retreat_talk.external_cover_img_link.blank?}
 	  # validate :source_of_file
-	  validate :source_of_cover_img
+	  # validate :source_of_cover_img
 
 	  # validates :external_file_link, presence: true, unless: ->(book){book.file_file_name.present?}
 	   # validates :file_file_name, presence: true, unless: ->(book){book.external_file_link.present?}
@@ -60,6 +60,57 @@ class RetreatTalk < ActiveRecord::Base
 		# scope :with_created_at_gte, lambda { |ref_date|
 		#   where('books.created_at >= ?', ref_date)
 		# }
+
+		filterrific(
+		  available_filters: [
+		    :search_query,
+		    :with_language_id,
+		    :with_author_id,
+		    :with_series,
+		  ]
+		)
+
+		scope :search_query, lambda { |query|
+		  return nil  if query.blank?
+		  # condition query, parse into individual keywords
+		  terms = query.downcase.split(/\s+/)
+		  # replace "*" with "%" for wildcard searches,
+		  # append '%', remove duplicate '%'s
+		  terms = terms.map { |e|
+		    (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+		  }
+		  # configure number of OR conditions for provision
+		  # of interpolation arguments. Adjust this if you
+		  # change the number of OR conditions.
+		  num_or_conditions = 2
+		  where(
+		    terms.map {
+		      or_clauses = [
+		        "LOWER(retreat_talks.title) LIKE ?",
+		        "LOWER(retreat_talks.description) LIKE ?",
+		        # "LOWER(students.email) LIKE ?"
+		      ].join(' OR ')
+		      "(#{ or_clauses })"
+		    }.join(' AND '),
+		    *terms.map { |e| [e] * num_or_conditions }.flatten
+		  )
+		}
+
+		def self.with_language_id language_id
+		  joins(:languages).where(languages: { id: language_id })
+		end
+
+		def self.with_author_id author_id
+		  joins(:authors).where(authors: { id: author_id })
+		end
+
+		def self.with_series series
+		  where(series: series)
+		end
+
+		def self.options_for_series
+		  where.not('series' => '').pluck(:series)
+		end
 
 		private
 

@@ -1,0 +1,27 @@
+<!-- <div id="results" class="row havePadding" > -->
+  <% @retreat_talks.each_with_index do |retreat_talk,index| %>
+  <div class="col-md-4 retreat_talk-grid">
+    <a href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
+      <% if !retreat_talk.external_cover_img_link.blank? %>
+        <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+      <% else %>
+        <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+      <% end %>
+    </a>
+    <h4 class="text-center"><%= retreat_talk.title %></h4>
+    <p class="text-center"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></p>
+  </div>
+    <% if (index+1) % 3 == 0 && index != 0 %>
+         <div class="clearfix"></div>
+    <% end %>
+  <% end %>
+  <div class="col-md-12">
+  <p class="text-center"><%= page_entries_info @retreat_talks %></p>
+
+  <nav class="text-center">
+  <%= paginate @retreat_talks, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
+  </nav>
+  <br>
+  <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
+  </div>
+<!-- </div> -->

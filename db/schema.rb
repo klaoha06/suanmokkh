@@ -117,20 +117,21 @@ ActiveRecord::Schema.define(version: 20151011073648) do
     t.text     "description"
     t.string   "series"
     t.date     "creation_date"
-    t.string   "duration"
+    t.integer  "duration"
     t.string   "audio_code"
-    t.text     "embeded_audio_link"
-    t.text     "external_link"
-    t.boolean  "draft",              default: false
-    t.boolean  "featured",           default: false
-    t.boolean  "recommended",        default: false
-    t.boolean  "allow_comments",     default: true
-    t.integer  "downloads",          default: 0
-    t.integer  "plays",              default: 0
-    t.integer  "shares",             default: 0
+    t.string   "part"
+    t.string   "secret_uri"
+    t.string   "external_link"
+    t.boolean  "draft",             default: false
+    t.boolean  "featured",          default: false
+    t.boolean  "recommended",       default: false
+    t.boolean  "allow_comments",    default: true
+    t.integer  "downloads",         default: 0
+    t.integer  "plays",             default: 0
+    t.integer  "shares",            default: 0
     t.integer  "admin_user_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
@@ -438,22 +439,14 @@ ActiveRecord::Schema.define(version: 20151011073648) do
     t.string   "title"
     t.text     "description"
     t.string   "series"
-    t.string   "duration"
-    t.string   "audio_code"
-    t.text     "embeded_audio_link"
-    t.text     "external_url_link"
-    t.text     "external_cover_img_link"
-    t.string   "language"
+    t.string   "format"
     t.string   "group"
+    t.text     "external_cover_img_link"
     t.date     "publication_date"
     t.boolean  "draft",                   default: false
     t.boolean  "featured",                default: false
     t.boolean  "allow_comments",          default: true
     t.boolean  "recommended",             default: false
-    t.string   "format"
-    t.integer  "downloads",               default: 0
-    t.integer  "views",                   default: 0
-    t.integer  "shares",                  default: 0
     t.integer  "admin_user_id"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false

@@ -4,95 +4,84 @@
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-    <div class="container animated fadeIn" style="border: none; margin-top: 40px;">
+    <div class="container bg-primary" id="retreat_talk_banner">
     <h1 class="text-center">Selected Retreat Talks</h1>
     <hr>
+   <!--  <iframe width="100%" height="266" scrolling="no" frameborder="yes" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/220603266&amp;color=725843&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false"></iframe> -->
       <div id="owl-featured-retreat_talks" class="owl-carousel">
         <% @featured_retreat_talks.each do |retreat_talk| %>
-        <div class="item row container">
-<!--           <div class="col-md-6 text-center">
-            <h1><%= retreat_talk.title %></h1>
-            <hr class="full">
-            <p style="text-d">
-              <% retreat_talk.authors.each do |author|%>
-                <%= author.name %>
-              <% end %>
-            </p>
-          </div> -->
-          <div class="col-md-12">
-           <% if !retreat_talk.external_cover_img_link.blank? %>
-             <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:100%;" %>
-           <% else %>
-             <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width:100%;" %>
-           <% end %>
-           <h1><%= retreat_talk.title %></h1>
-          </div>
+        <div class="item">
+          <%= retreat_talk.audios.first.embeded_audio_link_banner.html_safe %>
+          <h2 class="text-center"><%= link_to retreat_talk.title, retreat_talk %></h2>
         </div>
       <% end %>
       </div>
       <div class="clearfix"></div>
       <div class='container-fluid animated fadeIn'>
         <div class="container">
-   <!--      <h2>Playlist</h2>
-        <div id="owl-recommended-retreat_talks" class="owl-carousel">
-          <% @retreat_talks.each do |retreat_talk| %>
-              <div class="havePadding animated fadeIn">
-                <a href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
-                  <% if !retreat_talk.external_cover_img_link.blank? %>
-                    <%= image_tag "#{retreat_talk.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
-                  <% else %>
-                    <%= image_tag "#{retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
-                  <% end %>
-                  <div class="portfolio-box-caption">
-                    <div class="portfolio-box-caption-content">
-                     <div class="project-category text-faded">
-                        Take a look
-                      </div>
-                      <div class="project-name">
-                      <i class="fa fa-search"></i> 
-                        Take a look
-                      </div>
-                    </div>
-                  </div>
-                </a>
-                <h4 class="text-center"><%= retreat_talk.title %></h4>
-                <p class="text-center"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></p>
-              </div>
-          <% end %>
-        </div> -->
+
       </div>
       </div>
     </div>
-  <div class="container bg-primary" style="border: none; margin-top: 30px;">
+  <div class="container bg-primary" style="border: none;">
+  <%= form_for_filterrific(@filter) do |f| %>
+  <div class="row">
+    <div class="col-md-3">
+      <p>Search</p>
+      <div class="input-group">
+      <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+      <%= f.text_field(
+        :search_query,
+        class: 'filterrific-periodically-observed form-control'
+      ) %>
+      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+      </div>
 
-
-
-    <div class="row havePadding">
-<!--     <h1 class="text-center">Retreat Talks</h1>
-    <hr> -->
-    <% @retreat_talks.each do |retreat_talk| %>
-    <div class="col-md-4 retreat_talk-grid">
-      <a href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
-        <% if !retreat_talk.external_cover_img_link.blank? %>
-          <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
-        <% else %>
-          <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
-        <% end %>
-      </a>
-      <h4 class="text-center"><%= retreat_talk.title %></h4>
-      <p class="text-center"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></p>
     </div>
-    <% end %>
+    <div class="col-md-3">
+      <div class="form-group chardin_box">
+      <p>Language</p>
+      <%= f.select(
+        :with_language_id,
+        @filter.select_options[:with_language_id],
+        { include_blank: '- Any -' },
+        { :class => 'form-control' }
+      ) %>
+      </div>
     </div>
-    <div class="col-md-12">
-    <p class="text-center"><%= page_entries_info @retreat_talks %></p>
+    <div class="col-md-3">
+      <div class="form-group chardin_box">
+      <p>Author</p>
+      <%= f.select(
+        :with_author_id,
+        @filter.select_options[:with_author_id],
+        { include_blank: '- Any -' },
+        { :class => 'form-control' }
+      ) %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group chardin_box">
+      <p>Series</p>
+      <%= f.select(
+        :with_series,
+        @filter.select_options[:with_series],
+        { include_blank: '- Any -' },
+        { :class => 'form-control' }
+      ) %>
+      </div>
+    </div>
+  </div>
+    <%# add an automated spinner to your form when the list is refreshed %>
+    <h1 class="text-center"><%= render_filterrific_spinner %></h1>
+  <% end %>
+  <div id="results">
+    <%= render(
+      partial: 'retreat_talks/list',
+      locals: { retreat_talks: @retreat_talks }
+    ) %>
+  </div>
 
-    <nav class="text-center">
-    <%= paginate @retreat_talks, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
-    </nav>
-    <br>
-    <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
-    </div>
   </div>
 
   <div class="clearfix"></div>
@@ -113,11 +102,11 @@
   });
 
 $("#owl-featured-retreat_talks").owlCarousel({
-    items: 3,
+    items: 1,
     // animateOut: 'fadeOut',
-    animateIn: 'fadeIn',
+    // animateIn: 'fadeIn',
     // loop: true,
-    transitionStyle : "fade",
+    // transitionStyle : "fade",
     autoHeight:true
 });   
 </script>

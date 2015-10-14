@@ -2,8 +2,8 @@ class RetreatTalksController < InheritedResources::Base
 
 	def index
 	    # @retreat_talks = retreat_talk.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
-	    @retreat_talks = RetreatTalk.includes(:authors, :groups, :languages).where(draft: false).order('created_at DESC').page params[:page]
-	    @featured_retreat_talks = RetreatTalk.includes(:authors, :groups, :languages).where(featured: true, draft: false).order('created_at DESC').limit(10)
+	    # @retreat_talks = RetreatTalk.includes(:authors, :groups, :languages).where(draft: false).order('created_at DESC').page params[:page]
+	    @featured_retreat_talks = RetreatTalk.where(featured: true, draft: false).order('created_at DESC').limit(5)
 	    # @featured_retreat_talk = retreat_talk.order('created_at DESC').find_by(featured: true)
 	    # if !@featured_retreat_talk
 	    #   @featured_retreat_talk = @retreat_talks.first
@@ -20,6 +20,25 @@ class RetreatTalksController < InheritedResources::Base
 	    # end
 	    # @search = retreat_talk.search(params[:q])
 	    # @retreat_talks = @search.result
+
+	    @filter = initialize_filterrific(
+	      RetreatTalk,
+	      params[:filterrific],
+	      :select_options => {
+	        with_language_id: Language.options_for_select,
+	        with_author_id: Author.options_for_select,
+	        with_series: RetreatTalk.options_for_series,
+	      },
+	      # persistence_id: 'shared_key',
+	      # default_filter_params: {},
+	      # available_filters: [],
+	    ) or return
+	    @retreat_talks = @filter.find.page(params[:page])
+	    
+	    respond_to do |format|
+	      format.html
+	      format.js
+	    end
 	end
 
 	# GET /retreat_talks/1
@@ -30,6 +49,7 @@ class RetreatTalksController < InheritedResources::Base
 	  # @retreat_talk.audios.each do |audio|
 	  #   @audios_languages + audio.languages.name + " " if audio.language.name
 	  # end
+	  @book = @retreat_talk.books.first
 	end
 
   private

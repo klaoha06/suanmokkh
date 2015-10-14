@@ -9,9 +9,9 @@ class AdminUser < ActiveRecord::Base
 	has_many :articles, inverse_of: :admin_user
 	has_many :news_articles, inverse_of: :admin_user
 
+	accepts_nested_attributes_for :poems, allow_destroy: true
 	accepts_nested_attributes_for :books, allow_destroy: true
 	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
-	accepts_nested_attributes_for :poems, allow_destroy: true
 	accepts_nested_attributes_for :audios, allow_destroy: true
 	accepts_nested_attributes_for :articles, allow_destroy: true
 	accepts_nested_attributes_for :news_articles, allow_destroy: true

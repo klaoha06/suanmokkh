@@ -1,5 +1,5 @@
 <% content_for :head do %>
-<title><%= @book.title %> <%= "by"+@book.authors.first.name if @book.authors.first %> - Suan Mokkh</title>
+<title><%= @book.title %> <%= "by " + @book.authors.first.name if @book.authors.first %> - Suan Mokkh</title>
 <% end %>
 
 <!-- <p id="notice"><%= notice %></p> -->
@@ -23,20 +23,52 @@
       <% else %>
         <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
       <% end %>
-        <hr>
-        <% if @book.audios.first %>
+
+        <% if @book.audios.count == 0 %>
+
+        <% elsif @book.audios.count == 1 %>
+          <hr>
           <small class="text-center floatCenter" >
           <!-- <i class="fa fa-headphones fa-2x"></i> -->
-          <br> 
-          This book has audio file(s) Available
+          <br>
+          This book has an audio file available
           </small>
-          <% @book.audios.first.embeded_audio_link.html_safe %>
+          <%= @book.audios.first.embeded_audio_link.html_safe %>
+        <% else %>
+          <hr>
+          <small class="text-center floatCenter" >
+          <br>
+          This book has audio file(s) available in different languages
+          </small>
+          <ul>
           <% @book.audios.each do |audio| %>
-            <% audio.languages.each do |lang| %>
-              <% @audio_languages << lang.name + " " %>
+
+            <% if audio.languages.count == 0 %>
+
+            <% elsif audio.languages.count == 1 %>
+              <li>
+              <% if audio.languages.first.name == "Thai" %>
+                <%= image_tag "thai_icon.png" %>
+              <% end %>
+              <% if audio.languages.first.name == "English" %>
+                <%= image_tag "english_icon.gif" %>
+              <% end %>
+              <%= link_to audio.languages.first.name, audio %>
+              </li>
+
+            <% else %>
+              <% audio.languages.each_with_index do |lang, index| %>
+                <% if index != audio.languages.count-1 %>
+                  <% @audio_languages << lang.name + ' and ' %>
+                <% elsif index == audio.languages.count-1 %>
+                  <% @audio_languages << lang.name %>
+                <% end %>
+              <% end %>
+              <li><%= link_to @audio_languages, audio %></li>
             <% end %>
-            <%= link_to audio.title + " in " + @audio_languages, audio %>
+
           <% end %>
+          </ul>
         <% end %>
 
       </div>
@@ -51,7 +83,7 @@
         <span style="color:black !important"><%= @book.description.html_safe %></span>
       </div>
     </div>
-    <hr>
+    <!-- <hr> -->
       <div class="row">
         <div class="col-md-12">
           <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em; margin-top:50px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
