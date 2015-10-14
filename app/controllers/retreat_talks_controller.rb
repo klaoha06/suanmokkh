@@ -30,10 +30,11 @@ class RetreatTalksController < InheritedResources::Base
 	        with_series: RetreatTalk.options_for_series,
 	      },
 	      # persistence_id: 'shared_key',
-	      # default_filter_params: {},
+	      # default_filter_params: {draft: false},
 	      # available_filters: [],
 	    ) or return
 	    @retreat_talks = @filter.find.page(params[:page])
+	    # .where(draft: false)
 	    
 	    respond_to do |format|
 	      format.html
@@ -49,6 +50,7 @@ class RetreatTalksController < InheritedResources::Base
 	  # @retreat_talk.audios.each do |audio|
 	  #   @audios_languages + audio.languages.name + " " if audio.language.name
 	  # end
+	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code})
 	  @book = @retreat_talk.books.first
 	end
 

@@ -174,13 +174,25 @@ index do
 	  (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
 	end
 	column :title
-	column :retreat_talk_code
+	column "audio code", :sortable => false do |retreat_talk|
+	  (retreat_talk.audios.first.audio_code).html_safe
+	end
+	column "part", :sortable => false do |retreat_talk|
+	  (retreat_talk.audios.first.part).html_safe
+	end
 	column :series
 	column :creation_date
 	column :authors_related do |retreat_talk|
 			retreat_talk.authors.each do |author|
 				a :href => admin_author_path(author) do
 					li author.name
+				end
+			end
+	end
+	column :audios_related do |retreat_talk|
+			retreat_talk.audios.each do |audio|
+				a :href => admin_audio_path(audio) do
+					li audio.title
 				end
 			end
 	end

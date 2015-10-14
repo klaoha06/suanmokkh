@@ -15,7 +15,7 @@
 </header> -->
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <!-- <hr class="full"> -->
-  <div class="container bg-primary retreat_talk_header">
+  <div class="container bg-primary book_header">
     <div class="row">
       <div class="col-md-4">
       <% if !@retreat_talk.external_cover_img_link.blank? %>
@@ -23,17 +23,19 @@
       <% else %>
         <%= image_tag "#{@retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
       <% end %>
-        <hr>
-        <% if @retreat_talk.audios.first %>
-          <small class="text-center floatCenter" >
-          <!-- <i class="fa fa-headphones fa-2x"></i> -->
-          <br> 
-          This retreat talk has audio file(s) Available
-          </small>
-          <%= @retreat_talk.audios.first.embeded_audio_link.html_safe %>
+      <% if @related_retreat_talks.count > 1 %>
+      <hr>
+      <small class="text-center">Related Retreat Talk(s)</small>
+      <ul>
+        <% @related_retreat_talks.each do |rt| %>
+          <li><%= link_to rt.title, rt %></li>
         <% end %>
+      </ul>
+
+      <% end %>
 
       </div>
+
       <div class="col-md-8">
         <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @retreat_talk.title %></h1>
         <p>
@@ -44,13 +46,68 @@
         <hr class="full" style="border-color:#725843;">
         <span style="color:black !important"><%= @retreat_talk.description.html_safe %></span>
       </div>
+
+      <% if @retreat_talk.audios.count == 0 %>
+
+      <% elsif @retreat_talk.audios.count == 1 %>
+        <div class="col-md-12">
+        <!-- <hr> -->
+        <small class="text-center floatCenter" >
+        <!-- <i class="fa fa-headphones fa-2x"></i> -->
+        <br>
+        </small>
+        <%= @retreat_talk.audios.first.embeded_audio_link.html_safe %>
+      <% else %>
+        <hr>
+        <small class="text-center floatCenter" >
+        <br>
+        This retreat_talk has audio file(s) available in different languages
+        </small>
+        <ul>
+        <%= @retreat_talk.audios.each do |audio| %>
+
+          <% if audio.languages.count == 0 %>
+
+          <% elsif audio.languages.count == 1 %>
+            <li>
+            <% if audio.languages.first.name == "Thai" %>
+              <%= image_tag "thai_icon.png" %>
+            <% end %>
+            <% if audio.languages.first.name == "English" %>
+              <%= image_tag "english_icon.gif" %>
+            <% end %>
+            <%= link_to audio.languages.first.name, audio %>
+            </li>
+            </ul>
+        </div>
+
+          <% else %>
+            <% audio.languages.each_with_index do |lang, index| %>
+              <% if index != audio.languages.count-1 %>
+                <% @audio_languages << lang.name + ' and ' %>
+              <% elsif index == audio.languages.count-1 %>
+                <% @audio_languages << lang.name %>
+              <% end %>
+            <% end %>
+            <li><%= link_to @audio_languages, audio %></li>
+          <% end %>
+
+        <% end %>
+        </ul>
+      <% end %>
+
+
+
     </div>
+
+    <% if @book != nil %>
     <hr>
       <div class="row">
         <div class="col-md-12">
           <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em; margin-top:50px;" role="button"><i class="fa fa-retreat_talk"></i> Start Reading</a>
         </div>
       </div>
+    <% end %>
 <!--     <h1>Suan Mokkh</h1>
     <h1>Garden of Liberation</h1>
     <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
