@@ -71,30 +71,30 @@ class RetreatTalk < ActiveRecord::Base
 		)
 
 		scope :search_query, lambda { |query|
-		   return nil  if query.blank?
-		   # condition query, parse into individual keywords
-		   terms = query.to_s.downcase.split(/\s+/)
-		   # replace "*" with "%" for wildcard searches,
-		   # append '%', remove duplicate '%'s
-		   terms = terms.map { |e|
-		     (e.gsub('*', '%') + '%').gsub(/%+/, '%')
-		   }
-		   # configure number of OR conditions for provision
-		   # of interpolation arguments. Adjust this if you
-		   # change the number of OR conditions.
-		   num_or_conditions = 3
-		   joins(:authors).where(
-		     terms.map {
-		       or_clauses = [
-		         "LOWER(retreat_talks.title) LIKE ?",
-		         "LOWER(retreat_talks.description) LIKE ?",
-		         "LOWER(authors.name) LIKE ?",
-		       ].join(' OR ')
-		       "(#{ or_clauses })"
-		     }.join(' AND '),
-		     *terms.map { |e| [e] * num_or_conditions }.flatten
-		   )
-		 }
+		  return nil  if query.blank?
+		  # condition query, parse into individual keywords
+		  terms = query.downcase.split(/\s+/)
+		  # replace "*" with "%" for wildcard searches,
+		  # append '%', remove duplicate '%'s
+		  terms = terms.map { |e|
+		    (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+		  }
+		  # configure number of OR conditions for provision
+		  # of interpolation arguments. Adjust this if you
+		  # change the number of OR conditions.
+		  num_or_conditions = 2
+		  where(
+		    terms.map {
+		      or_clauses = [
+		        "LOWER(retreat_talks.title) LIKE ?",
+		        "LOWER(retreat_talks.description) LIKE ?",
+		        # "LOWER(students.email) LIKE ?"
+		      ].join(' OR ')
+		      "(#{ or_clauses })"
+		    }.join(' AND '),
+		    *terms.map { |e| [e] * num_or_conditions }.flatten
+		  )
+		}
 
 		def self.with_language_id language_id
 		  joins(:languages).where(languages: { id: language_id })

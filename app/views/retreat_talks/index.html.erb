@@ -24,7 +24,7 @@
       </div>
     </div>
   <div class="container bg-primary" style="border: none;">
-  <%= form_for_filterrific(@filterrific) do |f| %>
+  <%= form_for_filterrific(@filter) do |f| %>
   <div class="row">
     <div class="col-md-3">
       <p>Search</p>
@@ -43,7 +43,7 @@
       <p>Language</p>
       <%= f.select(
         :with_language_id,
-        @filterrific.select_options[:with_language_id],
+        @filter.select_options[:with_language_id],
         { include_blank: '- Any -' },
         { :class => 'form-control' }
       ) %>
@@ -54,7 +54,7 @@
       <p>Author</p>
       <%= f.select(
         :with_author_id,
-        @filterrific.select_options[:with_author_id],
+        @filter.select_options[:with_author_id],
         { include_blank: '- Any -' },
         { :class => 'form-control' }
       ) %>
@@ -65,7 +65,7 @@
       <p>Series</p>
       <%= f.select(
         :with_series,
-        @filterrific.select_options[:with_series],
+        @filter.select_options[:with_series],
         { include_blank: '- Any -' },
         { :class => 'form-control' }
       ) %>

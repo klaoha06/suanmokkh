@@ -20,8 +20,8 @@ class RetreatTalksController < InheritedResources::Base
 	    # end
 	    # @search = retreat_talk.search(params[:q])
 	    # @retreat_talks = @search.result
-	    
-	    @filterrific = initialize_filterrific(
+
+	    @filter = initialize_filterrific(
 	      RetreatTalk,
 	      params[:filterrific],
 	      :select_options => {
@@ -33,7 +33,7 @@ class RetreatTalksController < InheritedResources::Base
 	      # default_filter_params: {},
 	      # available_filters: [],
 	    ) or return
-	    @retreat_talks = @filterrific.find.page(params[:page])
+	    @retreat_talks = @filter.find.page(params[:page])
 	    
 	    respond_to do |format|
 	      format.html
