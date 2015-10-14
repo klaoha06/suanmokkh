@@ -306,12 +306,12 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			end
 			f.inputs "Audio related to this book" do
 	          f.input :audios
-	          f.has_many :audios do |audio|
-	             audio.input :title, :required => true
-	             audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
-	             audio.input :admin_user_id, :as => :hidden
-	             audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
-	          end
+	          # f.has_many :audios do |audio|
+	          #    audio.input :title, :required => true
+	          #    audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
+	          #    audio.input :admin_user_id, :as => :hidden
+	          #    # audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
+	          # end
 	        end
       		f.inputs "Retreat Talk(s) related to this book" do
                 f.input :retreat_talks
@@ -386,7 +386,6 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  end
 
 	  before_create do	
-	  	super do |format|  	
 		  	audios = @_params[:book][:audios_attributes]
 		  	if audios != nil
 			  	audios.each do |k,v|
@@ -395,7 +394,6 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					  end
 			  	end
 			  end
-			end
 	  end #before_create
 
   controller do

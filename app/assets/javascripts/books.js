@@ -38,10 +38,6 @@ owl.owlCarousel({
 
 $('.featured')
   .hover(
-    // if ($(".books_arrow").hasClass('hide')) {
-    //   $(".books_arrow").fadeIn().removeClass('hide').addClass('show');
-    //   console.log('yo')
-    // }
     function() {
       $( ".books_arrow" ).fadeIn().removeClass('hide');
     }, function() {

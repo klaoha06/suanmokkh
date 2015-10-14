@@ -58,17 +58,13 @@
 </div>
 <div class="container-fluid">
   <div id="start_reading" class="container">
-    <!-- <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object> -->
-    <!-- <iframe src=<%= @book.external_file_link || @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe> -->
-    <% if !@book.external_file_link.blank? %>
+  <% if @retreat_talk.books.first %>
+    <% if !@retreat_talk.books.first.external_file_link.blank? %>
       <iframe src=<%= @book.external_file_link + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
     <% else %>
-      <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
+      <iframe src=<%= @retreat_talk.books.first.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
     <% end %>
-    <!-- <iframe id="ifr" src="http://docs.google.com/gview?url=#{@book.file.url}&embedded=true" style="width:718px; height:700px;" frameborder="0"> -->
-    <!-- <iframe style="height: 1000px; width: 100%;" src=<%= @book.file.url %> /> -->
-    <!-- <hr class="full"> -->
-
+  <% end %>
   </div>
 
 </div>
@@ -76,17 +72,6 @@
 <% if @retreat_talk.allow_comments %>
 <div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
   <div class="container">
-    <div class="row">
-    <h1 class="text-center">
-      <small class="white">Downloads</small>
-      <%= @retreat_talk.downloads %>
-      <small class="white">Views</small>
-      <%= @retreat_talk.views %>
-      <small class="white">Shares</small>
-      <%= @retreat_talk.shares %>
-    </h1>
-    <hr>
-    </div>
   <div id="disqus_thread"></div>
   <script type="text/javascript">
       /* * * CONFIGURATION VARIABLES * * */

@@ -7,10 +7,11 @@ class CreateAudios < ActiveRecord::Migration
     	t.string :series
     	# t.string :group
     	t.date :creation_date
-    	t.string :duration
-    	t.string :audio_code
+    	t.integer :duration
+        t.string :audio_code
+    	t.string :part
 
-        t.text :embeded_audio_link
+        # t.text :embeded_audio_link
     	t.string :secret_uri
     	t.string :external_link
 

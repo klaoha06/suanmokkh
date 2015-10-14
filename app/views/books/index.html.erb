@@ -78,7 +78,6 @@
       <div class="col-md-3">
         <p>Search</p>
         <div class="input-group">
-        <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
         <%= f.text_field(
           :search_query,
           class: 'filterrific-periodically-observed form-control'
@@ -125,16 +124,6 @@
       <h1 class="text-center"><%= render_filterrific_spinner %></h1>
     <% end %>
 
-
-<!--     <%= form_tag(books_path, method: "get", remote: true) do %>
-      <%= label_tag(:language, "Language: ") %>
-      <%= label_tag(:author, "Author (first name): ") %>
-      <%= text_field_tag(:author) %>
-      <%= label_tag(:series, "Series: ") %>
-      <%= text_field_tag(:series) %>
-      <%= submit_tag("Search") %>
-    <% end %>
- -->
     <%= render(
       partial: 'books/book',
       locals: { books: @books }

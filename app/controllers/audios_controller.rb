@@ -1,7 +1,7 @@
 class AudiosController < InheritedResources::Base
 
 	def index
-	    @audios =  Audio.includes(:authors, :groups, :languages, :books).where(@query).order('created_at DESC').limit(20)
+	    # @audios =  Audio.includes(:authors, :groups, :languages, :books).where(@query).order('created_at DESC').limit(20)
 	    # @featured_audios =  Audio.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
 	    # @featured_audio = audio.order('created_at DESC').find_by(featured: true)
 	    # if !@featured_audio
@@ -19,6 +19,9 @@ class AudiosController < InheritedResources::Base
 	    # end
 	    # @search =  Audio.search(params[:q])
 	    # @audios = @search.result
+
+
+	    @audios = $sc_consumer.get('/users/159428232/tracks', :order => 'created_at', limit: 10)
 
 			# @sc_tracks_with_pagination_link = $sc_consumer.get('/users/159428232/tracks', :order => 'created_at', :limit => 20,
    #                  :linked_partitioning => 1)

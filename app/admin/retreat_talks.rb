@@ -19,6 +19,20 @@ show do |retreat_talk|
 	  	    	para 'no description'
 	  	    end
   	    end
+  	    row "Audio (from embeded audio link)" do
+  	    	if retreat_talk.audios.first
+		  	    text_node (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
+		  	  end
+  	    end
+  	    row "Book related" do
+  	    	if retreat_talk.books.first
+  	    		if retreat_talk.books.first.file_file_name
+		  	    	text_node ("<iframe src='" + retreat_talk.books.first.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+		  	    else
+		  	    	text_node ("<iframe src='" + retreat_talk.books.first.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+		  	    end
+		  	  end
+  	    end
   	    # row "File" do
   	    # 	if retreat_talk.file_file_name
 	  	   #  	text_node ("<iframe src='" + retreat_talk.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
@@ -62,9 +76,9 @@ show do |retreat_talk|
   end
   panel "External Links" do
   	attributes_table_for retreat_talk do
-	    row :external_url_link do
-	    	a retreat_talk.external_url_link, :href => retreat_talk.external_url_link
-	    end
+	    # row :external_url_link do
+	    # 	a retreat_talk.external_url_link, :href => retreat_talk.external_url_link
+	    # end
 	    row 'external_cover_img_link' do
 	    	a retreat_talk.external_cover_img_link, :href => retreat_talk.external_cover_img_link
 	    end
@@ -156,9 +170,9 @@ end
 index do
 	selectable_column
 	id_column
-	# column "retreat_talk", :sortable => false do |retreat_talk|
-	#   (retreat_talk.embeded_retreat_talk_link).html_safe
-	# end
+	column "audio", :sortable => false do |retreat_talk|
+	  (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
+	end
 	column :title
 	column :retreat_talk_code
 	column :series
@@ -194,7 +208,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 		tab 'Basic' do
 			f.inputs 'Basic Details' do
 				f.input :title, :required => true
-				f.input :audio_code
+				# f.input :audio_code
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 				f.input :languages
 				f.has_many :languages do |language|
@@ -217,12 +231,10 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			end
 			f.inputs "Audio related to this book" do
         f.input :audios
-        f.has_many :audios do |audio|
-        	audio.input :title, :required => true
-        	audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
-        	audio.input :admin_user_id, :as => :hidden
-        	audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
-        end
+        # f.has_many :audios do |audio|
+        # 	audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
+        # 	audio.input :admin_user_id, :as => :hidden
+        # end
 	    end
 			f.inputs "Book related to this retreat_talk" do
 	          f.input :books

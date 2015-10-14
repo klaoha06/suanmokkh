@@ -11,8 +11,10 @@
 <!--     <iframe width="100%" height="450" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/222701360%3Fsecret_token%3Ds-x3YEY&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe> -->
       <% @audios.each do |track| %>
         <div class="row">
-          <div class="col-md-10">        
-             <iframe width="100%" height="166" scrolling="no" frameborder="no" src=<%= "https://w.soundcloud.com/player/?url=#{track.secret_uri}&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false" %>></iframe>
+          <div class="col-md-10">
+          <%= track %>
+          <hr>    
+          <!--    <iframe width="100%" height="166" scrolling="no" frameborder="no" src=<%= "https://w.soundcloud.com/player/?url=#{track.secret_uri}&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false" %>></iframe> -->
 
 
           </div>

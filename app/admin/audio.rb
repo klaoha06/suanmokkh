@@ -22,6 +22,7 @@ show do |audio|
   	attributes_table_for audio do
   	    row :title
   	    row :audio_code
+  	    row :part
   	    row :external_link
   	    row :created_at
   	    row :updated_at
@@ -34,7 +35,7 @@ show do |audio|
   	    end
   	    row "Audio (from embeded audio link)" do
   	    	if audio.secret_uri
-		  	    text_node ("<iframe width='100%' height='150' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=" + audio.secret_uri + "&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false></iframe>").html_safe
+		  	    text_node ("<iframe width='100%' height='150' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=" + audio.secret_uri + "&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false'></iframe>").html_safe
 		  	  end
   	    end
   	  end

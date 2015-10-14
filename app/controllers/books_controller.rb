@@ -3,7 +3,7 @@ class BooksController < ApplicationController
 
   # GET /books
   # GET /books.json
-  @query = nil
+  # @query = nil
 
   def index
       # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
@@ -43,14 +43,14 @@ class BooksController < ApplicationController
         with_author_id: Author.options_for_select,
         with_series: Book.options_for_series,
       },
-      persistence_id: 'shared_key',
+      # persistence_id: 'shared_key',
       # default_filter_params: {},
       # available_filters: [],
     ) or return
     @books = @filterrific.find.page(params[:page])
 
     respond_to do |format|
-      format.html { render :index }
+      format.html
       format.js
     end
   end
