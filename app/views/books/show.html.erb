@@ -2,78 +2,37 @@
 <title><%= @book.title %> <%= "by " + @book.authors.first.name if @book.authors.first %> - Suan Mokkh</title>
 <% end %>
 
-<!-- <p id="notice"><%= notice %></p> -->
-<!-- <header class="showBook">
-  <div class="header-content">
-    <div class="header-content-inner wow fadeIn">
-      <h1>Suan Mokkh</h1>
-      <h1>Garden of Liberation</h1>
-      <hr>
-      <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-    </div>
-  </div>
-</header> -->
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-  <!-- <hr class="full"> -->
-  <div class="container bg-primary book_header">
+  <div class="container bg-primary retreat_talk_header">
     <div class="row">
       <div class="col-md-4">
       <% if !@book.external_cover_img_link.blank? %>
-        <%= image_tag "#{@book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+        <%= image_tag "#{@book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;" %>
       <% else %>
-        <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+        <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;" %>
       <% end %>
 
         <% if @book.audios.count == 0 %>
 
-        <% elsif @book.audios.count == 1 %>
-          <hr>
-          <small class="text-center floatCenter" >
-          <!-- <i class="fa fa-headphones fa-2x"></i> -->
-          <br>
-          This book has an audio file available
-          </small>
-          <%= @book.audios.first.embeded_audio_link.html_safe %>
-        <% else %>
-          <hr>
+        <% elsif @book.audios.count > 1 %>
           <small class="text-center floatCenter" >
           <br>
-          This book has audio file(s) available in different languages
           </small>
-          <ul>
-          <% @book.audios.each do |audio| %>
+          <div class="col-md-12">
+            <% @options_for_languages %>
+          <p>Select Audio Language</p>
+          <%= 
+          select_tag('languages', options_for_select(@options_for_languages), class: 'form-control changeStatus')
+          %>
+          <br>
+          </div>
 
-            <% if audio.languages.count == 0 %>
-
-            <% elsif audio.languages.count == 1 %>
-              <li>
-              <% if audio.languages.first.name == "Thai" %>
-                <%= image_tag "thai_icon.png" %>
-              <% end %>
-              <% if audio.languages.first.name == "English" %>
-                <%= image_tag "english_icon.gif" %>
-              <% end %>
-              <%= link_to audio.languages.first.name, audio %>
-              </li>
-
-            <% else %>
-              <% audio.languages.each_with_index do |lang, index| %>
-                <% if index != audio.languages.count-1 %>
-                  <% @audio_languages << lang.name + ' and ' %>
-                <% elsif index == audio.languages.count-1 %>
-                  <% @audio_languages << lang.name %>
-                <% end %>
-              <% end %>
-              <li><%= link_to @audio_languages, audio %></li>
-            <% end %>
-
-          <% end %>
-          </ul>
         <% end %>
-
+        
+        <hr class="full visible-sm visible-xs">
       </div>
       <div class="col-md-8">
-        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @book.title %></h1>
+        <h1 style="margin-top:0; margin-bottom: 15px"><%= @book.title %></h1>
         <p>
           <% @book.authors.each do |author|%>
             <%= author.name.upcase %>
@@ -81,17 +40,38 @@
         </p>
         <hr class="full" style="border-color:#725843;">
         <span style="color:black !important"><%= @book.description.html_safe %></span>
-      </div>
-    </div>
-    <!-- <hr> -->
-      <div class="row">
-        <div class="col-md-12">
-          <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em; margin-top:50px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
+        
+        <% if @book.audios.count > 1 %>
+        <div class="row">
+          <div class="col-md-12">
+            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
+          </div>
         </div>
+        <% end %>
+
       </div>
-<!--     <h1>Suan Mokkh</h1>
-    <h1>Garden of Liberation</h1>
-    <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
+      
+      <hr class="full visible-sm visible-xs">
+       <div class="col-md-12"><br>
+        <br>
+          <% @book.audios.each_with_index do |a,i| %>
+            <% if i == 0 %>
+            <div id=<%= "audio"+ a.id.to_s %> class="embeded_audio">
+              <%= a.embeded_audio.html_safe %>
+            </div>
+            <% else %>
+              <div id=<%= "audio"+ a.id.to_s %> class="embeded_audio hide">
+                <%= a.embeded_audio.html_safe %>
+              </div>
+            <% end %>
+          <% end %>
+      <% if @book.audios.count == 1 %>
+          <div class="col-md-12">
+            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
+          </div>
+      <% end %>
+       </div>
+    </div>
   </div>
 </div>
 <div class="container-fluid">
@@ -141,3 +121,10 @@
   </div>
 </div>
 <% end %>
+
+<script type="text/javascript">
+  $('select.changeStatus').change(function(){
+      $('.embeded_audio').addClass('hide');
+      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
+  });
+</script>

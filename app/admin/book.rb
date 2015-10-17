@@ -268,10 +268,18 @@ index do
 				end
 			end
 	end
+	column :retreat_talks_related do |book|
+			book.retreat_talks.each do |retreat_talk|
+				a :href => admin_retreat_talk_path(retreat_talk) do
+					li retreat_talk.title
+				end
+			end
+	end
 	column :draft, :sortable => :draft do |book|
 		status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
 	end
 	column :featured
+	column :recommended
 	column :created_at
 	actions
 end
@@ -370,6 +378,14 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  after_create do	  	
 	  	@book.audios.each do |audio|
 	  		@current_admin_user.audios << audio
+	  	end
+
+	  	if @book.authors.first == nil
+	  		@book.authors << Author.first
+	  	end
+
+	  	if @book.languages.first == nil
+	  		@book.languages << Language.first
 	  	end
 
 	  	audios = @_params[:book][:audios_attributes]

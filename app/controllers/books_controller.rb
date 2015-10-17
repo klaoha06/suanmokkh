@@ -63,6 +63,19 @@ class BooksController < ApplicationController
     # @book.audios.each do |audio|
     #   @audios_languages + audio.languages.name + " " if audio.language.name
     # end
+    @options_for_languages = []
+      @book.audios.each do |a|
+        language_option = ''
+        a.languages.each_with_index do |l, index|
+          if index != a.languages.count-1 
+            language_option << l.name + ' and '
+          elsif index == a.languages.count-1
+            language_option << l.name
+          end
+        end
+        @options_for_languages << [language_option, a.id]
+      end
+
   end
 
 
