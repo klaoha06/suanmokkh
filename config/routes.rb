@@ -13,11 +13,12 @@ Rails.application.routes.draw do
   resources :authors
   mount Ckeditor::Engine => '/ckeditor'
   resources :articles
-  resources :audios
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :books
-  resources :retreat_talks
+  resources :retreat_talks do
+    resources :audios
+  end
 
   get 'home/index'
   get 'buddhadasa' => 'buddhadasa'

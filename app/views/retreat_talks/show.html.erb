@@ -1,18 +1,6 @@
 <% content_for :head do %>
 <title><%= "Retreat Talk on '"+@retreat_talk.title %><%= "' by "+@retreat_talk.authors.first.name if @retreat_talk.authors.first %> - Suan Mokkh</title>
 <% end %>
-
-<!-- <p id="notice"><%= notice %></p> -->
-<!-- <header class="showretreat_talk">
-  <div class="header-content">
-    <div class="header-content-inner wow fadeIn">
-      <h1>Suan Mokkh</h1>
-      <h1>Garden of Liberation</h1>
-      <hr>
-      <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-    </div>
-  </div>
-</header> -->
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <!-- <hr class="full"> -->
   <div class="container bg-primary book_header">
@@ -23,15 +11,16 @@
       <% else %>
         <%= image_tag "#{@retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
       <% end %>
-      <% if @related_retreat_talks.count > 1 %>
-      <hr>
-      <small class="text-center">Related Retreat Talk(s)</small>
-      <ul>
-        <% @related_retreat_talks.each do |rt| %>
-          <li><%= link_to rt.title, rt %></li>
-        <% end %>
-      </ul>
-
+        
+      <% if @audios.count > 1 %>
+        <hr>
+        <div class="col-md-12" style="float: right;">
+        <p>Select Language</p>
+        <%= 
+        select_tag('languages', options_for_select(@options_for_languages), class: 'form-control input-sm changeStatus')
+        %>
+        <br>
+        </div>
       <% end %>
 
       </div>
@@ -45,73 +34,84 @@
         </p>
         <hr class="full" style="border-color:#725843;">
         <span style="color:black !important"><%= @retreat_talk.description.html_safe %></span>
+
+        <% if @book != nil %>
+        <hr>
+          <div class="row">
+            <div class="col-md-12">
+              <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:30%; padding:10px 0; font-size: 1em; margin-top:20px;" role="button"><i class="fa fa-edit"></i> See Transcript</a>
+            </div>
+          </div>
+        <% end %>
       </div>
+
+ 
 
       <% if @retreat_talk.audios.count == 0 %>
 
       <% elsif @retreat_talk.audios.count == 1 %>
         <div class="col-md-12">
-        <!-- <hr> -->
         <small class="text-center floatCenter" >
-        <!-- <i class="fa fa-headphones fa-2x"></i> -->
         <br>
         </small>
-        <%= @retreat_talk.audios.first.embeded_audio_link.html_safe %>
+
+        <%= @audio.embeded_audio_link.html_safe %>
+
       <% else %>
         <hr>
+ <!--        <div class="col-md-2" style="float: right;">
+        <p>Languages</p>
+        <%= 
+        select_tag('languages', options_for_select(@options_for_languages), class: 'form-control input-sm changeStatus')
+        %>
+        <br>
+        </div> -->
         <small class="text-center floatCenter" >
         <br>
-        This retreat_talk has audio file(s) available in different languages
-        </small>
-        <ul>
-        <%= @retreat_talk.audios.each do |audio| %>
-
-          <% if audio.languages.count == 0 %>
-
-          <% elsif audio.languages.count == 1 %>
-            <li>
-            <% if audio.languages.first.name == "Thai" %>
-              <%= image_tag "thai_icon.png" %>
-            <% end %>
-            <% if audio.languages.first.name == "English" %>
-              <%= image_tag "english_icon.gif" %>
-            <% end %>
-            <%= link_to audio.languages.first.name, audio %>
-            </li>
-            </ul>
-        </div>
-
+<!--         This retreat_talk has audio file(s) available in different languages
+ -->        </small>
+        <% @audios.each_with_index do |a,i| %>
+          <% if i == 0 %>
+          <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio">
+            <%= a.embeded_audio_link.html_safe %>
+          </div>
           <% else %>
-            <% audio.languages.each_with_index do |lang, index| %>
-              <% if index != audio.languages.count-1 %>
-                <% @audio_languages << lang.name + ' and ' %>
-              <% elsif index == audio.languages.count-1 %>
-                <% @audio_languages << lang.name %>
-              <% end %>
-            <% end %>
-            <li><%= link_to @audio_languages, audio %></li>
+            <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio hide">
+              <%= a.embeded_audio_link.html_safe %>
+            </div>
           <% end %>
 
         <% end %>
-        </ul>
       <% end %>
 
 
 
     </div>
 
-    <% if @book != nil %>
+  <% if @related_retreat_talks.count >= 1 %>
     <hr>
-      <div class="row">
-        <div class="col-md-12">
-          <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em; margin-top:50px;" role="button"><i class="fa fa-retreat_talk"></i> Start Reading</a>
+    <div class="col-md-12">
+
+    <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.8em">
+      See Related Talk(s)
+    </a>
+
+    <div class="collapse" id="collapseExample">
+        <div id="owl-demo">
+          <% @related_retreat_talks.each do |rt| %>
+          <div class="item text-center">
+            <img src=<%= rt.external_cover_img_link %> alt="Owl Image">
+            <%= link_to rt.title, rt %>
+          </div>
+          <% end %>
         </div>
-      </div>
-    <% end %>
-<!--     <h1>Suan Mokkh</h1>
-    <h1>Garden of Liberation</h1>
-    <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
+    </div>
+
+    </div>
+  <% end %>
+
   </div>
+
 </div>
 <div class="container-fluid">
   <div id="start_reading" class="container">
@@ -145,3 +145,19 @@
   </div>
 </div>
 <% end %>
+
+<script type="text/javascript">
+  $('select.changeStatus').change(function(){
+      $('.retreat_talk_audio').addClass('hide');
+      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
+  });
+  $("#owl-demo").owlCarousel({
+  
+       autoPlay: 3000, //Set AutoPlay to 3 seconds
+  
+       items : 4,
+       itemsDesktop : [1199,3],
+       itemsDesktopSmall : [979,3]
+  
+   });
+</script>

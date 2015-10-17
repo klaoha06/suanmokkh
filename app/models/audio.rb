@@ -31,6 +31,38 @@ class Audio < ActiveRecord::Base
 			return '<iframe width="' + width +'" height="' + height +'" frameborder="no" src="https://w.soundcloud.com/player/?url=' + self.secret_uri + '&amp;color=ff5500&amp;inverse=false&amp;auto_play=false&amp;show_user=true"></iframe>'
 		end
 
+		def self.options_for_retreat_talk_languages (retreat_talk_id)
+			# joins(:languages, :retreat_talk).where(retreat_talks: {retreat_talk_id: retreat_talk_id})
+		end
+
+		filterrific(
+		  available_filters: [
+		    :with_language_id,
+		  ]
+		)
+
+		def self.with_language_id language_id
+		  joins(:languages).where(languages: {id: language_id})
+		end
+
+		def self.options_for_languages retreat_talk_id
+		  # p joins(:audios, :languages).order('LOWER(name)').map { |e| [e.name, e.id] }
+		  options = []
+		  joins(:retreat_talks).find(retreat_talk_id).audios.each do |a|
+			  language_option = ''
+		  	a.languages.each_with_index do |l, index|
+		  		# language_options << l.name + ' '
+		  		if index != a.languages.count-1 
+		  			language_option << l.name + ' and '
+		  		elsif index == a.languages.count-1
+		  			language_option << l.name
+		  		end
+		  	end
+		  	options << language_option
+		  end
+		  options
+		end
+
 
 		def create
 			@audio = Audio.new(audio_params)

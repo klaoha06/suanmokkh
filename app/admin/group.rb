@@ -29,12 +29,12 @@ index do
   column :number_of_audios do |group|
     a group.audios.count, :href => admin_audios_path()
   end
-  column :number_of_articles do |group|
-      a group.articles.count, :href => admin_articles_path()
-  end
-  column :number_of_news_articles do |group|
-    a group.news_articles.count, :href => admin_news_articles_path()
-  end
+  # column :number_of_articles do |group|
+  #     a group.articles.count, :href => admin_articles_path()
+  # end
+  # column :number_of_news_articles do |group|
+  #   a group.news_articles.count, :href => admin_news_articles_path()
+  # end
   column :number_of_poems do |group|
     a group.poems.count, :href => admin_poems_path()
   end
@@ -61,9 +61,9 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        f.inputs "Poems" do
 	          f.input :poems
 	        end
-	        f.inputs "Articles" do
-	          f.input :articles
-	        end
+	        # f.inputs "Articles" do
+	        #   f.input :articles
+	        # end
 	        f.inputs 'Cover Image' do
 	        	# f.input :file
 	        	# f.input :photo, hint: f.article.photo? ? image_tag(f.article.photo.url, height: '200') : content_tag(:span, "Upload JPG/PNG/GIF image")

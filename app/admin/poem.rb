@@ -152,8 +152,8 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        end
 	        f.inputs 'Publish Status' do
 	        	f.input :draft, :label => "Make this a draft?"
-	        	f.input :featured
-	        	f.input :allow_comments, :label => "Allow commenting on this article?"
+	        	# f.input :featured
+	        	# f.input :allow_comments, :label => "Allow commenting on this article?"
 	        end
 	      end
 	    end

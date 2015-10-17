@@ -121,6 +121,11 @@ end
 	    	column("Name") {|book| link_to "#{book.title}", admin_book_path(book) }
 	    end
 	end
+	sidebar "retreat_talk related to this audio", :only => :show do
+	    table_for(Audio.find(params[:id]).retreat_talks) do
+	    	column("Name") {|retreat_talk| link_to "#{retreat_talk.title}", admin_retreat_talk_path(retreat_talk) }
+	    end
+	end
 	sidebar "Author related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).authors) do
 	    	column("Name") {|author| link_to "#{author.name}", admin_author_path(author) }
@@ -218,6 +223,12 @@ end
 		             author.input :name
 		          end
 		        end
+		        f.inputs "Retreat Talk" do
+		          f.input :retreat_talks
+		          # f.has_many :authors do |author|
+		          #    author.input :name
+		          # end
+		        end
 		        f.inputs "Book relating to this audio.." do
 		          f.input :books, hint: content_tag(:span, "To create new book please create this audio first then click on 'Books' tab on the top navigation bar and click on 'New Book' on the right. If this book is related to an book then create this book and find this book under the section 'Audio related to this book' in the book cretion form")
 		          # f.has_many :books do |book|
@@ -244,11 +255,15 @@ end
 			super do |format|
 				params.permit!
 				@existing_authors = params[:audio].delete("author_ids")
+				@existing_retreat_talks = params[:audio].delete("retreat_talk_ids")
 				@existing_languages = params[:audio].delete("language_ids")
 				@existing_groups = params[:audio].delete("group_ids")
 				@existing_books = params[:audio].delete("book_ids")
 				if @existing_authors
 					@audio.authors << Author.where(id: @existing_authors)
+				end
+				if @existing_retreat_talks
+					@audio.retreat_talks << RetreatTalk.where(id: @existing_retreat_talks)
 				end
 				if @existing_books
 					@audio.books << Book.where(id: @existing_books)
@@ -269,6 +284,7 @@ end
 			super do |format|
 				params.permit!
 				@existing_authors = params[:audio].delete("author_ids")
+				@existing_retreat_talks = params[:audio].delete("retreat_talk_ids")
 				@existing_books = params[:audio].delete("book_ids")
 				@existing_languages = params[:audio].delete("language_ids")
 				@existing_groups = params[:audio].delete("group_ids")
@@ -282,6 +298,18 @@ end
 						if !author.has_key?("id")
 							new_author = Author.where(name: author[:name]).first_or_create
 							@audio.authors << new_author
+						end
+					end
+				end
+
+				if @existing_retreat_talks
+					@audio.retreat_talks = RetreatTalk.where(id: @existing_retreat_talks)
+				end
+				if params[:audio][:retreat_talks_attributes]
+					params[:audio][:retreat_talks_attributes].each do |key, retreat_talk|
+						if !retreat_talk.has_key?("id")
+							new_retreat_talk = RetreatTalk.where(name: retreat_talk[:name]).first_or_create
+							@audio.retreat_talks << new_retreat_talk
 						end
 					end
 				end

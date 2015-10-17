@@ -36,6 +36,48 @@ require 'faker'
 # @search =  Audio.search(params[:q])
 # @audios = @search.result
 
+Poem.create!([{title: 'Buddhadasa Never Dies', content: "Buddhadasa shall live, there's no dying. 
+Even when the body dies, it will not listen. 
+Whether it is or goes is of no consequence, 
+it is only something passing through time.
+
+Buddhadasa carries on, there's no dying. 
+However good or bad the times, 
+always one with the true teaching. 
+Having offered body and mind in ceaseless service 
+Under Lord Buddha's command.
+
+Buddhadasa lives on, there's no dying. 
+In service to all humanity forever 
+through the Dhamma Proclamations left behind -- 
+O, Friends, can't you see! What dies?
+
+Even when I die and the body ceases 
+my voice still echoes in comrades' ears 
+clear and bright, as loud as ever. 
+Just as if I never died the Dhamma-body lives on.
+
+Treat me as if I never died, 
+as though I am with you all as before. 
+Speak up whatever is on your minds 
+as if I sit with you helping point out the facts.
+
+Treat me as if I never died, then 
+many streams of benefits will accrue. 
+Don't forget the days we set aside for Dhamma discussion; 
+Realize the Absolute and stop dying!", external_cover_img_link: 'ajarn1.jpg' }, {title: 'Buddhadasa', content: "I offer this life and body to the Buddha,
+
+the Buddha is my master, 
+
+I am the Buddha's servant. 
+
+Thus, I am called 'Buddhadasa.'", external_cover_img_link: 'ajarn2.jpg'}])
+
+12.times do |i|
+  Poem.create!({title: Faker::Lorem.sentence, content: Faker::Lorem.paragraph, external_cover_img_link: ('ajarn' + (i+1).to_s + '.jpg' )})
+end
+
+
 Language.create!([{name: 'English'}, {name: 'Thai'}, {name: 'German'}, {name: 'Chinese'}, {name: 'Russian'}, {name: 'Japanese'}, {name: 'French'}, {name: 'Korean'}])
 Author.create!([{name: 'Buddhadasa'}])
 

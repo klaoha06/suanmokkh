@@ -46,12 +46,32 @@ class RetreatTalksController < InheritedResources::Base
 	# GET /retreat_talks/1.json
 	def show
 	  @retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
-	  # @audios_languages = 'in ';
+	  @book = @retreat_talk.books.first
+	  @audios = @retreat_talk.audios
+	  @audio = @audios.first
+	  @audio_languages = 'in ';
+	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}).where.not(id: params[:id])
 	  # @retreat_talk.audios.each do |audio|
 	  #   @audios_languages + audio.languages.name + " " if audio.language.name
-	  # end
-	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code})
-	  @book = @retreat_talk.books.first
+	  # en
+
+	  @related_audios = @retreat_talk.audios
+
+	  @options_for_languages = []
+	    @retreat_talk.audios.each do |a|
+	  	  language_option = ''
+	    	a.languages.each_with_index do |l, index|
+	    		# language_options << l.name + ' '
+	    		if index != a.languages.count-1 
+	    			language_option << l.name + ' and '
+	    		elsif index == a.languages.count-1
+	    			language_option << l.name
+	    		end
+	    	end
+	    	@options_for_languages << [language_option, a.id]
+	    end
+
+
 	end
 
   private
