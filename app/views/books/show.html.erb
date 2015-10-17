@@ -65,7 +65,7 @@
               </div>
             <% end %>
           <% end %>
-      <% if @book.audios.count == 1 %>
+      <% if @book.audios.count <= 1 %>
           <div class="col-md-12">
             <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
           </div>
@@ -94,17 +94,6 @@
 <% if @book.allow_comments %>
 <div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
   <div class="container">
-    <div class="row">
-    <h1 class="text-center">
-      <small class="white">Downloads</small>
-      <%= @book.downloads %>
-      <small class="white">Views</small>
-      <%= @book.views %>
-      <small class="white">Shares</small>
-      <%= @book.shares %>
-    </h1>
-    <hr>
-    </div>
   <div id="disqus_thread"></div>
   <script type="text/javascript">
       /* * * CONFIGURATION VARIABLES * * */
