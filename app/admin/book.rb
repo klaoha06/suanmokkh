@@ -143,11 +143,11 @@ sidebar "Retreat Talk", :only => :show do
 		column("Title") {|retreat_talk| link_to "#{retreat_talk.title}", admin_retreat_talk_path(retreat_talk) }
 	end
 end
-# sidebar "Audio", :only => :show do
-# 	table_for(book.audios) do
-# 		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
-# 	end
-# end
+sidebar "Audio", :only => :show do
+	table_for(book.audios) do
+		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
+	end
+end
 sidebar "Author", :only => :show do
 	table_for(book.authors) do
 		column("Name") {|author| link_to "#{author.name}", admin_author_path(author) }
