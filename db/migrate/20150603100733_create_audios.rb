@@ -12,6 +12,7 @@ class CreateAudios < ActiveRecord::Migration
     	t.string :part
 
         t.text :embeded_audio_uri
+        t.string :uri
     	t.string :secret_uri
     	# t.string :external_link
 

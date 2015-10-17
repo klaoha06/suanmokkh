@@ -1,7 +1,7 @@
 ActiveAdmin.register Audio do
 	menu priority: 3
 	config.per_page = 15
-	permit_params :id, :admin_user_id, :recommended,
+	permit_params :id, :uri, :secret_uri, :admin_user_id, :recommended,
 		:language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
 
 # See permitted parameters documentation:
@@ -22,6 +22,8 @@ show do |audio|
   	attributes_table_for audio do
   	    row :title
   	    row :id
+  	    row :uri
+  	    row :secret_uri
   	    row :audio_code
   	    row :part
   	    # row :external_link
@@ -65,7 +67,7 @@ show do |audio|
   panel "External Links" do
   	attributes_table_for audio do
 	    row :secret_uri
-	    row :embeded_audio_link
+	    row :uri
 	    # row :external_url_link do
 	    # 	a audio.external_link, :href => audio.external_link
 	    # end
@@ -165,25 +167,26 @@ end
 	form :html => { :enctype => "multipart/form-data" } do |f|
 		tabs do
 		      tab 'Basic' do
-		        f.inputs 'Basic Details' do
+		        f.inputs 'Required Infomation' do
 		        	f.input :title, :required => true
-		        	f.input :audio_code
-		        	f.input :description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
+		        	f.input :uri, :as => :url, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
+		        	# f.input :audio_code
+		        	# f.input :description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 		        	f.input :languages, :required => true
-		        	f.has_many :languages do |language|
-		        	   language.inputs
-		        	end
-		        	f.input :groups
-		        	f.has_many :groups do |group|
-		        	   group.input :name
-		        	end
-		        	f.input :series
-		        	f.input :creation_date
-		        	f.input :duration, hint: content_tag(:span, "millisecond")
+		        	# f.has_many :languages do |language|
+		        	#    language.inputs
+		        	# end
 		        end
-		        f.inputs "Links" do
-		          f.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
+		        f.inputs "Optional Infomation" do
+		          # f.input :uri, :as => :url, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
 		          # f.input :external_link, :as => :url, hint: content_tag(:span, "This will show just a link for user to click")
+		          f.input :groups
+		          f.has_many :groups do |group|
+		             group.input :name
+		          end
+		          f.input :series
+		          f.input :creation_date
+		          f.input :duration, hint: content_tag(:span, "millisecond")
 		        end
 		        f.inputs "Author relating to this audio.." do
 		          f.input :authors
@@ -215,6 +218,16 @@ end
 		      end
 		    end
 		f.actions
+	end
+
+	after_create do
+			track_url = params[:audio][:uri] ||= @audio.uri
+		if track_url != ''
+			@sc_track = $sc_consumer.get('/resolve', :url => track_url, :client_id => Rails.application.secrets.SC_CLIENT_ID)
+			track = $sc_consumer.get('/tracks/'+@sc_track.id.to_s, :url => track_url, :client_id => Rails.application.secrets.SC_CLIENT_ID)
+			@audio.update({ secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+		end
+
 	end
 
 	controller do
