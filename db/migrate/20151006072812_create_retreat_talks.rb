@@ -6,12 +6,14 @@ class CreateRetreatTalks < ActiveRecord::Migration
     	t.string :series
     	# t.string :duration
     	# t.string :audio_code
+     #  t.string :part
       t.string :format
       t.string :series
       t.string :group
 
       # t.text :embeded_audio_link
       # t.text :external_url_link
+      # t.string :secret_uri
       t.text :external_cover_img_link
       # t.string :language
 

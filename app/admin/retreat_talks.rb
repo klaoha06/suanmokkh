@@ -8,6 +8,7 @@ show do |retreat_talk|
   panel "Basic" do
   	attributes_table_for retreat_talk do
   	    row :title
+  	    row :id
   	    row :created_at
   	    row :updated_at
   	    row :series

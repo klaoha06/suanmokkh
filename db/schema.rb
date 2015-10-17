@@ -120,18 +120,19 @@ ActiveRecord::Schema.define(version: 20151011073648) do
     t.integer  "duration"
     t.string   "audio_code"
     t.string   "part"
+    t.text     "embeded_audio_link"
     t.string   "secret_uri"
     t.string   "external_link"
-    t.boolean  "draft",             default: false
-    t.boolean  "featured",          default: false
-    t.boolean  "recommended",       default: false
-    t.boolean  "allow_comments",    default: true
-    t.integer  "downloads",         default: 0
-    t.integer  "plays",             default: 0
-    t.integer  "shares",            default: 0
+    t.boolean  "draft",              default: false
+    t.boolean  "featured",           default: false
+    t.boolean  "recommended",        default: false
+    t.boolean  "allow_comments",     default: true
+    t.integer  "downloads",          default: 0
+    t.integer  "plays",              default: 0
+    t.integer  "shares",             default: 0
     t.integer  "admin_user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
@@ -404,17 +405,14 @@ ActiveRecord::Schema.define(version: 20151011073648) do
   create_table "poems", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
-    t.string   "author"
+    t.text     "external_cover_img_link"
     t.string   "series"
     t.date     "creation_date"
-    t.integer  "views",                  default: 0
-    t.integer  "shares",                 default: 0
-    t.boolean  "draft",                  default: false
-    t.boolean  "featured",               default: false
-    t.boolean  "allow_comments",         default: true
+    t.boolean  "draft",                   default: false
+    t.boolean  "featured",                default: false
     t.integer  "admin_user_id"
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "cover_img_file_name"
     t.string   "cover_img_content_type"
     t.integer  "cover_img_file_size"

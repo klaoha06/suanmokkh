@@ -44,23 +44,6 @@ class RetreatTalk < ActiveRecord::Base
 			end
 		end
 
-		# filterrific(
-		#   available_filters: [
-		#     :with_languages,
-		#     # :with_created_at_gte
-		#   ]
-		# )
-
-		# scope :with_languages, lambda {
-		#   where(
-		#     'EXISTS (SELECT 1 from books, comments WHERE books.id = languages.book_id)'
-		#   )
-		# }
-
-		# scope :with_created_at_gte, lambda { |ref_date|
-		#   where('books.created_at >= ?', ref_date)
-		# }
-
 		filterrific(
 		  available_filters: [
 		    :search_query,
@@ -113,6 +96,28 @@ class RetreatTalk < ActiveRecord::Base
 		  where.not('series' => '').pluck(:series)
 		end
 
+		def self.audio_languages language_id
+			joins(:audios).where(audios: {language_id: language_id})
+		end
+
+		def self.options_for_languages retreat_talk_id
+		  # p joins(:audios, :languages).order('LOWER(name)').map { |e| [e.name, e.id] }
+		  options = []
+		  self.find(retreat_talk_id).audios.each do |a|
+			  language_option = ''
+		  	a.languages.each_with_index do |l, index|
+		  		# language_options << l.name + ' '
+		  		if index != a.languages.count-1 
+		  			language_option << l.name + ' and '
+		  		elsif index == a.languages.count-1
+		  			language_option << l.name
+		  		end
+		  	end
+		  	options << [language_option, a.id]
+		  end
+		  options
+		end
+
 		private
 
 	  def source_of_file
@@ -129,3 +134,4 @@ class RetreatTalk < ActiveRecord::Base
 	    end
 	  end
 end
+

@@ -56,15 +56,15 @@ show :title => :name do
       column("Actions") {|book| a ' Go to', :href => admin_book_path(book), :class => "button"}
     end
   end
-  panel "Article(s) in this language..." do
-    table_for(language.articles) do
-      column("Article ID", :sortable => :id) {|article| link_to "##{article.id}", admin_article_path(article) }
-      column("Title") {|article| link_to "##{article.id}", admin_article_path(audio)}
-      column("Created At", :sortable => :created_at){|article| pretty_format(article.created_at) }
-      column("Status") {|article| status_tag(article.draft? ? "Not Published" : "Published")}
-      column("Actions") {|article| a ' Go to', :href => admin_article_path(article), :class => "button"}
-    end
-  end
+  # panel "Article(s) in this language..." do
+  #   table_for(language.articles) do
+  #     column("Article ID", :sortable => :id) {|article| link_to "##{article.id}", admin_article_path(article) }
+  #     column("Title") {|article| link_to "##{article.id}", admin_article_path(audio)}
+  #     column("Created At", :sortable => :created_at){|article| pretty_format(article.created_at) }
+  #     column("Status") {|article| status_tag(article.draft? ? "Not Published" : "Published")}
+  #     column("Actions") {|article| a ' Go to', :href => admin_article_path(article), :class => "button"}
+  #   end
+  # end
   panel "Audio(s) in this language..." do
     table_for(language.audios) do
       column("Audio ID", :sortable => :id) {|audio| link_to "##{audio.id}", admin_audio_path(audio) }
