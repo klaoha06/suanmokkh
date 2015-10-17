@@ -3,7 +3,7 @@
 <% end %>
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <!-- <hr class="full"> -->
-  <div class="container bg-primary book_header">
+  <div class="container bg-primary retreat_talk_header">
     <div class="row">
       <div class="col-md-4">
       <% if !@retreat_talk.external_cover_img_link.blank? %>
@@ -14,10 +14,10 @@
         
       <% if @audios.count > 1 %>
         <hr>
-        <div class="col-md-12" style="float: right;">
+        <div class="col-md-12">
         <p>Select Language</p>
         <%= 
-        select_tag('languages', options_for_select(@options_for_languages), class: 'form-control input-sm changeStatus')
+        select_tag('languages', options_for_select(@options_for_languages), class: 'form-control changeStatus')
         %>
         <br>
         </div>
@@ -39,7 +39,7 @@
         <hr>
           <div class="row">
             <div class="col-md-12">
-              <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:30%; padding:10px 0; font-size: 1em; margin-top:20px;" role="button"><i class="fa fa-edit"></i> See Transcript</a>
+              <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:200px; padding:10px 0; font-size: 0.9em; margin:10px auto 20px auto" role="button"><i class="fa fa-edit"></i> See Transcript</a>
             </div>
           </div>
         <% end %>
@@ -55,7 +55,7 @@
         <br>
         </small>
 
-        <%= @audio.embeded_audio_link.html_safe %>
+        <%= @audio.embeded_audio.html_safe %>
 
       <% else %>
         <hr>
@@ -73,11 +73,11 @@
         <% @audios.each_with_index do |a,i| %>
           <% if i == 0 %>
           <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio">
-            <%= a.embeded_audio_link.html_safe %>
+            <%= a.embeded_audio.html_safe %>
           </div>
           <% else %>
             <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio hide">
-              <%= a.embeded_audio_link.html_safe %>
+              <%= a.embeded_audio.html_safe %>
             </div>
           <% end %>
 
@@ -89,7 +89,8 @@
     </div>
 
   <% if @related_retreat_talks.count >= 1 %>
-    <hr>
+    <!-- <hr> -->
+    <br>
     <div class="col-md-12">
 
     <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.8em">

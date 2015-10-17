@@ -1,5 +1,5 @@
 ActiveAdmin.register Audio do
-	# menu priority: 3
+	menu priority: 3
 	config.per_page = 15
 	permit_params :id, :admin_user_id, :recommended,
 		:language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
@@ -21,9 +21,10 @@ show do |audio|
   panel "Basic" do
   	attributes_table_for audio do
   	    row :title
+  	    row :id
   	    row :audio_code
   	    row :part
-  	    row :external_link
+  	    # row :external_link
   	    row :created_at
   	    row :updated_at
   	    row :series
@@ -35,7 +36,7 @@ show do |audio|
   	    end
   	    row "Audio (from embeded audio link)" do
   	    	if audio.secret_uri
-		  	    text_node ("<iframe width='100%' height='150' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=" + audio.secret_uri + "&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false'></iframe>").html_safe
+		  	    text_node (audio.embeded_audio_link_strip).html_safe
 		  	  end
   	    end
   	  end
@@ -61,61 +62,21 @@ show do |audio|
   	    end
   	  end
   end
-  # panel "Stats" do
-  # 	attributes_table_for audio do
-  # 	    row :plays
-  # 	    row :shares
-  # 	    # row :downloads
-  # 	  end
-  # end
   panel "External Links" do
   	attributes_table_for audio do
+	    row :secret_uri
 	    row :embeded_audio_link
-	    row :external_url_link do
-	    	a audio.external_link, :href => audio.external_link
-	    end
+	    # row :external_url_link do
+	    # 	a audio.external_link, :href => audio.external_link
+	    # end
 	    # row 'external_file_link' do
 	    # 	a book.external_file_link, :href => book.external_file_link
 	    # end
 	  end
   end
-  # panel "File" do
-  # 	attributes_table_for audio do
-  # 	    attachment_row:file
-  # 	    row :file_file_name
-  # 	    row :file_content_type
-  # 	    row 'file size (in Megabytes)' do
-  # 	    	para number_to_human_size(audio.file_file_size)
-  # 	    end
-  # 	    row 'file url' do
-  # 	    	para audio.file.url
-  # 	    end
-  # 	    row :file_updated_at
-  # 	  end
-  # end
-	  # panel "Cover Image" do
-	  # 	attributes_table_for audio do
-	  # 	    attachment_row:cover_img
-	  # 	    row :cover_img_file_name
-	  # 	    row :cover_img_content_type
-	  # 	    row 'cover image size (in Megabytes)' do
-	  # 	    	para number_to_human_size(audio.cover_img_file_size)
-	  # 	    end
-	  # 	    row 'cover image url' do
-	  # 	    	para audio.cover_img.url
-	  # 	    end
-	  # 	    row :cover_img_updated_at
-	  # 	  end
-	  # end
+
   active_admin_comments
 end
-	sidebar "Admin who create this audio..", :only => :show do
-		if Audio.find(params[:id]).admin_user_id
-			table_for(AdminUser.find(Audio.find(params[:id]).admin_user_id)) do
-				column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
-			end
-		end
-	end
 	sidebar "Book related to this audio", :only => :show do
 	    table_for(Audio.find(params[:id]).books) do
 	    	column("Name") {|book| link_to "#{book.title}", admin_book_path(book) }
@@ -140,6 +101,13 @@ end
 	    table_for(Audio.find(params[:id]).languages) do
 	    	column("Name") {|language| link_to "#{language.name}", admin_language_path(language) }
 	    end
+	end
+	sidebar "Admin who create this audio..", :only => :show do
+		if Audio.find(params[:id]).admin_user_id
+			table_for(AdminUser.find(Audio.find(params[:id]).admin_user_id)) do
+				column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+			end
+		end
 	end
 
 	scope :all, :default => true
@@ -186,10 +154,10 @@ end
 					end
 				end
 		end
-		column :draft, :sortable => :draft do |audio|
-	      status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
-	    end
-		column :featured
+		# column :draft, :sortable => :draft do |audio|
+	 #      status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
+	 #    end
+		# column :featured
 		# column :created_at
 	  actions
 	end
@@ -211,19 +179,19 @@ end
 		        	end
 		        	f.input :series
 		        	f.input :creation_date
-		        	f.input :duration
+		        	f.input :duration, hint: content_tag(:span, "millisecond")
 		        end
 		        f.inputs "Links" do
 		          f.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
-		          f.input :external_link, :as => :url, hint: content_tag(:span, "This will show just a link for user to click")
+		          # f.input :external_link, :as => :url, hint: content_tag(:span, "This will show just a link for user to click")
 		        end
-		        f.inputs "Author" do
+		        f.inputs "Author relating to this audio.." do
 		          f.input :authors
 		          f.has_many :authors do |author|
 		             author.input :name
 		          end
 		        end
-		        f.inputs "Retreat Talk" do
+		        f.inputs "Retreat Talk relating to this audio.." do
 		          f.input :retreat_talks
 		          # f.has_many :authors do |author|
 		          #    author.input :name

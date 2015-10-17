@@ -13,6 +13,7 @@ show do |retreat_talk|
   	    row :updated_at
   	    row :series
   	    row :format
+  	    row :publication_date
   	    row "Description" do
   	    	if retreat_talk.description
 	  	    	text_node (retreat_talk.description).html_safe
@@ -25,7 +26,7 @@ show do |retreat_talk|
 		  	    text_node (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
 		  	  end
   	    end
-  	    row "Book related" do
+  	    row "Book file" do
   	    	if retreat_talk.books.first
   	    		if retreat_talk.books.first.file_file_name
 		  	    	text_node ("<iframe src='" + retreat_talk.books.first.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
@@ -47,47 +48,31 @@ show do |retreat_talk|
   # 	attributes_table_for retreat_talk do
   # 	  end
   # end
-  panel "Status" do
-  	attributes_table_for retreat_talk do
-  	    row 'allow_comments' do
-  	    	status_tag((retreat_talk.allow_comments? ? "Commenting Allowed" : "No Commenting Allowed"), (retreat_talk.allow_comments? ? :ok : :warning))
-  	    end
-  	    row 'featured' do
-  	    	status_tag((retreat_talk.featured? ? "Featured" : "Not Featured"), (retreat_talk.featured? ? :ok : :warning))
-  	    end
-  	    row 'recommended' do
-  	    	status_tag((retreat_talk.recommended? ? "Recommended" : "Not Recommended"), (retreat_talk.recommended? ? :ok : :warning))
-  	    end
-  	    row 'draft' do
-  	    	status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
-  	    end
-  	  end
-  end
-  panel "Publication" do
-  	attributes_table_for retreat_talk do
-  	    row :publication_date
-  	  end
-  end
-  panel "Stats" do
-  	attributes_table_for retreat_talk do
-  	    row :views
-  	    row :shares
-  	    row :downloads
-  	  end
-  end
-  panel "External Links" do
-  	attributes_table_for retreat_talk do
-	    # row :external_url_link do
-	    # 	a retreat_talk.external_url_link, :href => retreat_talk.external_url_link
-	    # end
-	    row 'external_cover_img_link' do
-	    	a retreat_talk.external_cover_img_link, :href => retreat_talk.external_cover_img_link
-	    end
-	    # row 'external_file_link' do
-	    # 	a retreat_talk.external_file_link, :href => retreat_talk.external_file_link
-	    # end
-	  end
-  end
+  # panel "Publication" do
+  # 	attributes_table_for retreat_talk do
+  # 	    row :publication_date
+  # 	  end
+  # end
+  # panel "Stats" do
+  # 	attributes_table_for retreat_talk do
+  # 	    row :views
+  # 	    row :shares
+  # 	    row :downloads
+  # 	  end
+  # end
+  # panel "External Links" do
+  # 	attributes_table_for retreat_talk do
+	 #    # row :external_url_link do
+	 #    # 	a retreat_talk.external_url_link, :href => retreat_talk.external_url_link
+	 #    # end
+	 #    # row 'external_cover_img_link' do
+	 #    # 	a retreat_talk.external_cover_img_link, :href => retreat_talk.external_cover_img_link
+	 #    # end
+	 #    # row 'external_file_link' do
+	 #    # 	a retreat_talk.external_file_link, :href => retreat_talk.external_file_link
+	 #    # end
+	 #  end
+  # end
 
 	 if retreat_talk.cover_img_file_name
 	  panel "Cover Image" do
@@ -102,7 +87,7 @@ show do |retreat_talk|
 	  	    	para number_to_human_size(retreat_talk.cover_img_file_size)
 	  	    end
 	  	    row 'cover image url' do
-	  	    	para retreat_talk.cover_img.url
+	  	    	para retreat_talk.external_cover_img_link
 	  	    end
 	  	    row :cover_img_updated_at
 	  	  end
@@ -114,26 +99,39 @@ show do |retreat_talk|
 		  		image_tag(retreat_talk.external_cover_img_link, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img') if retreat_talk.external_cover_img_link
 	  		end
 	  		row 'external_cover_img_link' do
-	  			a retreat_talk.external_cover_img_link.first(50), :href => retreat_talk.external_cover_img_link
+	  			a retreat_talk.external_cover_img_link.first(130), :href => retreat_talk.external_cover_img_link
 	  		end
 	 		end
 	 	end
 	 end
+	 panel "Status" do
+	 	attributes_table_for retreat_talk do
+	 	    row 'allow_comments' do
+	 	    	status_tag((retreat_talk.allow_comments? ? "Commenting Allowed" : "No Commenting Allowed"), (retreat_talk.allow_comments? ? :ok : :warning))
+	 	    end
+	 	    row 'featured' do
+	 	    	status_tag((retreat_talk.featured? ? "Featured" : "Not Featured"), (retreat_talk.featured? ? :ok : :warning))
+	 	    end
+	 	    row 'recommended' do
+	 	    	status_tag((retreat_talk.recommended? ? "Recommended" : "Not Recommended"), (retreat_talk.recommended? ? :ok : :warning))
+	 	    end
+	 	    row 'draft' do
+	 	    	status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
+	 	    end
+	 	  end
+	 end
   active_admin_comments
 end
 
-sidebar "Admin who created this retreat_talk..", :only => :show do
-	if retreat_talk.admin_user
-		table_for(retreat_talk.admin_user) do
-			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
-		end
-	else
-		para 'no creator'
-	end
-end
+
 sidebar "Audio", :only => :show do
 	table_for(retreat_talk.audios) do
 		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
+	end
+end
+sidebar "Book", :only => :show do
+	table_for(retreat_talk.books) do
+		column("Title") {|book| link_to "#{book.title}", admin_book_path(book) }
 	end
 end
 sidebar "Author", :only => :show do
@@ -151,9 +149,13 @@ sidebar "Group", :only => :show do
 		column("Name") {|group| link_to "#{group.name}", admin_group_path(group) }
 	end
 end
-sidebar "Book", :only => :show do
-	table_for(retreat_talk.books) do
-		column("Title") {|book| link_to "#{book.title}", admin_book_path(book) }
+sidebar "Admin who created this retreat_talk..", :only => :show do
+	if retreat_talk.admin_user
+		table_for(retreat_talk.admin_user) do
+			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
+		end
+	else
+		para 'no creator'
 	end
 end
 
