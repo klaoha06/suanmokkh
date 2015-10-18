@@ -26,9 +26,9 @@ class CreateBooks < ActiveRecord::Migration
       t.decimal :price, :precision => 8, :scale => 2
       t.string :currency
 
-      t.integer :downloads, default: 0
-      t.integer :views, default: 0
-      t.integer :shares, default: 0
+      # t.integer :downloads, default: 0
+      # t.integer :views, default: 0
+      # t.integer :shares, default: 0
 
       t.belongs_to :admin_user, index:true
 

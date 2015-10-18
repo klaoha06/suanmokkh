@@ -36,6 +36,7 @@ require 'faker'
 # @search =  Audio.search(params[:q])
 # @audios = @search.result
 
+
 Poem.create!([{title: 'Buddhadasa Never Dies', content: "Buddhadasa shall live, there's no dying. 
 Even when the body dies, it will not listen. 
 Whether it is or goes is of no consequence, 
@@ -79,10 +80,16 @@ end
 
 
 Language.create!([{name: 'English'}, {name: 'Thai'}, {name: 'German'}, {name: 'Chinese'}, {name: 'Russian'}, {name: 'Japanese'}, {name: 'French'}, {name: 'Korean'}])
-Author.create!([{name: 'Buddhadasa'}])
+buddhadasa = Author.create!([{name: 'Buddhadasa'}])
+
+10.times do |i|
+  book = Book.create!({title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph(18), external_file_link: 'http://www.stc.arts.chula.ac.th/CJBS/Buddhadasa%20Bhikkhu.pdf', external_cover_img_link: 'http://placehold.it/250x320', draft: false, featured: true, recommended: true })
+  book.authors << buddhadasa
+  book.languages << Language.where(name: 'English')
+end
 
 def seed_tracks(sc_tracks)
-  sc_tracks.each do |track|
+  sc_tracks.each_with_index do |track, index|
 
     a_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
     if track.artwork_url != nil
@@ -94,11 +101,15 @@ def seed_tracks(sc_tracks)
     english = Language.where(name: 'English')
     buddhadasa = Author.where(name: 'Buddhadasa')
 
-    a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+    if index < 6 
+      a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description, featured: true, recommended: true })
+    else
+      a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+    end
     a.languages << english
     a.authors << buddhadasa
 
-    retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: true})
+    retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false})
     retreat_talk.languages << english
     retreat_talk.authors << buddhadasa
 

@@ -1,19 +1,12 @@
 Rails.application.routes.draw do
-  resources :relationships
+  # resources :relationships
   resources :users
   # devise_for :users
   get 'teachings' => 'pages#teachings'
 
-  resources :users
-  resources :languages
-  resources :groups
-  resources :news_articles
   resources :poems
-  resources :catagories
-  resources :publishers
-  resources :authors
+
   mount Ckeditor::Engine => '/ckeditor'
-  resources :articles
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :books

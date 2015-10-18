@@ -78,6 +78,7 @@
   <div id="start_reading" class="container">
     <!-- <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object> -->
     <!-- <iframe src=<%= @book.external_file_link || @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe> -->
+
     <% if !@book.external_file_link.blank? %>
       <iframe src=<%= @book.external_file_link + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
     <% else %>
