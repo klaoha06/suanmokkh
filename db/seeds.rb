@@ -103,13 +103,14 @@ def seed_tracks(sc_tracks)
 
     if index < 6 
       a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description, featured: true, recommended: true })
+      retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false, featured: true, recommended: true })
     else
       a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+      retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false})
     end
     a.languages << english
     a.authors << buddhadasa
 
-    retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false})
     retreat_talk.languages << english
     retreat_talk.authors << buddhadasa
 
