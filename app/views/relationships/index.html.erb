@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Relationships</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Retreat talk</th>
+      <th>Related retreat talk</th>
+      <th>Create</th>
+      <th>Destroy</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @relationships.each do |relationship| %>
+      <tr>
+        <td><%= relationship.retreat_talk_id %></td>
+        <td><%= relationship.related_retreat_talk_id %></td>
+        <td><%= relationship.create %></td>
+        <td><%= relationship.destroy %></td>
+        <td><%= link_to 'Show', relationship %></td>
+        <td><%= link_to 'Edit', edit_relationship_path(relationship) %></td>
+        <td><%= link_to 'Destroy', relationship, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Relationship', new_relationship_path %>
