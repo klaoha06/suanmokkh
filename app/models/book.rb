@@ -24,6 +24,11 @@ class Book < ActiveRecord::Base
   has_and_belongs_to_many :languages, -> { distinct }
   belongs_to :admin_user, inverse_of: :books
 
+  has_many :collections
+  has_many :related_books, :through => :collections
+  has_many :inverse_collections, :class_name => "Collection", :foreign_key => "related_book_id"
+  has_many :inverse_related_books, :through => :inverse_collections, :source => :book
+
 	accepts_nested_attributes_for :authors, allow_destroy: true
 	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
 	accepts_nested_attributes_for :publishers, allow_destroy: true
@@ -110,6 +115,14 @@ class Book < ActiveRecord::Base
 
   def self.options_for_series
     where.not('series' => '').pluck(:series)
+  end
+
+  def show_book
+    if !self.external_file_link.blank? 
+      return '<iframe src="' + self.external_file_link + '#page=1&zoom=100' + '"#view=fit" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+    else 
+      return '<iframe src="' + self.file.url + '#page=1&zoom=100' + '"#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+    end 
   end
 
   private

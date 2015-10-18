@@ -25,7 +25,7 @@
       </div>
 
       <div class="col-md-8">
-        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px;"><%= @retreat_talk.title %></h1>
+        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px; line-height: 1.2;"><%= @retreat_talk.title %></h1>
         <p>
           <% @retreat_talk.authors.each do |author|%>
             <%= author.name.upcase %>
@@ -35,7 +35,6 @@
         <span style="color:black !important"><%= @retreat_talk.description.html_safe %></span>
 
         <% if @book != nil %>
-        <hr>
           <div class="row">
             <div class="col-md-12">
               <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:200px; padding:10px 0; font-size: 0.9em; margin:10px auto 20px auto" role="button"><i class="fa fa-edit"></i> See Transcript</a>
@@ -44,31 +43,15 @@
         <% end %>
       </div>
 
- 
-
+      <div class="col-md-12">
       <% if @retreat_talk.audios.count == 0 %>
 
       <% elsif @retreat_talk.audios.count == 1 %>
-        <div class="col-md-12">
-        <small class="text-center floatCenter" >
-        <br>
-        </small>
-
-        <%= @audio.embeded_audio.html_safe %>
+          <br>
+          <%= @audio.embeded_audio.html_safe %>
 
       <% else %>
-        <hr>
- <!--        <div class="col-md-2" style="float: right;">
-        <p>Languages</p>
-        <%= 
-        select_tag('languages', options_for_select(@options_for_languages), class: 'form-control input-sm changeStatus')
-        %>
         <br>
-        </div> -->
-        <small class="text-center floatCenter" >
-        <br>
-<!--         This retreat_talk has audio file(s) available in different languages
- -->        </small>
         <% @audios.each_with_index do |a,i| %>
           <% if i == 0 %>
           <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio">
@@ -82,17 +65,13 @@
 
         <% end %>
       <% end %>
-
-
-
     </div>
 
   <% if @related_retreat_talks.count >= 1 %>
-    <!-- <hr> -->
-    <br><br>
+    <!-- <br><br><br> -->
     <div class="col-md-12">
-    <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em">
-      See Related Talk(s)
+    <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-plus"></i>
+      See related talk(s)
     </a>
 
     <div class="collapse" id="collapseExample">
@@ -114,14 +93,10 @@
   </div>
 
 </div>
-<div class="container-fluid">
+<div class="container-fluid bg-primary">
   <div id="start_reading" class="container">
   <% if @retreat_talk.books.first %>
-    <% if !@retreat_talk.books.first.external_file_link.blank? %>
-      <iframe src=<%= @book.external_file_link + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
-    <% else %>
-      <iframe src=<%= @retreat_talk.books.first.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
-    <% end %>
+    <%= @retreat_talk.books.first.show_book.html_safe %>
   <% end %>
   </div>
 

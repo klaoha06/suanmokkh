@@ -82,7 +82,7 @@ end
 Language.create!([{name: 'English'}, {name: 'Thai'}, {name: 'German'}, {name: 'Chinese'}, {name: 'Russian'}, {name: 'Japanese'}, {name: 'French'}, {name: 'Korean'}])
 buddhadasa = Author.create!([{name: 'Buddhadasa'}])
 
-10.times do |i|
+20.times do |i|
   book = Book.create!({title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph(18), external_file_link: 'http://www.stc.arts.chula.ac.th/CJBS/Buddhadasa%20Bhikkhu.pdf', external_cover_img_link: 'http://placehold.it/250x320', draft: false, featured: true, recommended: true })
   book.authors << buddhadasa
   book.languages << Language.where(name: 'English')

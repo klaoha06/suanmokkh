@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :collections
   # resources :relationships
   resources :users
   # devise_for :users

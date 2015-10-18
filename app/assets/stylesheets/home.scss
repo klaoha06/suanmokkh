@@ -82,12 +82,20 @@ h6 {
 
 p {
     margin-bottom: 20px;
-    font-size: 19px;
+    font-size: 17px;
     line-height: 1.5;
+}
+
+p.small {
+    font-size: 15px;
 }
 
 p.light {
     font-weight: 300;
+}
+
+.jumbotron p {
+    font-size: 17px;
 }
 
 p,h1,h2,h3,h4,h5,h6,blockquote {
