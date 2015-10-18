@@ -236,9 +236,6 @@ ActiveRecord::Schema.define(version: 20151018072025) do
     t.integer  "pages"
     t.decimal  "price",                   precision: 8, scale: 2
     t.string   "currency"
-    t.integer  "downloads",                                       default: 0
-    t.integer  "views",                                           default: 0
-    t.integer  "shares",                                          default: 0
     t.integer  "admin_user_id"
     t.datetime "created_at",                                                      null: false
     t.datetime "updated_at",                                                      null: false
