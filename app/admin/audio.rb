@@ -227,7 +227,6 @@ end
 			track = $sc_consumer.get('/tracks/'+@sc_track.id.to_s, :url => track_url, :client_id => Rails.application.secrets.SC_CLIENT_ID)
 			@audio.update({ secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
 		end
-
 	end
 
 	controller do
