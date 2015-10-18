@@ -94,7 +94,7 @@ def seed_tracks(sc_tracks)
     english = Language.where(name: 'English')
     buddhadasa = Author.where(name: 'Buddhadasa')
 
-    a = Audio.create({ title: a_title, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+    a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
     a.languages << english
     a.authors << buddhadasa
 

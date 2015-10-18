@@ -174,14 +174,20 @@ index do
 	selectable_column
 	id_column
 	column "audio", :sortable => false do |retreat_talk|
-	  (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
+		if retreat_talk.audios.first
+		  (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
+	 	end
 	end
 	column :title
 	column "audio code", :sortable => false do |retreat_talk|
-	  (retreat_talk.audios.first.audio_code).html_safe
+		if retreat_talk.audios.first
+		  (retreat_talk.audios.first.audio_code).html_safe
+		end
 	end
 	column "part", :sortable => false do |retreat_talk|
-	  (retreat_talk.audios.first.part).html_safe
+		if retreat_talk.audios.first
+		  (retreat_talk.audios.first.part).html_safe
+		end
 	end
 	column :series
 	column :creation_date

@@ -120,19 +120,19 @@ ActiveRecord::Schema.define(version: 20151011073648) do
     t.integer  "duration"
     t.string   "audio_code"
     t.string   "part"
-    t.text     "embeded_audio_link"
+    t.text     "embeded_audio_uri"
+    t.string   "uri"
     t.string   "secret_uri"
-    t.string   "external_link"
-    t.boolean  "draft",              default: false
-    t.boolean  "featured",           default: false
-    t.boolean  "recommended",        default: false
-    t.boolean  "allow_comments",     default: true
-    t.integer  "downloads",          default: 0
-    t.integer  "plays",              default: 0
-    t.integer  "shares",             default: 0
+    t.boolean  "draft",             default: false
+    t.boolean  "featured",          default: false
+    t.boolean  "recommended",       default: false
+    t.boolean  "allow_comments",    default: true
+    t.integer  "downloads",         default: 0
+    t.integer  "plays",             default: 0
+    t.integer  "shares",            default: 0
     t.integer  "admin_user_id"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"

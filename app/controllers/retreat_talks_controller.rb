@@ -35,6 +35,9 @@ class RetreatTalksController < InheritedResources::Base
 	    ) or return
 	    @retreat_talks = @filter.find.page(params[:page])
 	    # .where(draft: false)
+
+	    # @playlist = $sc_consumer.get("/me/playlists")
+
 	    
 	    respond_to do |format|
 	      format.html
@@ -51,9 +54,6 @@ class RetreatTalksController < InheritedResources::Base
 	  @audio = @audios.first
 	  @audio_languages = 'in ';
 	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}).where.not(id: params[:id])
-	  # @retreat_talk.audios.each do |audio|
-	  #   @audios_languages + audio.languages.name + " " if audio.language.name
-	  # en
 
 	  @related_audios = @retreat_talk.audios
 
