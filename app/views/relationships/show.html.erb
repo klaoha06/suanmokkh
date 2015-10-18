@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Retreat talk:</strong>
+  <%= @relationship.retreat_talk_id %>
+</p>
+
+<p>
+  <strong>Related retreat talk:</strong>
+  <%= @relationship.related_retreat_talk_id %>
+</p>
+
+<p>
+  <strong>Create:</strong>
+  <%= @relationship.create %>
+</p>
+
+<p>
+  <strong>Destroy:</strong>
+  <%= @relationship.destroy %>
+</p>
+
+<%= link_to 'Edit', edit_relationship_path(@relationship) %> |
+<%= link_to 'Back', relationships_path %>

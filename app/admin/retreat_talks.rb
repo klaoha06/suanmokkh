@@ -134,6 +134,11 @@ sidebar "Book", :only => :show do
 		column("Title") {|book| link_to "#{book.title}", admin_book_path(book) }
 	end
 end
+sidebar "Related Retreat Talks", :only => :show do
+	table_for(retreat_talk.related_retreat_talks) do
+		column("Title") {|related_retreat_talk| link_to "#{related_retreat_talk.title}", admin_retreat_talk_path(related_retreat_talk) }
+	end
+end
 sidebar "Author", :only => :show do
 	table_for(retreat_talk.authors) do
 		column("Name") {|author| link_to "#{author.name}", admin_author_path(author) }
@@ -235,6 +240,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				f.has_many :languages do |language|
 					language.inputs
 				end
+				f.input :related_retreat_talks
 				f.input :series
 				f.input :format
 				f.input :groups
@@ -312,6 +318,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			@existing_authors = params[:retreat_talk].delete("author_ids")
 	  			@existing_books = params[:retreat_talk].delete("book_ids")
 					@existing_audios = params[:retreat_talk].delete("audio_ids")	  			
+					@existing_related_retreat_talks = params[:retreat_talk].delete("related_retreat_talk_ids")	  			
 	  			@existing_languages = params[:retreat_talk].delete("language_ids")
 	  			@existing_groups = params[:retreat_talk].delete("group_ids")
 	  			if @existing_authors
@@ -319,6 +326,9 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			end
 	  			if @existing_books
 	  				@retreat_talk.books << Book.where(id: @existing_books)
+	  			end
+	  			if @existing_related_retreat_talks
+	  				@retreat_talk.related_retreat_talks << RetreatTalk.where(id: @existing_related_retreat_talks)
 	  			end
 	  			if @existing_audios
 	  				@retreat_talk.audios << Audio.where(id: @existing_audios)
@@ -341,6 +351,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			params.permit!
 			@existing_authors = params[:retreat_talk].delete("author_ids")
 			@existing_books = params[:retreat_talk].delete("book_ids")
+			@existing_related_retreat_talks = params[:retreat_talk].delete("related_retreat_talk_ids")
 			@existing_audios = params[:retreat_talk].delete("audio_ids")	  			
 			@existing_languages = params[:retreat_talk].delete("language_ids")
 			@existing_groups = params[:retreat_talk].delete("group_ids")
@@ -376,6 +387,18 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					if !book.has_key?("id")
 						new_book = Book.where(title: book[:title]).first_or_create
 						@retreat_talk.books << new_book
+					end
+				end
+			end
+
+			if @existing_related_retreat_talks
+				@retreat_talk.related_retreat_talks = RetreatTalk.where(id: @existing_related_retreat_talks)
+			end
+			if params[:retreat_talk][:related_retreat_talks_attributes]
+				params[:retreat_talk][:related_retreat_talks_attributes].each do |key, related_retreat_talk|
+					if !related_retreat_talk.has_key?("id")
+						new_related_retreat_talk = RetreatTalk.where(title: related_retreat_talk[:title]).first_or_create
+						@retreat_talk.related_retreat_talks << new_related_retreat_talk
 					end
 				end
 			end

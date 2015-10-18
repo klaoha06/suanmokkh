@@ -53,7 +53,7 @@ class RetreatTalksController < InheritedResources::Base
 	  @audios = @retreat_talk.audios
 	  @audio = @audios.first
 	  @audio_languages = 'in ';
-	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}).where.not(id: params[:id])
+	  @related_retreat_talks = (@retreat_talk.related_retreat_talks + RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}).where.not(id: params[:id])).uniq
 
 	  @related_audios = @retreat_talk.audios
 

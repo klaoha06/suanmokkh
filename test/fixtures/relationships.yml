@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  retreat_talk_id: 1
+  related_retreat_talk_id: 1
+  create: MyString
+  destroy: MyString
+
+two:
+  retreat_talk_id: 1
+  related_retreat_talk_id: 1
+  create: MyString
+  destroy: MyString
