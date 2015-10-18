@@ -148,6 +148,11 @@ sidebar "Audio", :only => :show do
 		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
 	end
 end
+sidebar "Same Books in different languages", :only => :show do
+	table_for(book.related_books) do
+		column("Title") {|related_book| link_to "#{related_book.title}", admin_book_path(related_book) }
+	end
+end
 sidebar "Author", :only => :show do
 	table_for(book.authors) do
 		column("Name") {|author| link_to "#{author.name}", admin_author_path(author) }
@@ -300,6 +305,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					language.inputs
 				end
 				f.input :series
+				f.input :related_books
 				f.input :groups
 				f.has_many :groups do |group|
 					group.input :name, :required => true
@@ -425,6 +431,9 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			if @existing_authors
 	  				@book.authors << Author.where(id: @existing_authors)
 	  			end
+	  			if @existing_related_books
+	  				@book.related_books << Book.where(id: @existing_related_books)
+	  			end
 	  			if @existing_retreat_talks
 	  				@book.retreat_talks << RetreatTalk.where(id: @existing_retreat_talks)
 	  			end
@@ -451,6 +460,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 		super do |format|
 			params.permit!
 			@existing_authors = params[:book].delete("author_ids")
+			@existing_related_books = params[:book].delete("related_book_ids")
 			@existing_retreat_talks = params[:book].delete("retreat_talk_ids")
 			@existing_audios = params[:book].delete("audio_ids")	  			
 			@existing_publishers = params[:book].delete("publisher_ids")
@@ -465,6 +475,18 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 					if !author.has_key?("id")
 						new_author = Author.where(name: author[:name]).first_or_create
 						@book.authors << new_author
+					end
+				end
+			end
+
+			if @existing_related_books
+				@book.related_books = Book.where(id: @existing_related_books)
+			end
+			if params[:book][:related_books_attributes]
+				params[:book][:related_books_attributes].each do |key, related_book|
+					if !book.has_key?("id")
+						new_related_book = Book.where(title: related_book[:title]).first_or_create
+						@book.related_books << new_related_book
 					end
 				end
 			end

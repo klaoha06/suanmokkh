@@ -19,14 +19,24 @@
           <br>
           </small>
           <div class="col-md-12">
-            <% @options_for_languages %>
-          <p>Select Audio Language</p>
+            <p style="font-size: 15px; text-align: center;">Select Audio Language</p>
+            <%= 
+            select_tag('languages', options_for_select(@options_for_audio_languages), class: 'form-control input-sm changeStatus')
+            %>
+            <br>
+          </div>
+        <% end %>
+
+        <% if @related_books.count > 1 %>
+          <br>
+          <div class="col-md-12">
+            <%= @options_for_languages %>
+          <p style="font-size: 15px; text-align: center;">Select Book Language</p>
           <%= 
-          select_tag('languages', options_for_select(@options_for_languages), class: 'form-control changeStatus')
+          select_tag('languages', options_for_select(@options_for_book_languages), class: 'form-control input-sm bookStatus')
           %>
           <br>
           </div>
-
         <% end %>
         
         <hr class="full visible-sm visible-xs">
@@ -52,7 +62,7 @@
       </div>
       
       <hr class="full visible-sm visible-xs">
-       <div class="col-md-12"><br>
+       <div class="col-md-12">
         <br>
           <% @book.audios.each_with_index do |a,i| %>
             <% if i == 0 %>
@@ -76,18 +86,17 @@
 </div>
 <div class="container-fluid">
   <div id="start_reading" class="container">
-    <!-- <object type="application/pdf" width="100%" height="auto" data=<%= @book.file.url + "#view=fit" %>></object> -->
-    <!-- <iframe src=<%= @book.external_file_link || @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe> -->
-
-    <% if !@book.external_file_link.blank? %>
-      <iframe src=<%= @book.external_file_link + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
-    <% else %>
-      <iframe src=<%= @book.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
+    <% @related_books.each_with_index do |b,i| %>
+      <% if i == 0 %>
+      <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
+          <%= b.show_book.html_safe %>
+      </div>
+      <% else %>
+        <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
+          <%= b.show_book.html_safe %>
+        </div>
+      <% end %>
     <% end %>
-    <!-- <iframe id="ifr" src="http://docs.google.com/gview?url=#{@book.file.url}&embedded=true" style="width:718px; height:700px;" frameborder="0"> -->
-    <!-- <iframe style="height: 1000px; width: 100%;" src=<%= @book.file.url %> /> -->
-    <!-- <hr class="full"> -->
-
   </div>
 
 </div>
@@ -115,6 +124,10 @@
 <script type="text/javascript">
   $('select.changeStatus').change(function(){
       $('.embeded_audio').addClass('hide');
-      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
+      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide').addClass('animated fadeIn');
+  });
+  $('select.bookStatus').change(function(){
+      $('.embeded_book').addClass('hide');
+      $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
   });
 </script>

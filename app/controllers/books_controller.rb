@@ -58,12 +58,13 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @book = Book.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
+    @book = Book.includes(:authors, :audios, :groups, :languages, :related_books).where(id: params[:id]).first
+    @related_books = @book.related_books.unshift(@book)
     @audio_languages = ''
     # @book.audios.each do |audio|
     #   @audios_languages + audio.languages.name + " " if audio.language.name
     # end
-    @options_for_languages = []
+    @options_for_audio_languages = []
       @book.audios.each do |a|
         language_option = ''
         a.languages.each_with_index do |l, index|
@@ -73,8 +74,22 @@ class BooksController < ApplicationController
             language_option << l.name
           end
         end
-        @options_for_languages << [language_option, a.id]
+        @options_for_audio_languages << [language_option, a.id]
       end
+
+    @options_for_book_languages = []
+    @related_books.each do |rb|
+      language_option = ''
+      rb.languages.each_with_index do |l,index|
+        if index != rb.languages.count-1 
+          language_option << l.name + ' and '
+        elsif index == rb.languages.count-1
+          language_option << l.name
+        end
+      end
+      @options_for_book_languages << [language_option, rb.id]
+    end
+
 
   end
 
