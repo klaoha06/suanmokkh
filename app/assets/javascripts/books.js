@@ -1,14 +1,15 @@
-	var style = document.documentElement.style;
-	support3d = (style.webkitTransition !== undefined ||
-	             style.MozTransition !== undefined ||
-	             style.OTransition !== undefined ||
-	             style.transition !== undefined);
+$( document ).ready(function() {
+  var style = document.documentElement.style;
+  support3d = (style.webkitTransition !== undefined ||
+               style.MozTransition !== undefined ||
+               style.OTransition !== undefined ||
+               style.transition !== undefined);
  
   var owl = $("#owl-featured-books");
 
-  $('#owl-recommended-books').owlCarousel({
-      items: 5,
-  });
+$('#owl-recommended-books').owlCarousel({
+    items: 5,
+});
 
 owl.owlCarousel({
     items: 1,
@@ -36,3 +37,5 @@ $('.featured')
       $( ".books_arrow" ).fadeOut();
     }
   );
+});
+
