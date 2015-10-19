@@ -121,7 +121,7 @@ class Book < ActiveRecord::Base
     if !self.external_file_link.blank? 
       return '<iframe src="' + self.external_file_link + '#page=1&zoom=100' + '"#view=fit" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
     else 
-      return '<iframe src="' + self.file.url + '#page=1&zoom=100' + '"#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+      return '<iframe src="' + self.file.url + '#page=1&zoom=100' + '"#view=fitH" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
     end 
   end
 
