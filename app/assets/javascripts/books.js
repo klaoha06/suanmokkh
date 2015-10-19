@@ -11,14 +11,6 @@
   });
 
 owl.owlCarousel({
-    // items: 1,
-    // // animateOut: 'fadeOut',
-    // animateIn: 'fadeIn',
-    // // loop: true,
-    // transitionStyle : "fade",
-    // autoHeight:true
-
-
     items: 1,
     stopOnHover: true,
     // autoPlay : true,
