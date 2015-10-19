@@ -295,38 +295,49 @@ end
 # end
 form :html => { :enctype => "multipart/form-data" } do |f|
 	tabs do
-		tab 'Basic' do
-			f.inputs 'Basic Details' do
+		tab 'Data' do
+			f.inputs 'Required Information' do
 				f.input :title, :required => true
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
-				f.input :creation_date
-				f.input :languages
-				f.has_many :languages do |language|
-					language.inputs
-				end
-				f.input :series
-				f.input :related_books
-				f.input :groups
-				f.has_many :groups do |group|
-					group.input :name, :required => true
-				end
-				f.input :external_url_link, :as => :url
-			end
-			f.inputs "Author" do
-				f.input :authors
+				f.input :languages, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Languages")
+				# f.has_many :languages do |language|
+				# 	language.inputs
+				# end
+
+				f.input :authors, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Authors")
 				f.has_many :authors do |author|
 					author.input :name, :required => true
 				end
+				f.input :file, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Please choose ONLY between uploading the file here or give a link to the pdf/epub file below in the external_file_link")
+				f.input :external_file_link, :as => :url
+				f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+				f.input :external_cover_img_link, :as => :url
+			end
+			f.inputs "Optional Information" do
+				# f.input :authors
+				# f.has_many :authors do |author|
+				# 	author.input :name, :required => true
+				# end
+				f.input :creation_date
+				f.input :series
+				f.input :groups, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Groups")
+				f.has_many :groups do |group|
+					group.input :name, :required => true
+				end
+
 			end
 			f.inputs "Audio related to this book" do
-	          f.input :audios
-	          # f.has_many :audios do |audio|
-	          #    audio.input :title, :required => true
-	          #    audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
-	          #    audio.input :admin_user_id, :as => :hidden
-	          #    # audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
-	          # end
-	        end
+        f.input :audios
+        # f.has_many :audios do |audio|
+        #    audio.input :title, :required => true
+        #    audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
+        #    audio.input :admin_user_id, :as => :hidden
+        #    # audio.input :embeded_audio_link, :as => :url, :required => true, hint: content_tag(:span, "Copy the embeded audio link from soundcloud and paste it here..")
+        # end
+      end
+			f.inputs "Same Book in Different Languages" do
+        f.input :related_books
+      end
       		f.inputs "Retreat Talk(s) related to this book" do
                 f.input :retreat_talks
                 # f.has_many :audios do |audio|
@@ -343,7 +354,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :currency
 	        end
 	        f.inputs 'Publication Details' do
-	        	f.input :publishers
+	        	f.input :publishers, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Publisher(s)")
 	        	f.has_many :publishers do |publisher|
 	        		publisher.input :name
 	        	end
@@ -351,12 +362,12 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :isbn_13
 	        	f.input :publication_date
 	        end
-	        f.inputs 'Actual Files' do
-	        	f.input :file, :required => true, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Please choose ONLY between uploading the file here or give a link to the pdf/epub file below in the external_file_link")
-	        	f.input :external_file_link, :as => :url
-	        	f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
-	        	f.input :external_cover_img_link, :as => :url
-	        end
+	        # f.inputs 'Actual Files' do
+	        # 	f.input :file, :required => true, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Please choose ONLY between uploading the file here or give a link to the pdf/epub file below in the external_file_link")
+	        # 	f.input :external_file_link, :as => :url
+	        # 	f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+	        # 	f.input :external_cover_img_link, :as => :url
+	        # end
 	        f.inputs 'Post Status' do
 	        	f.input :draft, :label => "Make this a draft?"
 	        	f.input :featured

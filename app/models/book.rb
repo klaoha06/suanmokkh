@@ -7,7 +7,7 @@ class Book < ActiveRecord::Base
 
   # Validations
   validates :title, presence: true, uniqueness: true
-  validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
+  # validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
   validates :external_cover_img_link, url: true,  unless: ->(book){book.external_cover_img_link.blank?}
   validate :source_of_file
   validate :source_of_cover_img
