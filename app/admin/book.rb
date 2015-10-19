@@ -299,12 +299,12 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			f.inputs 'Required Information' do
 				f.input :title, :required => true
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
-				f.input :languages, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Languages")
+				f.input :languages, hint: content_tag(:span, "Existing Languages")
 				# f.has_many :languages do |language|
 				# 	language.inputs
 				# end
 
-				f.input :authors, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Authors")
+				f.input :authors, hint: content_tag(:span, "Existing Authors")
 				f.has_many :authors do |author|
 					author.input :name, :required => true
 				end
@@ -320,7 +320,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				# end
 				f.input :creation_date
 				f.input :series
-				f.input :groups, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Groups")
+				f.input :groups, hint: content_tag(:span, "Existing Groups")
 				f.has_many :groups do |group|
 					group.input :name, :required => true
 				end
@@ -354,7 +354,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :currency
 	        end
 	        f.inputs 'Publication Details' do
-	        	f.input :publishers, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Existing Publisher(s)")
+	        	f.input :publishers, hint: content_tag(:span, "Existing Publisher(s)")
 	        	f.has_many :publishers do |publisher|
 	        		publisher.input :name
 	        	end
