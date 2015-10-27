@@ -49,11 +49,17 @@ class RetreatTalksController < InheritedResources::Base
 	# GET /retreat_talks/1.json
 	def show
 	  @retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
+	  if @retreat_talk == nil
+	  	respond_to do |format|
+	      format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
+	      format.all  { render nothing: true, status: 404 }
+	  	end
+	  else
 	  @book = @retreat_talk.books.first
 	  @audios = @retreat_talk.audios
 	  @audio = @audios.first
 	  @audio_languages = 'in ';
-	  @related_retreat_talks = (@retreat_talk.related_retreat_talks + RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}).where.not(id: params[:id])).uniq
+	  @related_retreat_talks = RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}).where.not(id: params[:id])
 
 	  @related_audios = @retreat_talk.audios
 
@@ -70,6 +76,7 @@ class RetreatTalksController < InheritedResources::Base
 	    	end
 	    	@options_for_languages << [language_option, a.id]
 	    end
+	  end
 
 
 	end
