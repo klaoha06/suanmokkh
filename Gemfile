@@ -20,7 +20,7 @@ gem 'activeadmin_addons'
 # gem 'activeadmin_associations'
 
 gem 'filterrific'
-gem 'ransack'
+# gem 'ransack'
 
 gem 'soundcloud'
 

@@ -1,16 +1,13 @@
 class FeedbacksController < InheritedResources::Base
 
 	def create
-		p feedback_params
 	  @feedback = Feedback.new(feedback_params)
 
 	  respond_to do |format|
 	    if @feedback.save
 	    	format.html { redirect_to :back, notice: 'feedback was successfully created.' }
-	    	# format.js   {}
 	    	format.json { render json: @feedback, status: :created }
 	    else
-	      # format.html { redirect_to :back, notice: 'error', status: :unprocessable_entity }
 	      format.json { render json: @feedback.errors, status: :unprocessable_entity }
 	    end
 	  end

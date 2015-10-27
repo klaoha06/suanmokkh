@@ -23,6 +23,11 @@ class RetreatTalk < ActiveRecord::Base
 	  has_and_belongs_to_many :languages, -> { distinct }
 	  belongs_to :admin_user, inverse_of: :retreat_talks
 
+	  has_many :relationships		
+	  has_many :related_retreat_talks, :through => :relationships		
+	  has_many :inverse_relationships, :class_name => "Relationship", :foreign_key => "related_retreat_talk_id"		
+	  has_many :inverse_related_retreat_talks, :through => :inverse_relationships, :source => :retreat_talk		
+
 		accepts_nested_attributes_for :authors, allow_destroy: true
 		accepts_nested_attributes_for :books, allow_destroy: true
 		accepts_nested_attributes_for :audios, allow_destroy: true
