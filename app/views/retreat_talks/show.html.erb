@@ -68,10 +68,9 @@
     </div>
 
   <% if @related_retreat_talks.count >= 1 %>
-    <!-- <br><br><br> -->
     <div class="col-md-12">
     <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-plus"></i>
-      See related talk(s)
+      See related talks
     </a>
 
     <div class="collapse" id="collapseExample">
@@ -127,13 +126,9 @@
       $('.retreat_talk_audio').addClass('hide');
       $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
   });
-  $("#owl-demo").owlCarousel({
-  
-       autoPlay: 3000, //Set AutoPlay to 3 seconds
-  
+  $("#owl-demo").owlCarousel({  
        items : 4,
        itemsDesktop : [1199,3],
        itemsDesktopSmall : [979,3]
-  
    });
 </script>
