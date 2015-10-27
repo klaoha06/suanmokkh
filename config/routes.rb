@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :feedbacks, :except => [:update, :destroy, :index, :show]
   resources :collections
   # resources :relationships
   resources :users

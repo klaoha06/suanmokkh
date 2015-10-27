@@ -1,33 +1,33 @@
-<!-- <p id="notice"><%= notice %></p> -->
 <% content_for :head do %>
 <title>Retreat Talks - Suan Mokkh</title>
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-  <div class="container bg-primary" id="retreat_talk_banner">
-    <h1 class="text-center">Selected Retreat Talks</h1>
-    <hr>
-    <% if @featured_retreat_talks.count >= 1 %>
-      <div id="owl-featured-retreat_talks" class="owl-carousel">
-        <% @featured_retreat_talks.each do |retreat_talk| %>
-          <% if retreat_talk.audios.first %>
-            <div class="item">
-              <%= retreat_talk.audios.first.embeded_audio_link_banner.html_safe %>
-              <h2 class="text-center"><%= link_to retreat_talk.title, retreat_talk %></h2>
-            </div>
+    <div class="container bg-primary" id="retreat_talk_banner">
+    <div class="container bg-primary" id="retreat_talk_banner">
+      <h1 class="text-center">Selected Retreat Talks</h1>
+      <hr>
+      <% if @featured_retreat_talks.count >= 1 %>
+        <div id="owl-featured-retreat_talks" class="owl-carousel">
+          <% @featured_retreat_talks.each do |retreat_talk| %>
+            <% if retreat_talk.audios.first %>
+              <div class="item">
+                <%= retreat_talk.audios.first.embeded_audio_link_banner.html_safe %>
+                <h2 class="text-center"><%= link_to retreat_talk.title, retreat_talk %></h2>
+              </div>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
-    <% end %>
-    <div class="clearfix"></div>
-  </div>
-
+        </div>
+      <% end %>
+      <div class="clearfix"></div>
+    </div>
   <div class="container bg-primary" style="border: none;">
   <%= form_for_filterrific(@filter) do |f| %>
   <div class="row">
     <div class="col-md-3">
       <p>Search</p>
       <div class="input-group">
+      <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
       <%= f.text_field(
         :search_query,
         class: 'filterrific-periodically-observed form-control input-sm'

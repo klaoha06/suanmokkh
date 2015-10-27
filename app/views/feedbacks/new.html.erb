@@ -1,0 +1,35 @@
+<% content_for :head do %>
+<title>Feedback and Report - Suan Mokkh</title>
+<% end %>
+
+<div class="container-fluid bg-dark">
+
+	<div class="container bg-primary retreat_talk_header" style="margin-top: 75px;">
+		  <h1 class="text-center">Feedback and Report</h1>
+		  <hr>
+		  <p class="text-center floatCenter" style="font-weight: 400; max-width:400px; padding-bottom: 15px;">Please use this space to give us any feedbacks to better this website or report any errors here.</p>
+		<div class="col-md-10 col-md-offset-1 col-sm-12">
+			<%= render 'form' %>
+		  <h4 id="reportalert" class="text-center"></h4>
+		</div>
+	</div>
+</div>
+
+	<script>
+	  $(document).ready(function(){
+	    $('#new_feedback')
+	    .on('ajax:send', function(e,d,s,x) {
+	    	$('#reportalert').html('<br><i class="fa fa-2x fa-circle-o-notch fa-spin"></i>');
+	    })
+	    .on('ajax:success', function(e,d,s,x) {
+	    	$('#reportalert').html('<br><span>Thank you!</span><hr><a href="/">Back to Main Page</a>');
+	    	document.getElementById("new_feedback").reset();
+	    })
+	    .on('ajax:error',function(e, data, status, error){
+	    	errorText = JSON.parse(data.responseText)
+	    	for (var key in errorText) {
+	    		$('#reportalert').html('<br><span style="color:red; font-weight:bold;">'+ key + ' ' + errorText[key] + '</span><br>');
+	    	}
+	 		});
+	  });
+	</script>

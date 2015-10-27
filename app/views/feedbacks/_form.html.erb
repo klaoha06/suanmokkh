@@ -1,0 +1,11 @@
+<%= bootstrap_form_for(Feedback.new, remote: true, label_errors: true, inline_errors: true, html: { id: "new_feedback"}) do |f| %>
+  <%= f.text_field :title, :placeholder => "Title" %>
+  <%= f.text_area :content, :required => true, :placeholder => "Type your feedback or report an error here", :rows => "10" %>
+  <%= f.check_box :required_response, label: "required a response?" %>
+  <%= f.text_field :firstname, :placeholder => "First Name" %>
+  <%= f.text_field :lastname, :placeholder => "Last Name" %>
+  <%= f.email_field :email, :placeholder => "Your Email" %>
+  <%= f.phone_field :tel, :placeholder => "Your Phone Number", :type => 'tel', :pattern => '^[0-9]*$' %>
+  <%= f.alert_message "Please fix the errors below." %>
+  <%= f.submit "Submit", :class => "btn btn-default btn-xl text-center floatCenter" %>
+<% end %>

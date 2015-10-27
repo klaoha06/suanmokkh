@@ -20,7 +20,7 @@ gem 'activeadmin_addons'
 # gem 'activeadmin_associations'
 
 gem 'filterrific'
-gem 'ransack'
+# gem 'ransack'
 
 gem 'soundcloud'
 
@@ -41,6 +41,8 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+
+gem 'bootstrap_form'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

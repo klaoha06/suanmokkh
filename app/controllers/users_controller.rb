@@ -1,7 +1,6 @@
 class UsersController < InheritedResources::Base
 	skip_before_action :verify_authenticity_token
 	def create
-		p user_params
 	  @user = User.new(user_params)
 
 	  respond_to do |format|
