@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-  before_action :set_book, only: [:show, :edit, :update, :destroy]
+  # before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   # GET /books
   # GET /books.json
@@ -59,6 +59,13 @@ class BooksController < ApplicationController
   # GET /books/1.json
   def show
     @book = Book.includes(:authors, :audios, :groups, :languages, :related_books).where(id: params[:id]).first
+    if @book == nil 
+      respond_to do |format|
+        format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
+        format.all  { render nothing: true, status: 404 }
+      end
+    else
+
     @related_books = @book.related_books.unshift(@book)
     @audio_languages = ''
     # @book.audios.each do |audio|
@@ -89,6 +96,7 @@ class BooksController < ApplicationController
       end
       @options_for_book_languages << [language_option, rb.id]
     end
+  end
 
 
   end
@@ -96,9 +104,7 @@ class BooksController < ApplicationController
 
   private
   # Use callbacks to share common setup or constraints between actions.
-  def set_book
-    @book = Book.find(params[:id])
-  end
+
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def book_params

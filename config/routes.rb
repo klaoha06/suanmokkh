@@ -22,7 +22,12 @@ Rails.application.routes.draw do
   get 'suanmokkh' => 'suanmokkh'
   get 'contact' => 'contact'
   get 'retreats' => 'retreats'
+  # get '404' => '404'
   # get 'retreat_talks' => 'retreat_tralks'
+
+  # if Rails.env.production?
+     get '404', :to => 'application#page_not_found'
+  # end
 
 
   # get 'gallery'
@@ -34,6 +39,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
 
+  get '*path', :to => 'application#page_not_found'
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
