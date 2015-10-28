@@ -8,6 +8,7 @@ show do |book|
   panel "Basic" do
   	attributes_table_for book do
   	    row :title
+  	    row :id
   	    row :created_at
   	    row :updated_at
   	    row :series
