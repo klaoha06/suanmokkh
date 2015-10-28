@@ -3,16 +3,16 @@
 
   <% else %>
   <% @books.each do |book| %>
-    <div class="col-md-4 book-grid">
+    <div class="col-md-4 book-grid" itemscope itemtype="http://schema.org/Book">
       <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
         <% if !book.external_cover_img_link.blank? %>
-          <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+          <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% else %>
-          <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;" %>
+          <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% end %>
       </a>
-      <h4 class="text-center"><%= book.title %></h4>
-      <p class="text-center"><%= book.authors.first.name if book.authors.first %></p>
+      <h4 class="text-center" itemprop="name"><%= book.title %></h4>
+      <p class="text-center" itemprop='author' itemscope='' itemtype='http://schema.org/Person'><span itemprop="name"><%= book.authors.first.name if book.authors.first %></span></p>
     </div>
   <% end %>
 <% end %>

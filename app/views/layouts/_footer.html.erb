@@ -24,7 +24,7 @@
 		        <%= f.submit 'submit', :class => 'btn btn-default' %>
 		        </span>
 		    <% end %>
-		    <div id="reportalert"></div>
+		    <div id="footeralert"></div>
 
 
 			</div>
@@ -34,16 +34,3 @@
 		</div>
 		
 	</footer>
-
-	<script>
-	  $(document).ready(function(){
-	    $('#new_user')
-	    .on('ajax:send', function(e,d,s,x) {
-	    	$('#reportalert').html('<br><i class="fa fa-2x fa-circle-o-notch fa-spin"></i>');
-	    })
-	    .on('ajax:complete',function(e, data, status, xhr){
-	    	$('#user_email').val('');
-	      $('#reportalert').html('<br><span>Thank you!</span>');
-	 		});
-	  });
-	</script>

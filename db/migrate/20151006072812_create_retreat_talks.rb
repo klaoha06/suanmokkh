@@ -10,6 +10,7 @@ class CreateRetreatTalks < ActiveRecord::Migration
       t.string :format
       t.string :series
       t.string :group
+      t.string :translator
 
       # t.text :embeded_audio_link
       # t.text :external_url_link

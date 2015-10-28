@@ -1,15 +1,16 @@
 <% content_for :head do %>
-<title><%= @book.title %> <%= "by " + @book.authors.first.name if @book.authors.first %> - Suan Mokkh</title>
+<title><%= @title %></title>
+<meta content="Suan Mokkh" property="og:site_name" /><meta content="website" property="og:type" /><meta content="<%= @img %>"  itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="<%= strip_tags(@book.description) %>" property="og:description" /><meta content="Suan Mokkh" name="twitter:site" /><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="<%= strip_tags(@book.description) %>" name="twitter:description" /><meta content="<%= @img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>" />
 <% end %>
 
-<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
+<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;" itemprop="mainEntity" itemscope itemtype="http://schema.org/Book">
   <div class="container bg-primary retreat_talk_header">
     <div class="row">
       <div class="col-md-4">
       <% if !@book.external_cover_img_link.blank? %>
-        <%= image_tag "#{@book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;" %>
+        <%= image_tag "#{@book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;", itemprop: 'image'%>
       <% else %>
-        <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;" %>
+        <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;", itemprop: 'image'%>
       <% end %>
 
         <% if @book.audios.count == 0 %>
@@ -42,15 +43,15 @@
         <hr class="full visible-sm visible-xs">
       </div>
       <div class="col-md-8">
-        <h1 style="margin-top:0; margin-bottom: 15px"><%= @book.title %></h1>
-        <p>
+        <h1 style="margin-top:0; margin-bottom: 15px" itemprop="name"><%= @book.title %></h1>
+        <p itemprop='author' itemscope='' itemtype='http://schema.org/Person'>
           <% @book.authors.each do |author|%>
-            <%= author.name.upcase %>
+            <span itemprop="name"><%= author.name.upcase %></span>
           <% end %>
         </p>
         <hr class="full" style="border-color:#725843;">
-        <span style="color:black !important"><%= @book.description.html_safe %></span>
-        
+        <span style="color:black !important" itemprop="description"><%= @book.description.html_safe %></span>
+
         <% if @book.audios.count > 1 %>
         <div class="row">
           <div class="col-md-12">
@@ -66,11 +67,11 @@
         <br>
           <% @book.audios.each_with_index do |a,i| %>
             <% if i == 0 %>
-            <div id=<%= "audio"+ a.id.to_s %> class="embeded_audio">
+            <div id=<%= "audio"+ a.id.to_s %> class="embeded_audio" itemscope itemtype="http://schema.org/AudioObject">
               <%= a.embeded_audio.html_safe %>
             </div>
             <% else %>
-              <div id=<%= "audio"+ a.id.to_s %> class="embeded_audio hide">
+              <div id=<%= "audio"+ a.id.to_s %> class="embeded_audio hide" itemscope itemtype="http://schema.org/AudioObject">
                 <%= a.embeded_audio.html_safe %>
               </div>
             <% end %>
@@ -98,6 +99,51 @@
       <% end %>
     <% end %>
   </div>
+
+  <% if @additional_info.first %>
+  <div id="additionalBookInfo" class="col-md-12">
+    <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-info"></i>
+      See additional info
+    </a>
+
+    <div class="collapse container text-center" id="collapseExample">
+      <h2>Additional Info</h2>
+      <hr>
+        <% @additional_info.each do |k,v| %>
+          <% if k =='Authors' && v.count >= 1 %>
+            <p itemprop="author" itemscope itemtype="http://schema.org/Person">Author(s):
+            <% v.each do |name| %>
+              <span class="brown" itemprop="name"><%= name %> <span>
+            <% end %>
+            </p><br>
+          <% elsif k == 'Isbn_10' || k == 'Isbn_13' %>
+            <p>INSB: <span class="brown" itemprop="isbn"><%= v %><span></p><br>
+          <% elsif k =='Publication_date' %>
+            <p><%= k %>: <span class="brown" itemprop="datePublished"><%= v %><span></p><br>
+          <% elsif k =='Format' %>
+            <p><%= k %>: <span class="brown" itemprop="bookFormat"><%= v %><span></p><br>
+          <% elsif k =='Pages' %>
+            <p><%= k %>: <span class="brown" itemprop="numberOfPages"><%= v %><span></p><br>
+          <% elsif k =='Publishers' && v.count >= 1 %>
+            <p itemprop="publisher" itemtype="http://schema.org/Organization" itemscope="">Publisher(s):  
+            <% v.each do |name| %>
+              <span class="brown" itemprop="name"><%= name %></span>
+            <% end %>
+            </p><br>
+          <% else %>
+            <p><%= k %>: <span class="brown"><%= v %><span></p><br>
+          <% end %>
+        <% end %>
+        <% if @languages.count >= 1 %>
+          <p>Language(s):
+          <% @languages.each do |l| %>
+            <meta itemprop="inLanguage" content=<%= l %>><%= l %></meta>
+          <% end %>
+          </p>
+        <% end %>
+    </div>
+  </div>
+  <% end %>
 
 </div>
 

@@ -9,9 +9,10 @@ class CreateAudios < ActiveRecord::Migration
     	t.date :creation_date
     	t.integer :duration
         t.string :audio_code
-    	t.string :part
+        t.string :part
+    	t.string :translator
 
-        t.text :embeded_audio_uri
+        t.string :embeded_audio_uri
         t.string :uri
     	t.string :secret_uri
 

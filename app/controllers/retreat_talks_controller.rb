@@ -21,6 +21,8 @@ class RetreatTalksController < InheritedResources::Base
 	    # @search = retreat_talk.search(params[:q])
 	    # @retreat_talks = @search.result
 
+	    @robot_img = 'http://www.bia.or.th/en/images/photo/08dec.jpg'
+
 	    @filter = initialize_filterrific(
 	      RetreatTalk,
 	      params[:filterrific],
@@ -48,25 +50,26 @@ class RetreatTalksController < InheritedResources::Base
 	# GET /retreat_talks/1
 	# GET /retreat_talks/1.json
 	def show
-		id = params[:id]
-		low = id.to_i - 3
-		high = id.to_i + 3
-	  @retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: id).first
+	  @retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
 	  if @retreat_talk == nil
 	  	respond_to do |format|
 	      format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
 	      format.all  { render nothing: true, status: 404 }
 	  	end
 	  else
-	  @book = @retreat_talk.books.first
-	  @audios = @retreat_talk.audios
-	  @audio = @audios.first
-	  @audio_languages = 'in ';
-	  # @related_retreat_talks = (@retreat_talk.related_retreat_talks + RetreatTalk.joins(:audios).where(audios: {audio_code: @retreat_talk.audios.first.audio_code}) + RetreatTalk.where(:id => low..high)).where.not(id: id).uniq 
-	  @related_retreat_talks = (@retreat_talk.related_retreat_talks + RetreatTalk.joins(:audios).where({:id => low..high} || {audios: {audio_code: @retreat_talk.audios.first.audio_code}}).where.not(id: params[:id])).uniq
-	  @related_audios = @retreat_talk.audios
+	  	@title = @retreat_talk.title + " by " + (@retreat_talk.authors.first.name if @retreat_talk.authors.first) + '- Suan Mokkh'
+		  @img = @retreat_talk.external_cover_img_link || 'http://www.bia.or.th/en/images/photo/08dec.jpg'
+	  	id = params[:id]
+	  	low = id.to_i - 3
+	  	high = id.to_i + 3
+		  @book = @retreat_talk.books.first
+		  @audios = @retreat_talk.audios
+		  @audio = @audios.first
+		  @audio_languages = 'in '
+		  @related_retreat_talks = (@retreat_talk.related_retreat_talks + RetreatTalk.joins(:audios).where({:id => low..high} || {audios: {audio_code: @retreat_talk.audios.first.audio_code}}).where.not(id: params[:id])).uniq
+		  @related_audios = @retreat_talk.audios
 
-	  @options_for_languages = []
+		  @options_for_languages = []
 	    @retreat_talk.audios.each do |a|
 	  	  language_option = ''
 	    	a.languages.each_with_index do |l, index|

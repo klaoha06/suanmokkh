@@ -120,7 +120,8 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.integer  "duration"
     t.string   "audio_code"
     t.string   "part"
-    t.text     "embeded_audio_uri"
+    t.string   "translator"
+    t.string   "embeded_audio_uri"
     t.string   "uri"
     t.string   "secret_uri"
     t.boolean  "draft",             default: false
@@ -224,6 +225,8 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.string   "series"
     t.string   "group"
     t.date     "creation_date"
+    t.string   "translator"
+    t.string   "transscriber"
     t.string   "isbn_10"
     t.string   "isbn_13"
     t.date     "publication_date"
@@ -463,6 +466,7 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.string   "series"
     t.string   "format"
     t.string   "group"
+    t.string   "translator"
     t.text     "external_cover_img_link"
     t.date     "publication_date"
     t.boolean  "draft",                   default: false
