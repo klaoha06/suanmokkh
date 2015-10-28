@@ -65,38 +65,66 @@ class BooksController < ApplicationController
         format.all  { render nothing: true, status: 404 }
       end
     else
+      @title = @book.title + " by " + (@book.authors.first.name if @book.authors.first) + '- Suan Mokkh'
+      @img = @book.external_cover_img_link || 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
+      @related_books = @book.related_books.unshift(@book)
+      @audio_languages = ''
+      @options_for_audio_languages = []
+        @book.audios.each do |a|
+          language_option = ''
+          a.languages.each_with_index do |l, index|
+            if index != a.languages.count-1 
+              language_option << l.name + ' and '
+            elsif index == a.languages.count-1
+              language_option << l.name
+            end
+          end
+          @options_for_audio_languages << [language_option, a.id]
+        end
 
-    @related_books = @book.related_books.unshift(@book)
-    @audio_languages = ''
-    # @book.audios.each do |audio|
-    #   @audios_languages + audio.languages.name + " " if audio.language.name
-    # end
-    @options_for_audio_languages = []
-      @book.audios.each do |a|
+      @options_for_book_languages = []
+      @languages = []
+      @related_books.each do |rb|
         language_option = ''
-        a.languages.each_with_index do |l, index|
-          if index != a.languages.count-1 
+        rb.languages.each_with_index do |l,index|
+          if index != rb.languages.count-1 
             language_option << l.name + ' and '
-          elsif index == a.languages.count-1
+          elsif index == rb.languages.count-1
             language_option << l.name
+            @languages << l.name
           end
         end
-        @options_for_audio_languages << [language_option, a.id]
+        @options_for_book_languages << [language_option, rb.id]
       end
-
-    @options_for_book_languages = []
-    @related_books.each do |rb|
-      language_option = ''
-      rb.languages.each_with_index do |l,index|
-        if index != rb.languages.count-1 
-          language_option << l.name + ' and '
-        elsif index == rb.languages.count-1
-          language_option << l.name
-        end
-      end
-      @options_for_book_languages << [language_option, rb.id]
     end
-  end
+
+    @languages.uniq!
+
+    @additional_info = Hash.new
+     @book.attributes.each do |k,v| 
+       if k == 'series' ||  k == 'isbn_10' || k == 'isbn_13' || k == 'publication_date' || k == 'format' || k == 'weight' || k == 'price' || k == 'pages' || k == 'transcriber'
+         if v == nil || v == "" 
+         else 
+            @additional_info[k.capitalize] = v  
+         end 
+       end 
+     end
+
+    @authors = []
+    @book.authors.each do |author| 
+      if author.name != ''
+        @authors << author.name
+      end 
+    end 
+    @additional_info['Authors'] = @authors
+
+    @publishers = []
+    @book.publishers.each do |pub|
+      if pub.name != ''
+        @publishers << pub.name
+      end
+    end
+    @additional_info['Publishers'] = @publishers
 
 
   end

@@ -81,3 +81,14 @@ var cbpAnimatedHeader = (function() {
  new WOW().init();
 
 $('.dropdown-toggle').dropdown();
+
+ $(document).ready(function(){
+   $('#new_user')
+   .on('ajax:send', function(e,d,s,x) {
+   	$('#footeralert').html('<br><i class="fa fa-2x fa-circle-o-notch fa-spin"></i>');
+   })
+   .on('ajax:complete',function(e, data, status, xhr){
+   	$('#user_email').val('');
+     $('#footeralert').html('<br><span>Thank you!</span>');
+		});
+ });

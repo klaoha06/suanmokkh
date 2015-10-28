@@ -1,5 +1,6 @@
 <% content_for :head do %>
 <title>Retreat Talks - Suan Mokkh</title>
+<meta content="Suan Mokkh" property="og:site_name"/><meta content="website" property="og:type" /><meta content="<%= @robot_img %>" itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="This audio collection of more than 300 retreat talks dating from the 1980's to 1990's. They are mostly translated live by Santikaro at a foreigner courses given at Suan Mokkh." property="og:description" /><meta content="Suan Mokkh" name="twitter:site"/><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="This audio collection of more than 300 retreat talks dating from the 1980's to 1990's. They are mostly translated live by Santikaro at a foreigner courses given at Suan Mokkh." name="twitter:description"/><meta content="<%= @robot_img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>"/>
 <% end %>
 
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
@@ -11,9 +12,11 @@
         <div id="owl-featured-retreat_talks" class="owl-carousel">
           <% @featured_retreat_talks.each do |retreat_talk| %>
             <% if retreat_talk.audios.first %>
-              <div class="item">
-                <%= retreat_talk.audios.first.embeded_audio_link_banner.html_safe %>
-                <h2 class="text-center"><%= link_to retreat_talk.title, retreat_talk %></h2>
+              <div class="item" itemscope itemprop="audio" itemtype="http://schema.org/AudioObject">
+                <span itemprop="embedUrl" content="<%= retreat_talk.audios.first.secret_uri %>"><%= retreat_talk.audios.first.embeded_audio_link_banner.html_safe %></span>
+                <h2 class="text-center" itemprop="name"><%= link_to retreat_talk.title, retreat_talk %></h2>
+                <meta itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name" class='hidden' ><%= retreat_talk.authors.first.name %></span></meta>
+                <div itemscope itemprop="provider" itemtype="http://schema.org/Organization"><meta itemprop="name" content="SoundCloud" /><meta itemprop="image" content="http://developers.soundcloud.com/assets/logo_white-8bf7615eb575eeb114fc65323068e1e4.png" /></div>
               </div>
             <% end %>
           <% end %>

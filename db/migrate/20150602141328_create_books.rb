@@ -10,6 +10,8 @@ class CreateBooks < ActiveRecord::Migration
       t.string :series
       t.string :group
       t.date :creation_date
+      t.string :translator
+      t.string :transscriber
 
       t.string :isbn_10
       t.string :isbn_13
