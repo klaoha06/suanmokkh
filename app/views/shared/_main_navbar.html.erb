@@ -1,6 +1,5 @@
   <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                   <span class="sr-only">Toggle navigation</span>
@@ -8,59 +7,24 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
               </button>
-        <!--       <a class="navbar-brand" href="/">
-              <img alt="Brand" src="public/logo.jpg"><i class="fa fa-play-circle-o fa-rotate-90 fa-lg"></i> SUAN MOKKH
-              </a> -->
               <%= link_to '/', :class => 'navbar-brand', :style=>"display:inline-block;" do %>
               <i class="fa fa-play-circle-o fa-rotate-90 fa-lg"></i> SUAN MOKKH
               <% end %>
           </div>
-
-          <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li>
-                    <a href="/buddhadasa">Buddhadasa</a>
-                </li>
-                <li>
-                    <a href="/suanmokkh">Suan Mokkh</a>
-                </li>
-                <li>
-                  <%= link_to "Books", books_path %>
-                </li>
-            <!--     <li>
-                  <%= link_to "Retreat Talks", retreat_talks_path %>
-                </li> -->
+                <li><a href="/buddhadasa">Buddhadasa</a></li>
+                <li><a href="/suanmokkh">Suan Mokkh</a></li>
+                <li><%= link_to "Books", books_path %></li>
                 <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Audios</a>
-                          <ul class="dropdown-menu">
-                          <li><a href="https://soundcloud.com/buddhadasa"><h4 class="text-center brown">All Audios</h4></a></li>
-                          <li><a href="/retreat_talks"><h4 class="text-center brown">Selected Retreat Talks</h4></a></li>
-
-           <!--                  <li><a href="#">All Audios</a></li>
-                            <li><a href="#">Selected Retreat Talks</a></li> -->
-<!--                             <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li> -->
-                          </ul>
-                        </li>
-  <!--               <li>
-                  <a href="https://soundcloud.com/buddhadasa">Audios</a>
-                </li> -->
-                <li>
-                  <%= link_to "Poetry", poems_path %>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Audios</a>
+                  <ul class="dropdown-menu">
+                  <li><a href="/retreat_talks"><h4 class="text-center brown">Retreat Talks</h4></a></li>
+                  <li><a href="https://soundcloud.com/buddhadasa"><h4 class="text-center brown">All Audios in SoundCloud</h4></a></li>
+                  </ul>
                 </li>
-                <li>
-                    <a href="/gallery">Gallery</a>
-                </li>
-               <!--    <li>
-                      <a href="/#retreat">Retreat</a>
-                  </li> -->
-                <!--   <li>
-                      <a href="/#news">News</a>
-                  </li> -->
+                <li><%= link_to "Poetry", poems_path %></li>
+                <li><a href="/gallery">Gallery</a></li>
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -68,7 +32,6 @@
                   <ul class="dropdown-menu text-center" role="menu">
                     <h4 class="text-center brown"><i class="fa fa-circle-thin brown"></i>  Buddhadasa Indapanno</h4>
                     <li><a href="/buddhadasa">About Ajahn</a></li>                
-                    <!-- <li><a href="/teachings">Basic Teachings</a></li>                     -->
                     <li><a href="/gallery">Gallery</a></li>
                     <li class="divider"></li>
                     <h4 class="text-center brown"><i class="fa fa-book brown"> </i> Buddhadasa's Teachings</h4>                 
@@ -77,7 +40,6 @@
                     <li><%= link_to "Books", books_path %></li>
                     <li><%= link_to "Poetry", poems_path %></li>
                     <li><a href="https://www.youtube.com/user/buddhadasaarchives">Video</a></li>
-                    <!-- <li><a href="#">Santikaro's Work</a></li> -->
                     <li class="divider"></li>
                     <h4 class="text-center brown"><i class="fa fa-pagelines brown"></i> Suan Mokkh</h4>
                     <li><a href="/suanmokkh">About</a></li>

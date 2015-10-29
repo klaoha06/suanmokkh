@@ -1,7 +1,7 @@
 ActiveAdmin.register Book do
 	menu priority: 2
 	config.per_page = 12
-	permit_params :recommended, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :language_ids, :title, :embeded_audio_link, :admin_user_id ]
+	permit_params :recommended, :creation_date, :transcriber, :translator, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :language_ids, :title, :embeded_audio_link, :admin_user_id ]
 	# config.batch_actions = true
 
 show do |book|
@@ -13,6 +13,8 @@ show do |book|
   	    row :updated_at
   	    row :series
   	    row :creation_date
+  	    row :translator
+  	    row :transcriber
   	    row "Description" do
   	    	if book.description
 	  	    	text_node (book.description).html_safe
@@ -61,13 +63,13 @@ show do |book|
   	    row :isbn_13
   	  end
   end
-  panel "Stats" do
-  	attributes_table_for book do
-  	    row :views
-  	    row :shares
-  	    row :downloads
-  	  end
-  end
+  # panel "Stats" do
+  # 	attributes_table_for book do
+  # 	    row :views
+  # 	    row :shares
+  # 	    row :downloads
+  # 	  end
+  # end
   panel "External Links" do
   	attributes_table_for book do
 	    row :external_url_link do

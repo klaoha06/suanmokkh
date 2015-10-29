@@ -9,7 +9,7 @@ class Book < ActiveRecord::Base
   validates :title, presence: true, uniqueness: true
   # validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
   validates :external_cover_img_link, url: true,  unless: ->(book){book.external_cover_img_link.blank?}
-  validate :source_of_file
+  # validate :source_of_file
   validate :source_of_cover_img
 
   # validates :external_file_link, presence: true, unless: ->(book){book.file_file_name.present?}
@@ -120,8 +120,10 @@ class Book < ActiveRecord::Base
   def show_book
     if !self.external_file_link.blank? 
       return '<iframe src="' + self.external_file_link + '#page=1&zoom=100' + '"#view=fit" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
-    else 
+    elsif !self.file.url.blank? && !self.file.url.include?('missing')
       return '<iframe src="' + self.file.url + '#page=1&zoom=100' + '"#view=fitH" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+    else
+      return false
     end 
   end
 

@@ -1,5 +1,4 @@
 class PoemsController < InheritedResources::Base
-
 	def index
 	    @featured_poems = Poem.where(featured: true, draft: false).order('created_at DESC').limit(5)
 	

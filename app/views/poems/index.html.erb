@@ -1,26 +1,18 @@
-<!-- <p id="notice"><%= notice %></p> -->
 <% content_for :head do %>
 <title>Poems by Ajahn Buddhadasa - Suan Mokkh</title>
 <% end %>
-
 <div class="container-fluid bg-dark">
   <div class="container havePadding" style="margin-top: 50px;">
-    <h1 class="text-center">Poetry</h1>
+    <h1 class="text-center animated fadeIn">Poetry</h1>
     <hr>
-
     <div id="poem_results">
       <%= render(
         partial: 'poems/list',
         locals: { poems: @poems }
       ) %>
     </div>
-
-    
-
-
   </div>
 </div>
-
 <%= javascript_include_tag 'imagesloaded.pkgd.min', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'isotope.pkgd.min', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'poems', 'data-turbolinks-track' => true %>

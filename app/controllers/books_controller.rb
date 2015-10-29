@@ -1,40 +1,7 @@
 class BooksController < ApplicationController
-  # before_action :set_book, only: [:show, :edit, :update, :destroy]
-
-  # GET /books
-  # GET /books.json
-  # @query = nil
-
   def index
-      # @books = Book.includes(:authors, :groups, :languages).where(@query).order('created_at DESC').limit(20)
-      # @books = Book.search(params[:q]).result
-
-      # @q = Book.search(params[:q])
-      # @books = @q.result(distinct: true)
-
-    # @books = Book.search(params[:language], params[:author], params[:series]).order('books.created_at DESC').page params[:page]
     @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
     @recommended_books = Book.includes(:authors).where(recommended: true).order('created_at DESC').limit(15)
-
-    # @featured_book = Book.order('created_at DESC').find_by(featured: true)
-    # if !@featured_book
-    #   @featured_book = @books.first
-    # end
-    # @filterrific = initialize_filterrific(
-    #   Book,
-    #   params[:filterrific]
-    # ) or return
-    # @books = @filterrific.find.page(params[:page])
-
-    # respond_to do |format|
-    #   format.html
-    #   format.js
-    # end
-    # @search = Book.search(params[:q])
-    # @books = @search.result
-    #
-    # @languages = Language.all
-
     @filterrific = initialize_filterrific(
       Book,
       params[:filterrific],
@@ -68,6 +35,7 @@ class BooksController < ApplicationController
       @title = @book.title + " by " + (@book.authors.first.name if @book.authors.first) + '- Suan Mokkh'
       @img = @book.external_cover_img_link || 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
       @related_books = @book.related_books.unshift(@book)
+
       @audio_languages = ''
       @options_for_audio_languages = []
         @book.audios.each do |a|
@@ -125,15 +93,10 @@ class BooksController < ApplicationController
       end
     end
     @additional_info['Publishers'] = @publishers
-
-
   end
 
 
   private
-  # Use callbacks to share common setup or constraints between actions.
-
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def book_params
     params.require(:book).permit(:language_ids, :group_ids, :author_ids, :audio_ids, :publisher_ids,:id, :title, :cover_img, :publisher, :description, :group, :language, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, :author_ids, :publisher_ids, authors_attributes: [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ])

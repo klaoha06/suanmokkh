@@ -2,9 +2,7 @@
 <title>Retreat Talks - Suan Mokkh</title>
 <meta content="Suan Mokkh" property="og:site_name"/><meta content="website" property="og:type" /><meta content="<%= @robot_img %>" itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="This audio collection of more than 300 retreat talks dating from the 1980's to 1990's. They are mostly translated live by Santikaro at a foreigner courses given at Suan Mokkh." property="og:description" /><meta content="Suan Mokkh" name="twitter:site"/><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="This audio collection of more than 300 retreat talks dating from the 1980's to 1990's. They are mostly translated live by Santikaro at a foreigner courses given at Suan Mokkh." name="twitter:description"/><meta content="<%= @robot_img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>"/>
 <% end %>
-
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-    <div class="container bg-primary" id="retreat_talk_banner">
     <div class="container bg-primary" id="retreat_talk_banner">
       <h1 class="text-center">Selected Retreat Talks</h1>
       <hr>
@@ -23,14 +21,12 @@
         </div>
       <% end %>
       <div class="clearfix"></div>
-    </div>
   <div class="container bg-primary" style="border: none;">
   <%= form_for_filterrific(@filter) do |f| %>
   <div class="row">
     <div class="col-md-3">
       <p>Search</p>
       <div class="input-group">
-      <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
       <%= f.text_field(
         :search_query,
         class: 'filterrific-periodically-observed form-control input-sm'
@@ -73,7 +69,6 @@
       </div>
     </div>
   </div>
-    <%# add an automated spinner to your form when the list is refreshed %>
     <h1 class="text-center"><%= render_filterrific_spinner %></h1>
   <% end %>
   <div id="results">
@@ -82,32 +77,24 @@
       locals: { retreat_talks: @retreat_talks }
     ) %>
   </div>
-
+    <a href="https://soundcloud.com/buddhadasa" class="haveMargin text-center floatCenter"><i class="fa fa-soundcloud"></i> See All Tracks in SoundCloud</a>
   </div>
-
   <div class="clearfix"></div>
-
 </div>
 
 <script type="text/javascript">
-    var style = document.documentElement.style;
+  var style = document.documentElement.style;
   support3d = (style.webkitTransition !== undefined ||
                style.MozTransition !== undefined ||
                style.OTransition !== undefined ||
                style.transition !== undefined);
- 
   var owl = $("#owl-featured-retreat_talks");
-
   $('#owl-recommended-retreat_talks').owlCarousel({
       items: 5,
   });
 
 $("#owl-featured-retreat_talks").owlCarousel({
     items: 1,
-    // animateOut: 'fadeOut',
-    // animateIn: 'fadeIn',
-    // loop: true,
-    // transitionStyle : "fade",
     autoHeight:true
 });   
 </script>
