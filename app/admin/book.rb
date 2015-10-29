@@ -319,6 +319,8 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				# f.has_many :authors do |author|
 				# 	author.input :name, :required => true
 				# end
+				f.input :translator
+				f.input :transcriber
 				f.input :creation_date
 				f.input :series
 				f.input :groups, hint: content_tag(:span, "Existing Groups")
