@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.4'
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 # Use Bootstrap for Front-End Framework
@@ -68,7 +67,6 @@ group :development, :test do
 	gem 'quiet_assets'
 	gem 'guard'
 	gem 'guard-livereload', '~> 2.4', require: false
-	gem 'faker'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
