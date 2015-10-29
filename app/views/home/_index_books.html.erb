@@ -1,5 +1,4 @@
-<% if @books.count > 0 %>
-
+<% if !@books.blank? %>
 <section id="index-books" class="bg-primary">
 	<h1 class="text-center wow fadeIn">Books</h1>
 	<hr>
@@ -7,33 +6,28 @@
 	<div class="container">
 		<div id="owl-books" class="owl-carousel owl-theme">
 			<% @books.each do |book| %>
-			    <div class="havePadding animated fadeIn">
-			    	<a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
-			    		<% if !book.external_cover_img_link.blank? %>
-			    		  <%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
-			    		<% else %>
-			    		  <%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
-			    		<% end %>
-			    		<div class="portfolio-box-caption">
-			    			<div class="portfolio-box-caption-content">
-			    				<div class="project-name">
-			    				<i class="fa fa-search"></i> 
-			    					Take a look
-			    				</div>
-			    			</div>
-			    		</div>
-			    	</a>
-			    	<h4 class="text-center"><%= book.title %></h4>
-			    </div>
+			<div class="havePadding animated fadeIn">
+				<a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
+					<% if !book.external_cover_img_link.blank? %>
+					<%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+					<% else %>
+					<%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+					<% end %>
+					<div class="portfolio-box-caption">
+						<div class="portfolio-box-caption-content">
+							<div class="project-name">
+								<i class="fa fa-search"></i> 
+								Take a look
+							</div>
+						</div>
+					</div>
+				</a>
+				<h4 class="text-center"><%= book.title %></h4>
+			</div>
 			<% end %>
 		</div>
-
 		<a href="/books" class="btn btn-default btn-xl wow fadeIn text-center floatCenter" role="button" style="width: 200px;">See all</a>
 	</div>
-</section>
-
-<% else %>
-	
-
+</section>	
 <% end %>
 

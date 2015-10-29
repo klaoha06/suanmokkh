@@ -1,64 +1,48 @@
 <% content_for :head do %>
 <title>Gallery - Suan Mokkh</title>
 <% end %>
-
 <section id="gallery" class="bg-dark">
-	<h1 class="text-center wow fadeIn">Gallery</h1>
+	<h1 class="text-center animated fadeIn" style="margin-top: 50px;">Gallery</h1>
 	<hr>
-    <div class="container bg-dark" style="padding:0;">
-        <div class="grid">
-        	<div class="grid-sizer"></div>
-        	<% 15.times do |i| %>
-            <div class="grid-item">
-                <a href="#" class="portfolio-box" data-toggle="modal" data-target=<%= '#myModal' + i.to_s %>>
-                <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                Category
-                            </div>
-                            <div class="project-name">
-                                <i class="fa fa-search"> Enlarge</i>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <div class="modal fade" id=<%= 'myModal' + i.to_s %> tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                      </div>
-                      <div class="modal-body">
-                        <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+  <div class="container bg-dark" style="padding:0;">
+    <div class="grid">
+     <div class="grid-sizer"></div>
+       <% 15.times do |i| %>
+       <div class="grid-item">
+        <a href="#" class="portfolio-box" data-toggle="modal" data-target=<%= '#myModal' + i.to_s %>>
+          <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
+          <div class="portfolio-box-caption">
+            <div class="portfolio-box-caption-content">
+              <div class="project-category text-faded">
+                Category
+              </div>
+              <div class="project-name">
+                <i class="fa fa-search"> Enlarge</i>
+              </div>
             </div>
-						<% end %>
+          </div>
+        </a>
+        <div class="modal fade" id=<%= 'myModal' + i.to_s %> tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+              </div>
+              <div class="modal-body">
+                <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <% end %>
     </div>
-    <!--     <div class="col-md-12 haveMargin" style="margin-bottom: 30px;">
-        <a href="/gallery" class="btn btn-default btn-xl wow fadeIn text-center floatCenter haveMargin" style="width: 200px;">See all</a>
-        </div> -->
-
-
-
-      <!--   <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-          Launch demo modal
-        </button> -->
-
-
-
+  </div>
 </section>
-
 <%= javascript_include_tag 'imagesloaded.pkgd.min', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'isotope.pkgd.min', 'data-turbolinks-track' => true %>
 <%= javascript_include_tag 'gallery', 'data-turbolinks-track' => true %>

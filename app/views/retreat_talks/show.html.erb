@@ -1,135 +1,122 @@
 <% content_for :head do %>
-  <title><%= @title %></title>
-  <meta content="Suan Mokkh" property="og:site_name"/><meta content="website" property="og:type" /><meta content="<%= @img %>" itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="<%= sanitize(strip_tags(@retreat_talk.description)) %>" property="og:description" /><meta content="Suan Mokkh" name="twitter:site"/><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="<%= sanitize(strip_tags(@retreat_talk.description)) %>" name="twitter:description"/><meta content="<%= @img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>"/>
+<title><%= @title %></title>
+<meta content="Suan Mokkh" property="og:site_name"/><meta content="website" property="og:type" /><meta content="<%= @img %>" itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="<%= sanitize(strip_tags(@retreat_talk.description)) %>" property="og:description" /><meta content="Suan Mokkh" name="twitter:site"/><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="<%= sanitize(strip_tags(@retreat_talk.description)) %>" name="twitter:description"/><meta content="<%= @img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>"/>
 <% end %>
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
   <div class="container bg-primary retreat_talk_header">
     <div class="row">
       <div class="col-md-4">
-      <% if !@retreat_talk.external_cover_img_link.blank? %>
+        <% if !@retreat_talk.external_cover_img_link.blank? %>
         <%= image_tag "#{@retreat_talk.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
-      <% else %>
+        <% else %>
         <%= image_tag "#{@retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
-      <% end %>
-        
-      <% if @audios.count > 1 %>
+        <% end %>
+        <% if @audios.count > 1 %>
         <hr>
         <div class="col-md-12">
-        <p>Select Language</p>
-        <%= 
-        select_tag('languages', options_for_select(@options_for_languages), class: 'form-control changeStatus')
-        %>
-        <br>
+          <p>Select Language</p>
+          <%= 
+          select_tag('languages', options_for_select(@options_for_languages), class: 'form-control changeStatus')
+          %>
+          <br>
         </div>
-      <% end %>
-
+        <% end %>
       </div>
-
       <div class="col-md-8">
         <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px; line-height: 1.2;"><%= @retreat_talk.title %></h1>
         <p>
           <% @retreat_talk.authors.each do |author|%>
-            <%= author.name.upcase %>
+          <%= author.name.upcase %>
           <% end %>
         </p>
         <hr class="full" style="border-color:#725843;">
         <span style="color:black !important"><%= @retreat_talk.description.html_safe %></span>
 
         <% if @book != nil %>
-          <div class="row">
-            <div class="col-md-12">
-              <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:200px; padding:10px 0; font-size: 0.9em; margin:10px auto 20px auto" role="button"><i class="fa fa-edit"></i> See Transcript</a>
-            </div>
+        <div class="row">
+          <div class="col-md-12">
+            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:200px; padding:10px 0; font-size: 0.9em; margin:10px auto 20px auto" role="button"><i class="fa fa-edit"></i> See Transcript</a>
           </div>
+        </div>
         <% end %>
       </div>
-
       <div class="col-md-12">
-      <% if @retreat_talk.audios.count == 0 %>
-
-      <% elsif @retreat_talk.audios.count == 1 %>
-          <br>
-          <%= @audio.embeded_audio.html_safe %>
-
-      <% else %>
+        <% if @retreat_talk.audios.blank? %>
+        <% elsif @retreat_talk.audios.count == 1 %>
+        <br>
+        <%= @audio.embeded_audio.html_safe %>
+        <% else %>
         <br>
         <% @audios.each_with_index do |a,i| %>
-          <% if i == 0 %>
-          <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio">
-            <%= a.embeded_audio.html_safe %>
-          </div>
-          <% else %>
-            <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio hide">
-              <%= a.embeded_audio.html_safe %>
-            </div>
-          <% end %>
+        <% if i == 0 %>
+        <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio">
+          <%= a.embeded_audio.html_safe %>
+        </div>
+        <% else %>
+        <div id=<%= "audio"+ a.id.to_s %> class="retreat_talk_audio hide">
+          <%= a.embeded_audio.html_safe %>
+        </div>
+        <% end %>
 
         <% end %>
+        <% end %>
+      </div>
+      <% if !@related_retreat_talks.blank? %>
+      <div class="col-md-12">
+        <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-plus"></i>
+          See related talks
+        </a>
+        <div class="collapse" id="collapseExample">
+          <hr>
+          <div id="owl-demo">
+            <% @related_retreat_talks.each do |rt| %>
+            <div class="item text-center">
+              <%= image_tag "#{rt.external_cover_img_link}", class: "lazyOwl img-responsive shadow floatCenter", style: "width: 90%;" %>
+              <br>
+              <%= link_to rt.title, rt %>
+            </div>
+            <% end %>
+          </div>
+          </div>
+      </div>
       <% end %>
     </div>
 
-  <% if @related_retreat_talks.count >= 1 %>
-    <div class="col-md-12">
-    <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-plus"></i>
-      See related talks
-    </a>
-
-    <div class="collapse" id="collapseExample">
-      <hr>
-        <div id="owl-demo">
-          <% @related_retreat_talks.each do |rt| %>
-          <div class="item text-center">
-          <%= image_tag "#{rt.external_cover_img_link}", class: "lazyOwl img-responsive shadow floatCenter", style: "width: 90%;" %>
-          <br>
-            <%= link_to rt.title, rt %>
-          </div>
-          <% end %>
-        </div>
-    </div>
-
-    </div>
-  <% end %>
-
   </div>
-
-</div>
-<div class="container-fluid bg-primary">
-  <div id="start_reading" class="container">
-  <% if @retreat_talk.books.first %>
-    <%= @retreat_talk.books.first.show_book.html_safe %>
-  <% end %>
+  <div class="container-fluid bg-primary">
+    <div id="start_reading" class="container">
+      <% if @retreat_talk.books.first %>
+      <%= @retreat_talk.books.first.show_book.html_safe %>
+      <% end %>
+    </div>
   </div>
+  <% if @retreat_talk.allow_comments %>
+  <div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
+    <div class="container">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES * * */
+        var disqus_shortname = 'suanmokkh';
 
-</div>
-
-<% if @retreat_talk.allow_comments %>
-<div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
-  <div class="container">
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-      /* * * CONFIGURATION VARIABLES * * */
-      var disqus_shortname = 'suanmokkh';
-      
-      /* * * DON'T EDIT BELOW THIS LINE * * */
-      (function() {
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
           var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
           dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
           (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+    </div>
   </div>
-</div>
-<% end %>
-
-<script type="text/javascript">
-  $('select.changeStatus').change(function(){
+  <% end %>
+  <script type="text/javascript">
+    $('select.changeStatus').change(function(){
       $('.retreat_talk_audio').addClass('hide');
       $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
-  });
-  $("#owl-demo").owlCarousel({  
-       items : 4,
-       itemsDesktop : [1199,3],
-       itemsDesktopSmall : [979,3]
+    });
+    $("#owl-demo").owlCarousel({  
+     items : 4,
+     itemsDesktop : [1199,3],
+     itemsDesktopSmall : [979,3]
    });
-</script>
+ </script>

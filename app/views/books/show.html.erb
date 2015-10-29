@@ -2,7 +2,6 @@
 <title><%= @title %></title>
 <meta content="Suan Mokkh" property="og:site_name" /><meta content="website" property="og:type" /><meta content="<%= @img %>"  itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="<%= sanitize(strip_tags(@book.description)) %>" property="og:description" /><meta content="Suan Mokkh" name="twitter:site" /><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="<%= sanitize(strip_tags(@book.description)) %>" name="twitter:description" /><meta content="<%= @img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>" />
 <% end %>
-
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;" itemprop="mainEntity" itemscope itemtype="http://schema.org/Book">
   <div class="container bg-primary retreat_talk_header">
     <div class="row">
@@ -12,9 +11,7 @@
       <% else %>
         <%= image_tag "#{@book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 90%;", itemprop: 'image'%>
       <% end %>
-
-        <% if @book.audios.count == 0 %>
-
+        <% if @book.audios.blank? %>
         <% elsif @book.audios.count > 1 %>
           <small class="text-center floatCenter" >
           <br>
@@ -27,7 +24,6 @@
             <br>
           </div>
         <% end %>
-
         <% if @related_books.count > 1 %>
           <br>
           <div class="col-md-12">
@@ -38,8 +34,7 @@
           %>
           <br>
           </div>
-        <% end %>
-        
+        <% end %>      
         <hr class="full visible-sm visible-xs">
       </div>
       <div class="col-md-8">
@@ -52,16 +47,14 @@
         <hr class="full" style="border-color:#725843;">
         <span style="color:black !important" itemprop="description"><%= @book.description.html_safe %></span>
 
-        <% if @book.audios.count > 1 %>
+        <% if @book.audios.count > 1 && @book.show_book %>
         <div class="row">
           <div class="col-md-12">
             <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
           </div>
         </div>
         <% end %>
-
-      </div>
-      
+      </div>    
       <hr class="full visible-sm visible-xs">
        <div class="col-md-12">
         <br>
@@ -76,7 +69,7 @@
               </div>
             <% end %>
           <% end %>
-      <% if @book.audios.count <= 1 %>
+      <% if @book.audios.count <= 1 && @book.show_book %>
           <div class="col-md-12">
             <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
           </div>
@@ -88,65 +81,63 @@
 <div class="container-fluid">
   <div id="start_reading" class="container">
     <% @related_books.each_with_index do |b,i| %>
-      <% if i == 0 %>
-      <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
-          <%= b.show_book.html_safe %>
-      </div>
-      <% else %>
-        <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
-          <%= b.show_book.html_safe %>
+      <% if b.show_book %>
+        <% if i == 0 %>
+        <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
+            <%= b.show_book.html_safe %>
         </div>
+        <% else %>
+          <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
+            <%= b.show_book.html_safe %>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>
-
-  <% if @additional_info.first %>
-  <div id="additionalBookInfo" class="col-md-12">
-    <a class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-info"></i>
-      See additional info
-    </a>
-
-    <div class="collapse container text-center" id="collapseExample">
-      <h2>Additional Info</h2>
-      <hr>
-        <% @additional_info.each do |k,v| %>
-          <% if k =='Authors' && v.count >= 1 %>
-            <p itemprop="author" itemscope itemtype="http://schema.org/Person">Author(s):
-            <% v.each do |name| %>
-              <span class="brown" itemprop="name"><%= name %> <span>
-            <% end %>
-            </p><br>
-          <% elsif k == 'Isbn_10' || k == 'Isbn_13' %>
-            <p>INSB: <span class="brown" itemprop="isbn"><%= v %><span></p><br>
-          <% elsif k =='Publication_date' %>
-            <p><%= k %>: <span class="brown" itemprop="datePublished"><%= v %><span></p><br>
-          <% elsif k =='Format' %>
-            <p><%= k %>: <span class="brown" itemprop="bookFormat"><%= v %><span></p><br>
-          <% elsif k =='Pages' %>
-            <p><%= k %>: <span class="brown" itemprop="numberOfPages"><%= v %><span></p><br>
-          <% elsif k =='Publishers' && v.count >= 1 %>
-            <p itemprop="publisher" itemtype="http://schema.org/Organization" itemscope="">Publisher(s):  
-            <% v.each do |name| %>
-              <span class="brown" itemprop="name"><%= name %></span>
-            <% end %>
-            </p><br>
-          <% else %>
-            <p><%= k %>: <span class="brown"><%= v %><span></p><br>
-          <% end %>
-        <% end %>
-        <% if @languages.count >= 1 %>
-          <p>Language(s):
-          <% @languages.each do |l| %>
-            <meta itemprop="inLanguage" content=<%= l %>><%= l %></meta>
-          <% end %>
-          </p>
-        <% end %>
-    </div>
-  </div>
-  <% end %>
-
 </div>
-
+<% if @additional_info.first && @book.show_book %>
+<div id="additionalBookInfo" class="container-fluid bg-dark">
+  <a class="text-center floatCenter white" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-info"></i>
+    See additional info
+  </a>
+  <div class="collapse container text-center" id="collapseExample">
+    <h2>Additional Info</h2>
+    <hr>
+      <% @additional_info.each do |k,v| %>
+        <% if k =='Authors' && v.count >= 1 %>
+          <p itemprop="author" itemscope itemtype="http://schema.org/Person">Author(s):
+          <% v.each do |name| %>
+            <span itemprop="name"><%= name %> <span>
+          <% end %>
+          </p><br>
+        <% elsif k == 'Isbn_10' || k == 'Isbn_13' %>
+          <p>INSB: <span itemprop="isbn"><%= v %><span></p><br>
+        <% elsif k =='Publication_date' %>
+          <p>Publication Date: <span itemprop="datePublished"><%= v.to_formatted_s(:long_ordinal) %><span></p><br>
+        <% elsif k =='Format' %>
+          <p><%= k %>: <span itemprop="bookFormat"><%= v %><span></p><br>
+        <% elsif k =='Pages' %>
+          <p><%= k %>: <span itemprop="numberOfPages"><%= v %><span></p><br>
+        <% elsif k =='Publishers' && !v.blank? %>
+          <p itemprop="publisher" itemtype="http://schema.org/Organization" itemscope="">Publisher(s):  
+          <% v.each do |name| %>
+            <span itemprop="name"><%= name %></span>
+          <% end %>
+          </p><br>
+        <% elsif !v.blank? %>
+          <p><%= k %>: <%= v %></p><br>
+        <% end %>
+      <% end %>
+      <% if @languages.count >= 1 %>
+        <p>Language(s):
+        <% @languages.each do |l| %>
+          <meta itemprop="inLanguage" content=<%= l %>><%= l %></meta>
+        <% end %>
+        </p>
+      <% end %>
+  </div>
+</div>
+<% end %>
 <% if @book.allow_comments %>
 <div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
   <div class="container">
@@ -166,7 +157,6 @@
   </div>
 </div>
 <% end %>
-
 <script type="text/javascript">
   $('select.changeStatus').change(function(){
       $('.embeded_audio').addClass('hide');

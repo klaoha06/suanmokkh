@@ -1,10 +1,11 @@
 	<footer id="footer" class="bg-dark">
-
 		<div class="row" style="padding-top:50px;padding-bottom:50px; margin:0;">
 			<div class="col-md-4 text-center">
-				<h3>NEED HELP? CALL US</h3>
+				<h3>GET IN TOUCH</h3>
 				<hr>
-				<h3>081-906-1590</h3>
+				<a href='/contact' class="white">CONTACT US</a><br><br>
+				<a href='/feedbacks/new' class="white">SEND FEEDBACK</a><br><br>
+				<a href='/feedbacks/new' class="white">REPORT ERROR</a>
 			</div>
 			<div id="followFooter"class="col-md-4 text-center">
 				<h3>FOLLOW US</h3>
@@ -17,20 +18,16 @@
 			<div class="col-md-4 text-center">
 				<h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
 				<hr>
-
-		    <%= form_for(User.new, remote: true, html: { class: "input-group new_user", id: "new_user", style: "width:300px; margin:0 auto;" }) do |f| %>
-		        <%= f.email_field :email, :class => 'form-control', :placeholder => "Your Email Here..." %>
-		        <span class="input-group-btn">
-		        <%= f.submit 'submit', :class => 'btn btn-default' %>
-		        </span>
-		    <% end %>
-		    <div id="footeralert"></div>
-
-
+				<%= form_for(User.new, remote: true, html: { class: "input-group new_user", id: "new_user", style: "width:300px; margin:0 auto;" }) do |f| %>
+				<%= f.email_field :email, :class => 'form-control', :placeholder => "Your Email Here..." %>
+				<span class="input-group-btn">
+					<%= f.submit 'submit', :class => 'btn btn-default' %>
+				</span>
+				<% end %>
+				<div id="footeralert"></div>
 			</div>
 		</div>
 		<div class="col-md-12 text-center bg-dark" style="padding:10px 0;">
-		<p class="light">Copyright© <%= Time.now.year %> Suan Mokkh</p>
+			<p class="light">Copyright© <%= Time.now.year %> Suan Mokkh</p>
 		</div>
-		
 	</footer>
