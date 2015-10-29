@@ -45,7 +45,7 @@
    // $('.dropdown-toggle').dropdown();
    
     // Initialize WOW.js Scrolling Animations
-    new WOW().init();
+    // new WOW().init();
 
 
     // Start Owl Carousel
@@ -70,12 +70,12 @@
         slideSpeed: 900
     });
 
-    $(".owl-demo").owlCarousel({
-        nav : false, // Show next and prev buttons
-        slideSpeed : 300,
-        paginationSpeed : 400,
-        singleItem:true,
-    });
+    // $(".owl-demo").owlCarousel({
+    //     nav : false, // Show next and prev buttons
+    //     slideSpeed : 300,
+    //     paginationSpeed : 400,
+    //     singleItem:true,
+    // });
 
     $("#owl-poetry").owlCarousel({
         items: 1,
@@ -107,20 +107,6 @@
     $grid.imagesLoaded().progress( function() {
       $grid.isotope('layout');
     });
-
-    // //Switch to Articles
-    // $('#switch_to_articles').click(function (event) {
-    //   event.preventDefault(); // Prevent link from following its href
-    //   $('#teachings_books').addClass("hide");
-    //   $('#teachings_articles').removeClass("hide");
-    // });
-
-    // //Switch to Books
-    // $('#switch_to_books').click(function (event) {
-    //   event.preventDefault(); // Prevent link from following its href
-    //   $('#teachings_articles').addClass("hide");
-    //   $('#teachings_books').removeClass("hide");
-    // });
 
 
 
