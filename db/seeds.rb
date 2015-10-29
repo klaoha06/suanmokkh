@@ -52,7 +52,7 @@ Language.create!([{name: 'English'}, {name: 'Thai'}, {name: 'German'}, {name: 'C
 buddhadasa = Author.create!([{name: 'Buddhadasa'}])
 
 20.times do |i|
-  book = Book.create!({title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph(18), external_file_link: 'http://www.bia.or.th/en/index.php/2013-10-23-08-26-28/ebooks/send/3-books-texts/9-where-is-suan-mokkh', external_cover_img_link: 'http://placehold.it/250x320', draft: false, featured: true, recommended: true })
+  book = Book.create!({title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph(18), external_file_link: 'http://www.suanmokkh-idh.org/talks/chanting-book-ver1-02.pdf', external_cover_img_link: 'http://placehold.it/250x320', draft: false, featured: true, recommended: true })
   book.authors << buddhadasa
   book.languages << Language.where(name: 'English')
 end
