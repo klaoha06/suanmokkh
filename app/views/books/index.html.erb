@@ -1,9 +1,7 @@
-<!-- <p id="notice"><%= notice %></p> -->
 <% content_for :head do %>
   <title>Book Library - Suan Mokkh</title>
   <meta content="Suan Mokkh" property="og:site_name"/><meta content="website" property="og:type" /><meta content="<%= @robot_img %>" itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="The is the largest and most accesible source of Ajahn Budhadasa's teachings whether in books, audios, or poems." property="og:description" /><meta content="Suan Mokkh" name="twitter:site"/><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="The is the largest and most accesible source of Ajahn Budhadasa's teachings whether in books, audios, or poems." name="twitter:description"/><meta content="<%= @robot_img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>"/>
 <% end %>
-
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;" itemscope itemtype="http://schema.org/WebPage">
   <div class="featured container" style="border: none; margin-top: 30px;">
     <div id="owl-featured-books" class="owl-carousel">
@@ -34,9 +32,7 @@
       <% end %>
     </div>
   </div>
-
   <div class="clearfix"></div>
-
   <div class="container-fluid bg-primary">
     <br>
 <!--     <h1 class="text-center">Books in Archive</h1>
@@ -89,17 +85,14 @@
         </div>
       </div>
     </div>
-      <%# add an automated spinner to your form when the list is refreshed %>
       <h1 class="text-center"><%= render_filterrific_spinner %></h1>
     <% end %>
-
     <%= render(
       partial: 'books/book',
       locals: { books: @books }
     ) %>
     </div>
   </div>
-
   <div class='container-fluid bg-dark'>
     <div class="container">
       <h2>Recommended</h2>
@@ -131,10 +124,5 @@
       </div>
     </div>
   </div>
-
-
-
   <div class="clearfix"></div>
 </div>
-
-<%= javascript_include_tag 'books', 'data-turbolinks-track' => true %>
