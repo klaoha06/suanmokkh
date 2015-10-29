@@ -232,15 +232,26 @@ end
 form :html => { :enctype => "multipart/form-data" } do |f|
 	tabs do
 		tab 'Basic' do
-			f.inputs 'Basic Details' do
+			f.inputs 'Required Information' do
 				f.input :title, :required => true
-				# f.input :audio_code
+				f.input :audios
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 				f.input :languages
 				f.has_many :languages do |language|
 					language.inputs
 				end
+				f.input :cover_img, :required => true, hint: f.retreat_talk.cover_img? ? image_tag(f.retreat_talk.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+				f.input :external_cover_img_link, :as => :url
 				f.input :related_retreat_talks
+				f.input :authors
+				f.has_many :authors do |author|
+					author.input :name, :required => true
+				end
+			end
+			f.inputs "Book related to this retreat_talk" do
+	          f.input :books
+	    end
+			f.inputs "Optional Information" do
 				f.input :series
 				f.input :format
 				f.input :groups
@@ -249,27 +260,18 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				end
 				# f.input :external_url_link, :as => :url
 				f.input :publication_date
+				f.input :translator
 			end
-			f.inputs "Author" do
-				f.input :authors
-				f.has_many :authors do |author|
-					author.input :name, :required => true
-				end
-			end
-			f.inputs "Audio related to this book" do
-        f.input :audios
-        # f.has_many :audios do |audio|
-        # 	audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
-        # 	audio.input :admin_user_id, :as => :hidden
-        # end
-	    end
-			f.inputs "Book related to this retreat_talk" do
-	          f.input :books
-	    end
-	    f.inputs 'Actual Files' do
-	    	f.input :cover_img, :required => true, hint: f.retreat_talk.cover_img? ? image_tag(f.retreat_talk.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
-	    	f.input :external_cover_img_link, :as => :url
-	    end
+			# f.inputs "Audio related to this book" do
+   #      f.input :audios
+   #      # f.has_many :audios do |audio|
+   #      # 	audio.input :languages, :required => true, hint: content_tag(:span, "Must Select At Least One")
+   #      # 	audio.input :admin_user_id, :as => :hidden
+   #      # end
+	  #   end
+	    # f.inputs 'Actual Files' do
+
+	    # end
 	    f.inputs 'Post Status' do
 	    	f.input :draft, :label => "Make this a draft?"
 	    	f.input :featured

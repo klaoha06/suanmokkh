@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.string   "group"
     t.date     "creation_date"
     t.string   "translator"
-    t.string   "transscriber"
+    t.string   "transcriber"
     t.string   "isbn_10"
     t.string   "isbn_13"
     t.date     "publication_date"
