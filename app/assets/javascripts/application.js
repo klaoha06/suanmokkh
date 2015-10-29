@@ -15,11 +15,11 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require jquery.easing.min
-//= require cbpAnimatedHeader
-//= require owl.carousel.min
-//= require wow.min
 //= require creative
+//= require wow.min
+//= require cbpAnimatedHeader
 //= require filterrific/filterrific-jquery
+//= require owl.carousel.min
 //= require imagesloaded.pkgd.min
 //= require isotope.pkgd.min
 //= require_self
