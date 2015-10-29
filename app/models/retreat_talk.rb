@@ -67,7 +67,6 @@ class RetreatTalk < ActiveRecord::Base
 		  terms = terms.map { |e|
 		    ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
 		  }
-		  p terms
 		  # configure number of OR conditions for provision
 		  # of interpolation arguments. Adjust this if you
 		  # change the number of OR conditions.

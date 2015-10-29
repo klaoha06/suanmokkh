@@ -2,7 +2,7 @@
 <html>
 <head>
 	<%= yield :head %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,12 +31,12 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </head>
   <%= render "shared/main_navbar" %>
 <body>
 <%= yield %>
-	<%= render "layouts/footer" %>
+  <%= render "layouts/footer" %>
+  <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'cbpAnimatedHeader', 'data-turbolinks-track' => true %>
 </body>
 </html>
