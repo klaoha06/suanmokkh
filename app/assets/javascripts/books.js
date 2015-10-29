@@ -18,7 +18,6 @@ owl.owlCarousel({
     // animateOut: 'fadeOut',
     pagination: false,
     animateIn: 'fadeIn',
-    // loop: true,
     navigation:true,
     navigationText: [
     "<i class='books_arrow fa fa-angle-left white fa-4x hide'></i>",

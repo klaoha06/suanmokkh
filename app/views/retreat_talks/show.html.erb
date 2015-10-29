@@ -68,7 +68,7 @@
         </a>
         <div class="collapse" id="collapseExample">
           <hr>
-          <div id="owl-demo">
+          <div id="owl_related_retreat_talks">
             <% @related_retreat_talks.each do |rt| %>
             <div class="item text-center">
               <%= image_tag "#{rt.external_cover_img_link}", class: "lazyOwl img-responsive shadow floatCenter", style: "width: 90%;" %>
@@ -114,9 +114,4 @@
       $('.retreat_talk_audio').addClass('hide');
       $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
     });
-    $("#owl-demo").owlCarousel({  
-     items : 4,
-     itemsDesktop : [1199,3],
-     itemsDesktopSmall : [979,3]
-   });
  </script>
