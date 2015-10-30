@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Buddhadasa Indapanno">
   <% if Rails.env.production? %>
-    <%= render "layouts/google_analytics" %>
+  <%= render "layouts/google_analytics" %>
   <% end %>
   <!-- Bootstrap Core CSS -->
   <!-- <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"> -->
@@ -32,7 +32,7 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-  <%= render "shared/main_navbar" %>
+<%= render "shared/main_navbar" %>
 <body>
 <%= yield %>
   <%= render "layouts/footer" %>
