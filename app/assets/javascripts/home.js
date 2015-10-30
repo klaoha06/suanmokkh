@@ -70,13 +70,6 @@
         slideSpeed: 900
     });
 
-    // $(".owl-demo").owlCarousel({
-    //     nav : false, // Show next and prev buttons
-    //     slideSpeed : 300,
-    //     paginationSpeed : 400,
-    //     singleItem:true,
-    // });
-
     $("#owl-poetry").owlCarousel({
         items: 1,
         navigation:true,
