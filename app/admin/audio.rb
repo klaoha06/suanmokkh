@@ -169,7 +169,7 @@ end
 		      tab 'Basic' do
 		        f.inputs 'Required Infomation' do
 		        	f.input :title, :required => true
-		        	f.input :uri, :as => :url, :required => true, hint: content_tag(:span, "Please input an embededable code to direct be injected into the website.")
+		        	f.input :uri, :as => :url, :required => true, hint: content_tag(:span, "Please input the url for the audio soundtrack from SoundCloud. For example, 'https://soundcloud.com/buddhadasa/9003b-1-buddhism-conservation' Be careful not to input the same soundtrack that also has the playlist info in it like so 'https://soundcloud.com/buddhadasa/8602-1-how-to-study-dhamma-1?in=buddhadasa/sets/1986-1991-retreat-talks' because this will not work.")
 		        	# f.input :audio_code
 		        	# f.input :description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 		        	f.input :languages, :required => true
@@ -209,12 +209,12 @@ end
 		        # f.inputs 'Actual Files' do
 		        # 	# f.input :file, hint: content_tag(:span, "DO NOT upload the file here unless necessary. Please use service like Soundcloud for uploading audio instead whenever possible.")
 		        # end
-		        f.inputs 'Publish Status' do
-		        	f.input :draft, :label => "Make this a draft?"
-		        	f.input :featured
-		        	f.input :recommended
-		        	f.input :allow_comments, :label => "Allow commenting on this audio track?"
-		        end
+		        # f.inputs 'Publish Status' do
+		        # 	f.input :draft, :label => "Make this a draft?"
+		        # 	f.input :featured
+		        # 	f.input :recommended
+		        # 	f.input :allow_comments, :label => "Allow commenting on this audio track?"
+		        # end
 		      end
 		    end
 		f.actions
