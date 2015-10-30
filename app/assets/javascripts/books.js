@@ -32,7 +32,6 @@ owl.owlCarousel({
     autoHeight:true
 }); 
 
-
 $('.featured')
   .hover(
     function() {
