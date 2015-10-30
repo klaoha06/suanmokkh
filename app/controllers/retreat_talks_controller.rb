@@ -1,8 +1,8 @@
 class RetreatTalksController < InheritedResources::Base
 	def index
 		@robot_img = 'http://www.bia.or.th/en/images/photo/08dec.jpg'
+		@title = 'Retreat Talks by Ajahn Buddhadasa - Suan Mokkh'
 		@featured_retreat_talks = RetreatTalk.where(featured: true, draft: false).order('created_at DESC').limit(5)
-
 		@filter = initialize_filterrific(
 			RetreatTalk,
 			params[:filterrific],
@@ -26,7 +26,7 @@ class RetreatTalksController < InheritedResources::Base
 	# GET /retreat_talks/1.json
 	def show
 		@retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
-		if @retreat_talk == nil
+		if @retreat_talk.blank?
 			respond_to do |format|
 				format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
 				format.all  { render nothing: true, status: 404 }
@@ -34,6 +34,7 @@ class RetreatTalksController < InheritedResources::Base
 		else
 			@title = @retreat_talk.title + " by " + (@retreat_talk.authors.first.name if @retreat_talk.authors.first) + '- Suan Mokkh'
 			@img = @retreat_talk.external_cover_img_link || 'http://www.bia.or.th/en/images/photo/08dec.jpg'
+			@fall_back_description = "Suanmokkh.org holds audio collection of more than 300 retreat talks during the life time of Ajahn Buddhadasa starting from the 1980\'s to 1990\'s. These audios are mostly translated live by Santikaro given at Suan Mokkh International Dhamma Hermitage."
 			id = params[:id]
 			low = id.to_i - 3
 			high = id.to_i + 3
