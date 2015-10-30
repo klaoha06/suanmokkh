@@ -3,8 +3,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  ActionController::Base.helpers.strip_tags('string')
-
   def page_not_found
     respond_to do |format|
       format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
