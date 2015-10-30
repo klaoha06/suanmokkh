@@ -84,6 +84,11 @@
         // animateOut: 'fadeOut',
         // animateIn: 'fadeIn',
         // loop: true,
+        itemsDesktop: false,
+        itemsDesktopSmall: false,
+        itemsTablet: false,
+        itemsTabletSmall: false,
+        itemsMobile: false,
         navigationText: [
         "<i class='fa fa-angle-left fa-4x white'></i>",
         "<i class='fa fa-angle-right fa-4x white'></i>",
