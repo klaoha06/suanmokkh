@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
   def index
+    @robot_img = 'http://www.bia.or.th/en/images/photo/08dec.jpg'
+    @title = 'Book Library - Suan Mokkh'
     @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
     @recommended_books = Book.includes(:authors).where(recommended: true).order('created_at DESC').limit(15)
     @filterrific = initialize_filterrific(
@@ -35,7 +37,6 @@ class BooksController < ApplicationController
       @title = @book.title + " by " + (@book.authors.first.name if @book.authors.first) + '- Suan Mokkh'
       @img = @book.external_cover_img_link || 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
       @related_books = @book.related_books.unshift(@book)
-
       @audio_languages = ''
       @options_for_audio_languages = []
         @book.audios.each do |a|
