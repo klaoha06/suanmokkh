@@ -121,19 +121,14 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.string   "audio_code"
     t.string   "part"
     t.string   "translator"
+    t.integer  "soundcloud_identifier"
     t.string   "embeded_audio_uri"
     t.string   "uri"
     t.string   "secret_uri"
-    t.boolean  "draft",             default: false
-    t.boolean  "featured",          default: false
-    t.boolean  "recommended",       default: false
-    t.boolean  "allow_comments",    default: true
-    t.integer  "downloads",         default: 0
-    t.integer  "plays",             default: 0
-    t.integer  "shares",            default: 0
+    t.boolean  "do_not_update_from_soundcloud", default: false
     t.integer  "admin_user_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.string   "file_file_name"
     t.string   "file_content_type"
     t.integer  "file_file_size"
@@ -469,13 +464,14 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.string   "translator"
     t.text     "external_cover_img_link"
     t.date     "publication_date"
-    t.boolean  "draft",                   default: false
-    t.boolean  "featured",                default: false
-    t.boolean  "allow_comments",          default: true
-    t.boolean  "recommended",             default: false
+    t.boolean  "draft",                         default: false
+    t.boolean  "featured",                      default: false
+    t.boolean  "allow_comments",                default: true
+    t.boolean  "recommended",                   default: false
+    t.boolean  "do_not_update_from_soundcloud", default: false
     t.integer  "admin_user_id"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.string   "cover_img_file_name"
     t.string   "cover_img_content_type"
     t.integer  "cover_img_file_size"

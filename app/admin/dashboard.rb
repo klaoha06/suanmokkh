@@ -73,7 +73,7 @@ ActiveAdmin.register_page "Dashboard" do
             table_for Audio.order('id desc').limit(10) do
                 column("Title") {|audio| audio.title}
                 column("Created At") {|audio| pretty_format(audio.created_at)}
-                column("Status") {|audio| status_tag(audio.draft? ? "Not Published" : "Published")}
+                # column("Status") {|audio| status_tag(audio.draft? ? "Not Published" : "Published")}
                 # column("Downloads") {|audio| audio.downloads}
                 column("Actions") {|audio| a ' Go to', :href => admin_audio_path(audio), :class => "button"}
       

@@ -1,7 +1,7 @@
 ActiveAdmin.register RetreatTalk do
 	menu priority: 3
 	config.per_page = 12
-	permit_params :recommended, :translator, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :downloads, :draft, :series, :allow_comments, :publication_date, :format, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
+	permit_params :recommended, :do_not_update_from_soundcloud, :translator, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :downloads, :draft, :series, :allow_comments, :publication_date, :format, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
 	# config.batch_actions = true
 
 show do |retreat_talk|
@@ -25,6 +25,9 @@ show do |retreat_talk|
   	    	if retreat_talk.audios.first
 		  	    text_node (retreat_talk.audios.first.embeded_audio_link_strip).html_safe
 		  	  end
+  	    end
+  	    row 'do_not_update_from_soundcloud' do
+  	    	status_tag((retreat_talk.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updateing from SoundClound"), (retreat_talk.do_not_update_from_soundcloud? ? :ok : :ok))
   	    end
   	    row "Book file" do
   	    	if retreat_talk.books.first
@@ -277,6 +280,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	    	f.input :featured
 	    	f.input :recommended
 	    	f.input :allow_comments, :label => "Allow commenting on this retreat_talk?"
+	    	f.input :do_not_update_from_soundcloud, hint: content_tag(:span, "if you do not want this track to be periodicaly update or overwrite from SoundCloud data then check this")
 	    end
 	  end
 

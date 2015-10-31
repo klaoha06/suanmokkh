@@ -1,5 +1,6 @@
 class Audio < ActiveRecord::Base
-	validates :title, presence: true, uniqueness: true
+	validates :title, presence: true
+	# validates :soundcloud_identifier, uniqueness: true
 	validates :uri, presence: true
 
 	has_attached_file :file
@@ -64,9 +65,9 @@ class Audio < ActiveRecord::Base
 		end
 
 
-		def create
-			@audio = Audio.new(audio_params)
-		end
+		# def create
+		# 	@audio = Audio.new(audio_params)
+		# end
 
 		private
 

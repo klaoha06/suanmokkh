@@ -54,6 +54,8 @@ gem 'sdoc', '~> 0.4.0', group: :do
 
 gem 'faker'
 
+gem 'rufus-scheduler', '~> 3.1', '>= 3.1.7'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
