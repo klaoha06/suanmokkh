@@ -24,6 +24,7 @@ class CreateRetreatTalks < ActiveRecord::Migration
       t.boolean :featured, default: false
       t.boolean :allow_comments, default: true
       t.boolean :recommended, default: false
+      t.boolean :do_not_update_from_soundcloud, default: false
       
 
       # t.integer :downloads, default: 0

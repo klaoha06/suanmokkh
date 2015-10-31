@@ -1,7 +1,7 @@
 ActiveAdmin.register Audio do
 	menu priority: 3
 	config.per_page = 15
-	permit_params :id, :uri, :secret_uri, :admin_user_id, :recommended,
+	permit_params :id, :soundcloud_identifier, :do_not_update_from_soundcloud, :uri, :secret_uri, :admin_user_id, :recommended,
 		:language_ids, :group_ids, :audio_code, :author_ids, :featured, :title, :cover_img, :description, :duration, :creation_date, :group, :plays, :downloads, :embeded_audio_link, :external_link, :series, :file, :draft, :allow_comments, :author_ids, :book_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id], groups_attributes: [ :name, :id]
 
 # See permitted parameters documentation:
@@ -22,6 +22,7 @@ show do |audio|
   	attributes_table_for audio do
   	    row :title
   	    row :id
+  	    row :soundcloud_identifier
   	    row :uri
   	    row :secret_uri
   	    row :audio_code
@@ -41,6 +42,9 @@ show do |audio|
 		  	    text_node (audio.embeded_audio_link_strip).html_safe
 		  	  end
   	    end
+		    row 'do_not_update_from_soundcloud' do
+		    	status_tag((audio.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updateing from SoundClound"), (audio.do_not_update_from_soundcloud? ? :ok : :ok))
+		    end
   	  end
   end
   panel "Audio Details" do
@@ -48,22 +52,22 @@ show do |audio|
   	    row :duration
   	  end
   end
-  panel "Status" do
-  	attributes_table_for audio do
-  	    row 'allow_comments' do
-  	    	status_tag((audio.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (audio.allow_comments? ? :warning : :ok))
-  	    end
-  	    row 'featured' do
-  	    	status_tag((audio.featured? ? "Not Featured" : "Featured"), (audio.featured? ? :warning : :ok))
-  	    end
-  	    row 'recommended' do
-  	    	status_tag((audio.recommended? ? "Not recommended" : "Recommended"), (audio.recommended? ? :warning : :ok))
-  	    end
-  	    row 'draft' do
-  	    	status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
-  	    end
-  	  end
-  end
+  # panel "Status" do
+  # 	attributes_table_for audio do
+  # 	    row 'allow_comments' do
+  # 	    	status_tag((audio.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (audio.allow_comments? ? :warning : :ok))
+  # 	    end
+  # 	    row 'featured' do
+  # 	    	status_tag((audio.featured? ? "Not Featured" : "Featured"), (audio.featured? ? :warning : :ok))
+  # 	    end
+  # 	    row 'recommended' do
+  # 	    	status_tag((audio.recommended? ? "Not recommended" : "Recommended"), (audio.recommended? ? :warning : :ok))
+  # 	    end
+  # 	    row 'draft' do
+  # 	    	status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
+  # 	    end
+  # 	  end
+  # end
   panel "External Links" do
   	attributes_table_for audio do
 	    row :secret_uri
@@ -113,12 +117,12 @@ end
 	end
 
 	scope :all, :default => true
-	scope :published do |audio|
-	  audio.where(:draft => false)
-	end
-	scope :not_published do |audio|
-	  audio.where(:draft => true)
-	end
+	# scope :published do |audio|
+	#   audio.where(:draft => false)
+	# end
+	# scope :not_published do |audio|
+	#   audio.where(:draft => true)
+	# end
 	# scope :related_to_book do |audio|
 	#   audio.where(:draft => true)
 	# end
@@ -209,12 +213,13 @@ end
 		        # f.inputs 'Actual Files' do
 		        # 	# f.input :file, hint: content_tag(:span, "DO NOT upload the file here unless necessary. Please use service like Soundcloud for uploading audio instead whenever possible.")
 		        # end
-		        # f.inputs 'Publish Status' do
-		        # 	f.input :draft, :label => "Make this a draft?"
-		        # 	f.input :featured
-		        # 	f.input :recommended
-		        # 	f.input :allow_comments, :label => "Allow commenting on this audio track?"
-		        # end
+		        f.inputs 'Update Status' do
+		        	f.input :do_not_update_from_soundcloud, hint: content_tag(:span, "if you do not want this track to be periodicaly update or overwrite from SoundCloud data then check this")
+		        	# f.input :draft, :label => "Make this a draft?"
+		        	# f.input :featured
+		        	# f.input :recommended
+		        	# f.input :allow_comments, :label => "Allow commenting on this audio track?"
+		        end
 		      end
 		    end
 		f.actions

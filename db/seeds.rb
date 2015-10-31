@@ -71,11 +71,11 @@ def seed_tracks(sc_tracks)
     buddhadasa = Author.where(name: 'Buddhadasa')
 
     if index < 6 
-      a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description, featured: true, recommended: true })
-      retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false, featured: true, recommended: true, translator: 'Santikaro' })
+      a = Audio.create!({soundcloud_identifier: track.id.to_i, title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+      retreat_talk = RetreatTalk.create!({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false, featured: true, recommended: true, translator: 'Santikaro' })
     else
-      a = Audio.create({ title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
-      retreat_talk = RetreatTalk.create({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false, translator: 'Santikaro'})
+      a = Audio.create!({soundcloud_identifier: track.id.to_i, title: a_title, uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
+      retreat_talk = RetreatTalk.create!({title: a_title, description: track.description, external_cover_img_link: a_cover_img, draft: false, translator: 'Santikaro'})
     end
     a.languages << english
     a.authors << buddhadasa
@@ -93,9 +93,5 @@ end
 
 seed_tracks(@sc_tracks)
 seed_tracks(@sc_tracks1)
-
-# Author.create!([{ name: 'Ajarn Buddhadasa' }, { name: 'YOYOYO' },{ name: 'Ajarn Jayasaro'}, { name: 'Thich Nhat Han' }])
-
-# user.products.create(:name => 'Apple', :store => walmart)
 
 
