@@ -10,7 +10,7 @@ Rails.application.config.after_initialize do
 
   scheduler = Rufus::Scheduler.new
 
-      scheduler.in '1s' do
+      scheduler.every '7d' do
       	p 'Number of audio before update = ' + (Audio.all.count).to_s
       	p 'Updating audios from Soundcloud..'
       	@audio_updated = 0
