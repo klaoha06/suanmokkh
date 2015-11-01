@@ -317,10 +317,10 @@ ActiveRecord::Schema.define(version: 20151027095113) do
     t.string   "lastname"
     t.string   "email"
     t.string   "tel"
-    t.boolean  "required_response"
-    t.boolean  "responsed"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.boolean  "required_response", default: false
+    t.boolean  "responsed",         default: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   create_table "groups", force: :cascade do |t|
@@ -420,6 +420,7 @@ ActiveRecord::Schema.define(version: 20151027095113) do
   create_table "poems", force: :cascade do |t|
     t.string   "title"
     t.text     "content"
+    t.string   "translator"
     t.text     "external_cover_img_link"
     t.string   "series"
     t.date     "creation_date"

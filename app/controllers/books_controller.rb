@@ -2,8 +2,8 @@ class BooksController < ApplicationController
   def index
     @robot_img = 'http://www.bia.or.th/en/images/photo/08dec.jpg'
     @title = 'Book Library - Suan Mokkh'
-    @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true).order('created_at DESC').limit(10)
-    @recommended_books = Book.includes(:authors).where(recommended: true).order('created_at DESC').limit(15)
+    @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true, draft: false).order('created_at DESC').limit(10)
+    @recommended_books = Book.includes(:authors).where(recommended: true, draft: false).order('created_at DESC').limit(15)
     @filterrific = initialize_filterrific(
       Book,
       params[:filterrific],
@@ -27,13 +27,14 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
-    @book = Book.includes(:authors, :audios, :groups, :languages, :related_books).where(id: params[:id]).first
-    if @book == nil 
+    @book = Book.includes(:authors, :audios, :groups, :languages, :related_books).where(id: params[:id], draft: false).first
+    if @book.blank?
       respond_to do |format|
         format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
         format.all  { render nothing: true, status: 404 }
       end
-    else
+      return
+    elsif !@book.blank?
       @title = @book.title + " by " + (@book.authors.first.name if @book.authors.first) + '- Suan Mokkh'
       @img = @book.external_cover_img_link || 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
       @related_books = @book.related_books.unshift(@book)
@@ -67,7 +68,9 @@ class BooksController < ApplicationController
       end
     end
 
-    @languages.uniq!
+    if !@languages.blank?
+      @languages.uniq!
+    end
 
     @additional_info = Hash.new
      @book.attributes.each do |k,v| 
