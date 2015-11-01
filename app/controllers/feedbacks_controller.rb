@@ -15,7 +15,7 @@ class FeedbacksController < InheritedResources::Base
   private
 
     def feedback_params
-      params.require(:feedback).permit(:title, :content, :email, :tel, :reply, :firstname, :lastname)
+      params.require(:feedback).permit(:title, :required_response, :content, :email, :tel, :reply, :firstname, :lastname)
     end
 end
 

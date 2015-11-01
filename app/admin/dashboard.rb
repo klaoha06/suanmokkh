@@ -110,25 +110,24 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
       columns do
-        # column do
-        #   panel "Recent Poems" do
-        #     table_for Poem.order('id desc').limit(10) do
-        #         # column "cover_img", :sortable => false do |poem|
-        #         #   "<img src='#{poem.cover_img.url}' alt='poem cover_img' style='width:70px; max-height: none;height:100x; display:block; margin:0 auto;'/>".html_safe
-        #         # end
-        #         column("Title") {|poem| poem.title}
-        #         column("Created At") {|poem| pretty_format(poem.created_at)}
-        #         column("Status") {|poem| status_tag(poem.draft? ? "Not Published" : "Published")}
-        #         column("Actions") {|poem| a ' Go to', :href => admin_poem_path(poem), :class => "button"}
-        #     end
-        #     div :style => 'display:inline; text-align:center; padding: 5px;' do
-        #       para :style => 'display:inline-block; margin:0;' do
-        #        ("Number of poems in Archieve - <strong>#{Poem.count}</strong>").html_safe
-        #       end
-        #        a ' See all', :href => admin_poems_path(), :style => 'float:right'
-        #     end
-        #   end
-        # end
+        column do
+          panel "Feedbacks" do
+            table_for Feedback.order('id desc').limit(10) do
+                column("Title") {|feedback| feedback.title}
+                column("Content") {|feedback| feedback.content}
+                column("Created At") {|feedback| pretty_format(feedback.created_at)}
+                column("Required response?") {|feedback| status_tag(feedback.required_response? ? "Do not required a response" : "Required response", feedback.required_response? ? :ok : :warning)}
+                column("Responsed?") {|feedback| status_tag(feedback.responsed? ? "Responsed" : "Not responsed yet", feedback.responsed? ? :ok : :warning)}
+                column("Actions") {|feedback| a ' Go to', :href => admin_feedback_path(feedback), :class => "button"}
+            end
+            div :style => 'display:inline; text-align:center; padding: 5px;' do
+              para :style => 'display:inline-block; margin:0;' do
+               ("Number of poems in Archieve - <strong>#{Feedback.count}</strong>").html_safe
+              end
+               a ' See all', :href => admin_feedbacks_path(), :style => 'float:right'
+            end
+          end
+        end
       end
 
   end # content

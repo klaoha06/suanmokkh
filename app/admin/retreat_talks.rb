@@ -27,7 +27,7 @@ show do |retreat_talk|
 		  	  end
   	    end
   	    row 'do_not_update_from_soundcloud' do
-  	    	status_tag((retreat_talk.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updateing from SoundClound"), (retreat_talk.do_not_update_from_soundcloud? ? :ok : :ok))
+  	    	status_tag((retreat_talk.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updating from SoundClound"), (retreat_talk.do_not_update_from_soundcloud? ? :ok : :ok))
   	    end
   	    row "Book file" do
   	    	if retreat_talk.books.first
