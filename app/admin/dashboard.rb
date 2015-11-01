@@ -100,7 +100,7 @@ ActiveAdmin.register_page "Dashboard" do
             end
             div :style => 'display:inline; text-align:center; padding: 5px;' do
               para :style => 'display:inline-block; margin:0;' do
-               ("Number of poems in Archieve - <strong>#{Poem.count}</strong>").html_safe
+               ("Number of Poems in Archieve - <strong>#{Poem.count}</strong>").html_safe
               end
                a ' See all', :href => admin_poems_path(), :style => 'float:right'
             end
@@ -116,13 +116,13 @@ ActiveAdmin.register_page "Dashboard" do
                 column("Title") {|feedback| feedback.title}
                 column("Content") {|feedback| feedback.content}
                 column("Created At") {|feedback| pretty_format(feedback.created_at)}
-                column("Required response?") {|feedback| status_tag(feedback.required_response? ? "Do not required a response" : "Required response", feedback.required_response? ? :ok : :warning)}
+                column("Required response?") {|feedback| status_tag(feedback.required_response? ? "Required a response" : "Do not required response", feedback.required_response? ? :warning : :ok)}
                 column("Responsed?") {|feedback| status_tag(feedback.responsed? ? "Responsed" : "Not responsed yet", feedback.responsed? ? :ok : :warning)}
                 column("Actions") {|feedback| a ' Go to', :href => admin_feedback_path(feedback), :class => "button"}
             end
             div :style => 'display:inline; text-align:center; padding: 5px;' do
               para :style => 'display:inline-block; margin:0;' do
-               ("Number of poems in Archieve - <strong>#{Feedback.count}</strong>").html_safe
+               ("Number of Feedbacks in Archieve - <strong>#{Feedback.count}</strong>").html_safe
               end
                a ' See all', :href => admin_feedbacks_path(), :style => 'float:right'
             end
