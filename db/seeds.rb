@@ -44,12 +44,14 @@ I am the Buddha's servant.
 
 Thus, I am called 'Buddhadasa.'", external_cover_img_link: 'ajarn2.jpg'}])
 
+buddhadasa = Author.create!([{name: 'Buddhadasa'}])
+
 12.times do |i|
-  Poem.create!({title: Faker::Lorem.sentence, content: Faker::Lorem.paragraph, external_cover_img_link: ('ajarn' + (i+1).to_s + '.jpg' )})
+  poem = Poem.create!({title: Faker::Lorem.sentence, content: Faker::Lorem.paragraph, external_cover_img_link: ('ajarn' + (i+1).to_s + '.jpg' )})
+  poem.authors << buddhadasa
 end
 
 Language.create!([{name: 'English'}, {name: 'Thai'}, {name: 'German'}, {name: 'Chinese'}, {name: 'Russian'}, {name: 'Japanese'}, {name: 'French'}, {name: 'Korean'}])
-buddhadasa = Author.create!([{name: 'Buddhadasa'}])
 
 20.times do |i|
   book = Book.create!({title: Faker::Lorem.sentence, description: Faker::Lorem.paragraph(18), external_file_link: 'http://www.suanmokkh-idh.org/talks/chanting-book-ver1-02.pdf', external_cover_img_link: 'http://placehold.it/250x320', draft: false, featured: true, recommended: true })

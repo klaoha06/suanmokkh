@@ -1,20 +1,18 @@
 Rails.application.routes.draw do
   resources :feedbacks, :except => [:update, :destroy, :index, :show]
-  resources :collections
+  resources :collections, :except => [:update, :destroy, :index, :show]
   # resources :relationships
-  resources :users
+  resources :users, :except => [:update, :destroy, :index, :show, :new]
   # devise_for :users
   get 'teachings' => 'pages#teachings'
 
-  resources :poems
+  resources :poems, :except => [:update, :destroy, :show, :create, :new]
 
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  resources :books
-  resources :retreat_talks do
-    resources :audios
-  end
+  resources :books, :except => [:update, :destroy, :create, :new]
+  resources :retreat_talks, :only => [:show, :index]
 
   get 'home/index'
   get 'buddhadasa' => 'buddhadasa'

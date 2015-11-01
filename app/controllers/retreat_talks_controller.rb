@@ -25,7 +25,7 @@ class RetreatTalksController < InheritedResources::Base
 	# GET /retreat_talks/1
 	# GET /retreat_talks/1.json
 	def show
-		@retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: params[:id]).first
+		@retreat_talk = RetreatTalk.includes(:authors, :audios, :groups, :languages).where(id: params[:id], draft: false).first
 		if @retreat_talk.blank?
 			respond_to do |format|
 				format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }

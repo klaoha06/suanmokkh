@@ -3,7 +3,7 @@ class CreatePoems < ActiveRecord::Migration
     create_table :poems do |t|
     	t.string :title
     	t.text :content
-    	# t.string :author
+    	t.string :translator
       # t.string :language
       t.text :external_cover_img_link
       t.string :series
