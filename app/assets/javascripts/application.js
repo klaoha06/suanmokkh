@@ -120,3 +120,20 @@ $("#owl-featured-retreat_talks").owlCarousel({
 $poemGrid.imagesLoaded().progress( function() {
   $poemGrid.isotope('layout');
 });
+$(document).ready(function(){
+    $('#new_feedback')
+    .on('ajax:send', function(e,d,s,x) {
+      $('#reportalert').html('<br><i class="fa fa-2x fa-circle-o-notch fa-spin"></i>');
+    })
+    .on('ajax:success', function(e,d,s,x) {
+      $('#reportalert').html('<br><span>Thank you!</span><hr><a href="/">Back to Main Page</a>');
+      document.getElementById("new_feedback").reset();
+    })
+    .on('ajax:error',function(e, data, status, error){
+      console.log(data);
+      errorText = JSON.parse(data.responseText);
+      for (var key in errorText) {
+        $('#reportalert').html('<br><span style="color:red; font-weight:bold;">'+ key + ' ' + errorText[key] + '</span><br>');
+      }
+    });
+  });

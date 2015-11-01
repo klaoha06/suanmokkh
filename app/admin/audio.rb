@@ -43,7 +43,7 @@ show do |audio|
 		  	  end
   	    end
 		    row 'do_not_update_from_soundcloud' do
-		    	status_tag((audio.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updateing from SoundClound"), (audio.do_not_update_from_soundcloud? ? :ok : :ok))
+		    	status_tag((audio.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updating from SoundClound"), (audio.do_not_update_from_soundcloud? ? :ok : :ok))
 		    end
   	  end
   end
