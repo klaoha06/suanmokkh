@@ -7,8 +7,8 @@ class CreateFeedbacks < ActiveRecord::Migration
       t.string :lastname
       t.string :email
       t.string :tel
-      t.boolean :required_response
-      t.boolean :responsed
+      t.boolean :required_response, default: false
+      t.boolean :responsed, default: false
 
       t.timestamps null: false
     end
