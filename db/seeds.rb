@@ -5,7 +5,7 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-require 'faker'
+require 'ffaker'
 
 Poem.create!([{title: 'Buddhadasa Never Dies', content: "Buddhadasa shall live, there's no dying. 
 Even when the body dies, it will not listen. 
@@ -97,3 +97,7 @@ seed_tracks(@sc_tracks)
 seed_tracks(@sc_tracks1)
 
 
+
+
+Spree::Core::Engine.load_seed if defined?(Spree::Core)
+Spree::Auth::Engine.load_seed if defined?(Spree::Auth)

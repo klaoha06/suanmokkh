@@ -26,7 +26,6 @@
 //= require books
 //= require poems
 //= require google_analytics
-//= stub active_admin/application
 //= stub ckeditor/init
 //= stub activeadmin
 
