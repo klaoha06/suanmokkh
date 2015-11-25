@@ -11,7 +11,7 @@ a, div, p, span, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 a:hover, a:focus {
     color: #664d3b;
     text-decoration: none;
-    font-style: bold;
+    transition: all .35s;
 }
 @font-face {
     font-family: font10;
@@ -85,7 +85,7 @@ a {
 .info:hover{
 	font-size: 1.3em;
 	color: #725843;
-
+	transition: all .35s;
 }
 
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
@@ -94,6 +94,7 @@ a {
     background-color: #725843;
     border-color: #725843;
     cursor: default;
+    transition: all .35s;
 }
 
 .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
@@ -101,6 +102,7 @@ a {
     color: #725843;
     background-color: #eeeeee;
     border-color: #ddd;
+    transition: all .35s;
 }
 
 .pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
@@ -108,6 +110,7 @@ a {
     color: #725843;
     background-color: #eeeeee;
     border-color: #ddd;
+    transition: all .35s;
 }
 
 .pagination > li > a, .pagination > li > span {
@@ -143,4 +146,29 @@ hr {
     color: #fff;
     background-color: #725843;
     border-color: #725843;
+}
+.btn-dark:hover {
+    color: white;
+    background-color: #68503d;
+    border-color: #adadad;
+    transition: all .35s;
+}
+.btn-dark {
+    color: white;
+    background-color: #725843;
+    border-color: #ccc;
+}
+.dropdown-menu > li > a {
+	color:#725843 !important;
+}
+
+#followFooter > a {
+	font-size: 2.7em;
+}
+
+#followFooter i {
+	margin:0 5px;
+}
+.product-title {
+	font-size: 3em;
 }
