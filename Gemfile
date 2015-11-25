@@ -89,5 +89,4 @@ gem 'spree_multi_currency', github: 'spree-contrib/spree_multi_currency', branch
 gem 'spree_social', github: 'spree-contrib/spree_social', branch: '3-0-stable'
 gem 'spree_paypal_express', github: 'spree-contrib/better_spree_paypal_express', branch: '3-0-stable'
 gem 'spree_wishlist', github: 'spree-contrib/spree_wishlist', branch: '3-0-stable'
-gem 'spree_email_to_friend', github: 'spree-contrib/spree_email_to_friend', branch: '3-0-stable'
-gem 'spree_reviews', github: 'spree-contrib/spree_reviews', branch: '3-0-stable'
+# gem 'spree_email_to_friend', github: 'spree-contrib/spree_email_to_friend', branch: '3-0-stable'

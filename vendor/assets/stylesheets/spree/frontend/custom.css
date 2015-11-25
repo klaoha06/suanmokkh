@@ -1,0 +1,146 @@
+html {
+	font-family: font10;
+}
+a, div, p, span, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: font10;
+    font-weight: 800;
+    line-height: 1.1;
+    color: inherit;
+}
+
+a:hover, a:focus {
+    color: #664d3b;
+    text-decoration: none;
+    font-style: bold;
+}
+@font-face {
+    font-family: font10;
+    src:url(../../Vegur-Light.otf);
+}
+@font-face {
+    font-family: font10;
+    src: url(../../Vegur-Light.otf);
+    font-weight: 900;
+}
+
+#mylogo {
+	color:#fff;
+	font-size: 2em;
+	margin-top: 10px;
+	display: inline-block;
+}
+
+a #mylogo {
+	text-decoration: none;
+}
+
+#store_title {
+	/*font-size: 1.5em;*/
+}
+
+#spree-header {
+    background: #725843;
+}
+
+#spree-header #header {
+    background: none;
+    padding: 20px 0;
+}
+
+.bg-dark {
+    color: #fff;
+    background-color: #725843;
+}
+
+.bg-dark a {
+    color: #fff;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+     border: 1px solid transparent; 
+     border-radius: 4px; 
+     box-shadow: none;
+}
+
+.panel-footer {
+    padding: none;
+     background-color: #fff; 
+     border-top: none; 
+     border-bottom-right-radius: 3px; 
+     border-bottom-left-radius: 3px; 
+}
+
+a {
+	color: #725843;
+	font-size: 1.1em;
+}
+
+.info {
+	font-size: 1.3em;
+	color: #725843;
+}
+
+.info:hover{
+	font-size: 1.3em;
+	color: #725843;
+
+}
+
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    z-index: 2;
+    color: #fff;
+    background-color: #725843;
+    border-color: #725843;
+    cursor: default;
+}
+
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+    z-index: 3;
+    color: #725843;
+    background-color: #eeeeee;
+    border-color: #ddd;
+}
+
+.pagination > li > a:hover, .pagination > li > a:focus, .pagination > li > span:hover, .pagination > li > span:focus {
+    z-index: 3;
+    color: #725843;
+    background-color: #eeeeee;
+    border-color: #ddd;
+}
+
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    line-height: 1.42857143;
+    text-decoration: none;
+    color: #725843;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-left: -1px;
+}
+
+hr {
+	max-width: 50px;
+}
+
+.product-list-item:hover {
+  -webkit-transform: scale(1.04);
+  -moz-transform: scale(1.04);
+  -o-transform: scale(1.04);
+  transform: scale(1.04);
+  transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+
+#spree-header #header {
+    padding: 15px 0;
+}
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    z-index: 2;
+    color: #fff;
+    background-color: #725843;
+    border-color: #725843;
+}
