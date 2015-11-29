@@ -135,4 +135,8 @@ $(document).ready(function(){
         $('#reportalert').html('<br><span style="color:red; font-weight:bold;">'+ key + ' ' + errorText[key] + '</span><br>');
       }
     });
+    $('select.changeStatus').change(function(){
+      $('.retreat_talk_audio').addClass('hide');
+      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
+    });
   });
