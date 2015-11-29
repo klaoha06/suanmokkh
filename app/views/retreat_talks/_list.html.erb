@@ -7,7 +7,7 @@
         <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width: 65%;", itemprop: 'image' %>
       <% end %>
     </a>
-    <h4 class="text-center" itemprop="name"><%= retreat_talk.title %></h4>
+    <h4 class="text-center" itemprop="name"><a itemprop="url" href=<%= '/retreat_talks/' + retreat_talk.id.to_s %>><%= retreat_talk.title %></a></h4>
     <p class="text-center" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></span></p>
     <div itemscope itemprop="provider" itemtype="http://schema.org/Organization"><meta itemprop="name" content="SoundCloud" /><meta itemprop="image" content="http://developers.soundcloud.com/assets/logo_white-8bf7615eb575eeb114fc65323068e1e4.png" /></div>
   </div>
@@ -22,5 +22,4 @@
   <%= paginate @retreat_talks, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
   </nav>
   <br>
-  <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
   </div>
