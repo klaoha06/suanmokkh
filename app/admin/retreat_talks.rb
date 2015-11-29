@@ -237,7 +237,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 		tab 'Basic' do
 			f.inputs 'Required Information' do
 				f.input :title, :required => true
-				f.input :audios
+				f.input :audios, :label => "Same Audio in different languages"
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 				f.input :languages
 				f.has_many :languages do |language|

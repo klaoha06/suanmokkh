@@ -26,7 +26,6 @@
 //= require books
 //= require poems
 //= require google_analytics
-//= stub active_admin/application
 //= stub ckeditor/init
 //= stub activeadmin
 
@@ -135,5 +134,9 @@ $(document).ready(function(){
       for (var key in errorText) {
         $('#reportalert').html('<br><span style="color:red; font-weight:bold;">'+ key + ' ' + errorText[key] + '</span><br>');
       }
+    });
+    $('select.changeStatus').change(function(){
+      $('.retreat_talk_audio').addClass('hide');
+      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
     });
   });

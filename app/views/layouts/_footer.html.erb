@@ -18,7 +18,7 @@
 			<div class="col-md-4 text-center">
 				<h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
 				<hr>
-				<%= form_for(User.new, remote: true, html: { class: "input-group new_user", id: "new_user", style: "width:300px; margin:0 auto;" }) do |f| %>
+				<%= form_for(Subscriber.new, remote: true, html: { class: "input-group new_user", id: "new_user", style: "width:300px; margin:0 auto;" }) do |f| %>
 				<%= f.email_field :email, :class => 'form-control', :placeholder => "Your Email Here..." %>
 				<span class="input-group-btn">
 					<%= f.submit 'submit', :class => 'btn btn-default' %>

@@ -11,7 +11,7 @@
           <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% end %>
       </a>
-      <h4 class="text-center" itemprop="name"><%= book.title %></h4>
+      <h4 class="text-center" itemprop="name"><a href=<%= '/books/' + book.id.to_s %>><%= book.title %></a></h4>
       <p class="text-center" itemprop='author' itemscope='' itemtype='http://schema.org/Person'><span itemprop="name"><%= book.authors.first.name if book.authors.first %></span></p>
     </div>
   <% end %>

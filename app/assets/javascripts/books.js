@@ -40,5 +40,14 @@ $('.featured')
       $( ".books_arrow" ).fadeOut();
     }
   );
+
+  $('select.changeStatus').change(function(){
+      $('.embeded_audio').addClass('hide');
+      $('#audio'+ ($('select.changeStatus').val())).removeClass('hide').addClass('animated fadeIn');
+  });
+  $('select.bookStatus').change(function(){
+      $('.embeded_book').addClass('hide');
+      $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
+  });
 });
 
