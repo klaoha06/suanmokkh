@@ -1,7 +1,7 @@
 ActiveAdmin.register Article do
 	menu priority: 31
 	config.per_page = 15
-	permit_params :recommended, :external_file_link, :external_cover_img_link, :author_ids, :creation_date, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content_or_description, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
+	permit_params :recommended, :external_file_link, :external_cover_img_link, :author_ids, :creation_date, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
 	
 	show do |article|
 	  panel "Basic" do
@@ -11,9 +11,9 @@ ActiveAdmin.register Article do
 	  	    row :updated_at
 	  	    row :series
 	  	    row :creation_date
-	  	    if article.content_or_description
-		  	    row "Content_or_description" do
-		  	    	text_node (article.content_or_description).html_safe
+	  	    if article.content
+		  	    row "content" do
+		  	    	text_node (article.content).html_safe
 		  	    end
 		  	  end
 	  	    row "File" do
@@ -201,7 +201,7 @@ ActiveAdmin.register Article do
 
 	# index as: :blog do
 	#   title :title # Calls #my_title on each resource
-	#   body  :content_or_description  # Calls #my_body on each resource
+	#   body  :content  # Calls #my_body on each resource
 	# end
 # See permitted parameters documentation:
 # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
@@ -220,7 +220,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	      tab 'Basic' do
 	        f.inputs 'Basic Details' do
 	        	f.input :title, :required => true
-	        	f.input :content_or_description, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
+	        	f.input :content, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 	        	f.input :external_url_link, :as => :url
 	        	f.input :languages
 	        	f.has_many :languages do |language|

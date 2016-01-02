@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20151124103943) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title"
-    t.text     "content_or_description"
+    t.text     "content"
     t.date     "creation_date"
     t.text     "external_url_link"
     t.text     "external_cover_img_link"
@@ -63,8 +63,6 @@ ActiveRecord::Schema.define(version: 20151124103943) do
     t.boolean  "featured",                default: false
     t.boolean  "recommended",             default: false
     t.boolean  "allow_comments",          default: true
-    t.integer  "views",                   default: 0
-    t.integer  "shares",                  default: 0
     t.integer  "admin_user_id"
     t.datetime "created_at",                              null: false
     t.datetime "updated_at",                              null: false
