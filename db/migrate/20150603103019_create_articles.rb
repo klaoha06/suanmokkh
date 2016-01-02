@@ -2,7 +2,7 @@ class CreateArticles < ActiveRecord::Migration
   def change
     create_table :articles do |t|
     	t.string :title
-    	t.text :content_or_description
+    	t.text :content
     	t.date :creation_date
         t.text :external_url_link
         t.text :external_cover_img_link
@@ -19,8 +19,8 @@ class CreateArticles < ActiveRecord::Migration
         t.boolean :recommended, default: false
     	t.boolean :allow_comments, default: true
 
-        t.integer :views, default: 0
-    	t.integer :shares, default: 0
+     #    t.integer :views, default: 0
+    	# t.integer :shares, default: 0
 
         t.belongs_to :admin_user, index:true
 
