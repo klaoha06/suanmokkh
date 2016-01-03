@@ -41,7 +41,7 @@ class Book < ActiveRecord::Base
 
   before_create :create_remote_url
 
-  paginates_per 12
+  paginates_per 16
 
   def create_remote_url
     if external_file_link && !file
