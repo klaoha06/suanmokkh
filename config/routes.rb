@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :retreat_talks, :only => [:show, :index]
 
   get 'home/index'
+  get 'alt' => 'home#alt'
   get 'buddhadasa' => 'buddhadasa'
   get 'gallery' => 'gallery'
   get 'suanmokkh' => 'suanmokkh'
