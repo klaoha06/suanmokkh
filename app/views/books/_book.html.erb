@@ -3,7 +3,7 @@
 
   <% else %>
   <% @books.each do |book| %>
-    <div class="col-md-4 book-grid" itemscope itemtype="http://schema.org/Book">
+    <div class="col-md-3 book-grid" itemscope itemtype="http://schema.org/Book">
       <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
         <% if !book.external_cover_img_link.blank? %>
           <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>

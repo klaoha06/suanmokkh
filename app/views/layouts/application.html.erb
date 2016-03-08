@@ -35,7 +35,9 @@
 <%= render "shared/main_navbar" %>
 <body>
 <%= yield %>
-  <%= render "layouts/footer" %>
+  <% if !current_page?('/alt') %>
+    <%= render "layouts/footer"%>
+  <% end %>
   <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 </body>
 </html>
