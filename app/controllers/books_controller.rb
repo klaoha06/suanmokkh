@@ -12,11 +12,12 @@ class BooksController < ApplicationController
         with_author_id: Author.options_for_select,
         with_series: Book.options_for_series,
       },
+      # default_filter_params: [],
       # persistence_id: 'shared_key',
-      # default_filter_params: {},
       # available_filters: [],
     ) or return
-    @books = @filterrific.find.page(params[:page])
+    @books = @filterrific.find.page(params[:page]).where(draft: false)
+    # @books = @books.where(draft: false)
 
     respond_to do |format|
       format.html
