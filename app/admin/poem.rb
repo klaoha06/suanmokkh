@@ -1,7 +1,7 @@
 ActiveAdmin.register Poem do
 	config.per_page = 15
 
-	permit_params :id, :translator, :title, :cover_img, :content, :group, :language, :draft, :series, :file, :allow_comments, :featured, :language_ids, :group_ids, :author_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
+	permit_params :id, :translator,:external_cover_img_link, :title, :cover_img, :content, :group, :language, :draft, :series, :file, :allow_comments, :featured, :language_ids, :group_ids, :author_ids, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
 
 
 # See permitted parameters documentation:
@@ -150,7 +150,8 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	end
 	        end
 	        f.inputs 'Cover Image' do
-	        	f.input :cover_img
+	        	f.input :cover_img, :required => true, hint: f.poem.cover_img? ? image_tag(f.poem.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+	        	f.input :external_cover_img_link, :as => :url
 	        end
 	        f.inputs 'Publish Status' do
 	        	f.input :draft, :label => "Make this a draft?"

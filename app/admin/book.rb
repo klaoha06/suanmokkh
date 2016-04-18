@@ -1,4 +1,11 @@
 ActiveAdmin.register Book do
+	batch_action :unpublish do |ids|
+	    Book.find(ids).each do |book|
+	      book.draft = true
+	      book.save
+	    end
+	    redirect_to collection_path, alert: "Items have been unpublished."
+  end
 	menu priority: 2
 	config.per_page = 12
 	permit_params :recommended, :creation_date, :transcriber, :translator, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :language_ids, :title, :embeded_audio_link, :admin_user_id ]
