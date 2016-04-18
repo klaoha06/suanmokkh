@@ -4,7 +4,14 @@ ActiveAdmin.register Book do
 	      book.draft = true
 	      book.save
 	    end
-	    redirect_to collection_path, alert: "Items have been unpublished."
+	    redirect_to collection_path, alert: "Books have been unpublished."
+  end
+	batch_action :publish do |ids|
+	    Book.find(ids).each do |book|
+	      book.draft = false
+	      book.save
+	    end
+	    redirect_to collection_path, alert: "Books have been published."
   end
 	menu priority: 2
 	config.per_page = 12
