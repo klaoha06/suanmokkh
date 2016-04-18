@@ -1,4 +1,11 @@
 ActiveAdmin.register RetreatTalk do
+	batch_action :unpublish do |ids|
+	    RetreatTalk.find(ids).each do |retreat_talk|
+	      retreat_talk.draft = true
+	      retreat_talk.save
+	    end
+	    redirect_to collection_path, alert: "Audios have been unpublished."
+  end
 	menu priority: 3
 	config.per_page = 12
 	permit_params :recommended, :do_not_update_from_soundcloud, :translator, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :downloads, :draft, :series, :allow_comments, :publication_date, :format, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :title, :embeded_audio_link, :admin_user_id ]
