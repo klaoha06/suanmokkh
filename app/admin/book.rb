@@ -38,7 +38,7 @@ show do |book|
   	    end
   	    row "File" do
   	    	if book.file_file_name
-	  	    	text_node ("<iframe src='" + book.file.url(:thumb) + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+	  	    	text_node ("<iframe src='" + book.file.url(:medium) + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
 	  	    else
 	  	    	text_node ("<iframe src='" + book.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
 	  	    end
@@ -251,7 +251,7 @@ index do
 	id_column
 	column "cover_img", :sortable => false do |book|
 		if book.cover_img_file_name
-		  "<img src='#{book.cover_img.url(:thumb)}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+		  "<img src='#{book.cover_img.url(:medium)}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
 		else
 		  "<img src='#{book.external_cover_img_link}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
 		 end
