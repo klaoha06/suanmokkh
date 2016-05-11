@@ -47,7 +47,7 @@ Rails.application.config.after_initialize do
 
       	  		retreat_talk = audio.retreat_talks.first
       	  		if retreat_talk && !retreat_talk.do_not_update_from_soundcloud
-	      	  		retreat_talk.assign_attributes({title: track_title(track), description: track.description, external_cover_img_link: track_cover_img(track), draft: false, translator: 'Santikaro'})
+	      	  		retreat_talk.assign_attributes({title: track_title(track), description: track.description, external_cover_img_link: track_cover_img(track), translator: 'Santikaro'})
 	      	  		if retreat_talk.changed?
 	      	  			retreat_talk.save
 	      	  			@retreat_talk_updated += 1
