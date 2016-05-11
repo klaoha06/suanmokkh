@@ -21,7 +21,7 @@
             <% if !book.external_cover_img_link.blank? %>
               <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:50%;", itemprop: 'image' %>
             <% else %>
-              <%= image_tag "#{book.cover_img.url(:thumb)}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:50%;", itemprop: 'image' %>
+              <%= image_tag "#{book.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:50%;", itemprop: 'image' %>
             <% end %>
           </div>
           <br>
