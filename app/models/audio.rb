@@ -24,8 +24,8 @@ class Audio < ActiveRecord::Base
 				return "<iframe width='" + width + "' height='" + height +"' scrolling='no' frameborder='no' src='https://w.soundcloud.com/player/?url=" + (self.secret_uri ||= self.uri) + "&amp;color=725843&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_artwork=false&amp;show_user=false'></iframe>"
 		end
 
-		def embeded_audio_link_banner(width = '100%', height = '450')
-			return '<iframe width="' + width +'" height="' + height +'" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' + (self.secret_uri ||= self.uri) + '&amp;color=725843&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
+		def embeded_audio_link_banner(width = '90%', height = '400')
+			return '<iframe class="floatCenter" width="' + width +'" height="' + height +'" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=' + (self.secret_uri ||= self.uri) + '&amp;color=725843&amp;auto_play=false&amp;hide_related=true&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;visual=true"></iframe>'
 		end
 
 		def embeded_audio_link_strip(width = '100%', height = '20')
