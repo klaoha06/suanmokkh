@@ -52,7 +52,7 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :do
 
-# gem 'faker'
+gem 'ffaker'
 
 gem 'rufus-scheduler', '~> 3.1', '>= 3.1.7'
 
@@ -80,13 +80,15 @@ group :development, :test do
   gem 'spring'
 end
 
-gem 'spree', '3.0.4'
-gem 'braintree'
-gem 'spree_gateway', github: 'spree/spree_gateway', branch: '3-0-stable'
-gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '3-0-stable'
-gem 'spree_i18n', github: 'spree-contrib/spree_i18n', branch: '3-0-stable'
-gem 'spree_multi_currency', github: 'spree-contrib/spree_multi_currency', branch: '3-0-stable'
-gem 'spree_social', github: 'spree-contrib/spree_social', branch: '3-0-stable'
-gem 'spree_paypal_express', github: 'spree-contrib/better_spree_paypal_express', branch: '3-0-stable'
-gem 'spree_wishlist', github: 'spree-contrib/spree_wishlist', branch: '3-0-stable'
+# gem 'spree', '3.0.4'
+# gem 'braintree'
+# gem 'spree_gateway', github: 'spree/spree_gateway', branch: '3-0-stable'
+# gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: '3-0-stable'
+# gem 'spree_i18n', github: 'spree-contrib/spree_i18n', branch: '3-0-stable'
+# gem 'spree_multi_currency', github: 'spree-contrib/spree_multi_currency', branch: '3-0-stable'
+# gem 'spree_social', github: 'spree-contrib/spree_social', branch: '3-0-stable'
+# gem 'spree_paypal_express', github: 'spree-contrib/better_spree_paypal_express', branch: '3-0-stable'
+# gem 'spree_wishlist', github: 'spree-contrib/spree_wishlist', branch: '3-0-stable'
+
+
 # gem 'spree_email_to_friend', github: 'spree-contrib/spree_email_to_friend', branch: '3-0-stable'

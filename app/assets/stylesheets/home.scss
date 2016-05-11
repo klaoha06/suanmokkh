@@ -31,15 +31,12 @@ hr.light {
 hr.full {
 	max-width: 100%;
 }
-
 .noMargin {
 	margin:0;
 }
-
 .text-indent {
     text-indent: 50px;
 }
-
 a {
 		/*font-size: 16px;*/
     color: #725843;
@@ -47,13 +44,11 @@ a {
     -moz-transition: all .35s;
     transition: all .35s;
 }
-
 a:hover,
 a:focus {
     color: black;
     text-decoration: none;
 }
-
 a.dark {
 	font-size: 16px;
   color: white;
@@ -62,14 +57,12 @@ a.dark {
   transition: all .35s;
   border: 2px solid #725843;
 }
-
 a.dark:hover, a.dark:active, a.dark.focus {
 	color:white;
 	text-decoration: none;
 	border-bottom: 2px solid white;
 	cursor: pointer;
 }
-
 h1,
 h2,
 h3,
@@ -843,21 +836,17 @@ a.footer-icon:hover {
     background-color: #f5f5f5;
     border-color: #ddd;
 }
-
 .article_image {
     margin: 15px 25px;
 }
-
 .float_inherit {
     float: inherit;
 }
-
 #retreat_talk_banner {
     border: none; margin-top: 35px;
 }
-
-.poem-content p,h1,h2,h3,h4,h5 {
-    font-weight: 300;
+#footer h3 {
+    font-weight: 600;
 }
 
 .btn-primary:focus {

@@ -1,0 +1,9 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>External cover img link:</strong>
+  <%= @gallery_photo.external_cover_img_link %>
+</p>
+
+<%= link_to 'Edit', edit_gallery_photo_path(@gallery_photo) %> |
+<%= link_to 'Back', gallery_photos_path %>
