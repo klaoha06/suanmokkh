@@ -11,7 +11,7 @@
 					<% if !book.external_cover_img_link.blank? %>
 					<%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
 					<% else %>
-					<%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+					<%= image_tag "#{book.cover_img.url(:thumb)}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
 					<% end %>
 					<div class="portfolio-box-caption">
 						<div class="portfolio-box-caption-content">
