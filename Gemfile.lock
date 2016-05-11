@@ -114,6 +114,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.8)
     execjs (2.6.0)
+    ffaker (1.32.1)
     ffi (1.9.10)
     filterrific (2.0.5)
       rails (>= 3.1.0)
@@ -310,6 +311,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   draper
+  ffaker
   filterrific
   font-awesome-rails
   guard
