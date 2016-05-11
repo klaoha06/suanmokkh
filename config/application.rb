@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module SuanmokkhOrg
   class Application < Rails::Application
-    
+    config.middleware.use Rack::Deflater
     #spree
 
     # config.to_prepare do
