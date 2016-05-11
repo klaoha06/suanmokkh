@@ -2,7 +2,6 @@
 <html>
 <head>
 	<%= yield :head %>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -38,6 +37,7 @@
   <% if !current_page?('/alt') %>
     <%= render "layouts/footer"%>
   <% end %>
+<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 </body>
 </html>
