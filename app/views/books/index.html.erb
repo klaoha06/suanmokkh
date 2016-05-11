@@ -15,7 +15,7 @@
                 <span itemprop="name"><%= author.name %></span>
               <% end %>
             </p>
-            <p style="color:white !important; font-size:1.3em;" class="text-justify text-indent" itemprop="description"><%= sanitize(strip_tags(book.description)).first(900).strip.concat('...') %></p>
+            <p style="color:white !important; font-size:1.3em;" class="text-justify text-indent" itemprop="description"><%= sanitize(strip_tags(book.description)).first(570).strip.concat('...') %></p>
           </div>
           <div class="col-md-6">
             <% if !book.external_cover_img_link.blank? %>
