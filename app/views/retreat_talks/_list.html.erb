@@ -4,7 +4,7 @@
       <% if !retreat_talk.external_cover_img_link.blank? %>
         <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width: 65%;", itemprop: 'image' %>
       <% else %>
-        <%= image_tag "#{retreat_talk.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width: 65%;", itemprop: 'image' %>
+        <%= image_tag "#{retreat_talk.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width: 65%;", itemprop: 'image' %>
       <% end %>
     </a>
     <h4 class="text-center" itemprop="name"><a itemprop="url" href=<%= '/retreat_talks/' + retreat_talk.id.to_s %>><%= retreat_talk.title %></a></h4>
