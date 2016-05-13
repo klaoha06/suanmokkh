@@ -80,6 +80,8 @@ group :development, :test do
   gem 'spring'
 end
 
+gem 'sitemap_generator'
+
 # gem 'spree', '3.0.4'
 # gem 'braintree'
 # gem 'spree_gateway', github: 'spree/spree_gateway', branch: '3-0-stable'

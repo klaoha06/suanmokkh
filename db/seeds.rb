@@ -63,6 +63,8 @@ def seed_tracks(sc_tracks)
   sc_tracks.each_with_index do |track, index|
 
     a_title = track.title.gsub(/\d{6}|[(]\d[)]/, '').strip
+
+    puts track.artwork_url
     if track.artwork_url != nil
       a_cover_img = track.artwork_url.gsub('large', 't300x300')
     else
