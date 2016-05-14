@@ -10,7 +10,12 @@ Rails.application.config.after_initialize do
 
   scheduler = Rufus::Scheduler.new
 
-      scheduler.every '7d' do
+      scheduler.every '10d' do
+        $sc_consumer = Soundcloud.new(:client_id => Rails.application.secrets.SC_CLIENT_ID,
+                                :client_secret => Rails.application.secrets.SC_CLIENT_SECRET,
+                                :username => Rails.application.secrets.SC_USERNAME,
+                                :password => Rails.application.secrets.SC_PASSWORD)
+
       	p 'Number of audio before update = ' + (Audio.all.count).to_s
       	p 'Updating audios from Soundcloud..'
       	@audio_updated = 0
@@ -55,7 +60,7 @@ Rails.application.config.after_initialize do
 	      	  	end
       	  	elsif audio.blank?
       	  		a = Audio.create!({soundcloud_identifier: track.id.to_i, title: track_title(track), uri: track.uri, secret_uri: track.secret_uri, audio_code: track.title.match(/\d{6}/).to_s, part: track.title.match(/\([^)]\)/).to_s, duration: track.duration.to_i, description: track.description })
-      	  		r = RetreatTalk.create({title: track_title(track), description: track.description, external_cover_img_link: track_cover_img(track), draft: false, translator: 'Santikaro'})
+      	  		r = RetreatTalk.create({title: track_title(track), description: track.description, external_cover_img_link: track_cover_img(track), translator: 'Santikaro'})
 
       	  		a.languages << english
       	  		a.authors << buddhadasa
@@ -81,7 +86,6 @@ Rails.application.config.after_initialize do
        	p 'retreat_talks updated = ' + @retreat_talk_updated.to_s
        	p 'datetime = ' + (Time.now.strftime("%Y-%m-%d %I:%M%p")).to_s
        	p 'number of audios = ' + (Audio.all.count).to_s
-
       end #scheduler
 
 end
