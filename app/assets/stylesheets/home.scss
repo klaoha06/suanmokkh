@@ -381,7 +381,7 @@ header {
 }
 
 .indexPage {
-	background-image: url(header11.jpg);
+	background-image: image-url('header11.jpg');
 }
 
 header .header-content {
@@ -702,7 +702,7 @@ body {
 	min-height: auto;
 	text-align: center;
 	color: #fff;
-	background-image: url(suanmokkh4s.jpg);
+	background-image: image-url('suanmokkh4s.jpg');
 	background-position: center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
