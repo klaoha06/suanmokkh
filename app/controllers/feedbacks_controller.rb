@@ -2,7 +2,6 @@ class FeedbacksController < InheritedResources::Base
 
 	def create
 	  @feedback = Feedback.new(feedback_params)
-
 	  respond_to do |format|
 	    if @feedback.save
 	    	format.html { redirect_to :back, notice: 'feedback was successfully created.' }

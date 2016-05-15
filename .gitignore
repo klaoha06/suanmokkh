@@ -17,6 +17,8 @@
 /tmp
 /public/system/**
 /public/assets/**
+/public/spree/**
+/public/ckeditor_assets/**
 /public/system
 config/secrets.yml
 /config/secrets.yml

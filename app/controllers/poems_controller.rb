@@ -14,7 +14,7 @@ class PoemsController < InheritedResources::Base
 	      # default_filter_params: {draft: false},
 	      # available_filters: [],
 	    ) or return
-	    @poems = @filter.find.page(params[:page])
+	    @poems = @filter.find.page(params[:page]).where(draft: false)
 	    # .where(draft: false)
 	    
 	    respond_to do |format|

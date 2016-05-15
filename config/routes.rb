@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  # resources :gallery_photos
   # This line mounts Spree's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
@@ -11,13 +12,17 @@ Rails.application.routes.draw do
   # If you would like to change where this engine is mounted, simply change the :at option to something different.
   #
   # We ask that you don't use the :as option here, as Spree relies on it being the default of "spree"
-  mount Spree::Core::Engine, :at => '/store'
-          resources :feedbacks, :except => [:update, :destroy, :index, :show]
+  
+  #spree
+  # mount Spree::Core::Engine, :at => '/store'
+  #spree
+  
+  resources :feedbacks, :except => [:update, :destroy, :index, :show]
   resources :collections, :except => [:update, :destroy, :index, :show]
   # resources :relationships
   resources :subscribers, :except => [:update, :destroy, :index, :show, :new]
   # devise_for :users
-  get 'teachings' => 'pages#teachings'
+  # get 'teachings' => 'pages#teachings'
 
   resources :poems, :except => [:update, :destroy, :show, :create, :new]
 
@@ -28,8 +33,9 @@ Rails.application.routes.draw do
   resources :retreat_talks, :only => [:show, :index]
 
   get 'home/index'
+  # get 'alt' => 'home#alt'
   get 'buddhadasa' => 'buddhadasa'
-  get 'gallery' => 'gallery'
+  get 'gallery' => 'gallery_photos#index'
   get 'suanmokkh' => 'suanmokkh'
   get 'contact' => 'contact'
   get 'retreats' => 'retreats'

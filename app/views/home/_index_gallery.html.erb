@@ -2,26 +2,26 @@
 <section id="index-gallery" class="bg-dark">
 	<h1 class="text-center wow fadeIn">Gallery</h1>
 	<hr>
-    <div class="container bg-primary" style="max-height: 900px; overflow: hidden; padding:0; border:5px solid white;">
+    <div class="container bg-primary" style="max-height: 450px; overflow: hidden; padding:0; border:5px solid white;">
         <div class="grid">
         	<div class="grid-sizer"></div>
-        	<% 15.times do |i| %>
-            <div class="grid-item">
-                <a href="/gallery" class="portfolio-box">
-                <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                Category
-                            </div>
-                            <div class="project-name">
-                                See More
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-			<% end %>
+            <% if @photos.count < 9 %>
+            	<% 9.times do |i| %>
+                <div class="grid-item">
+                    <a href="/gallery" class="portfolio-box">
+                    <%= image_tag "ajarn#{i+1}.jpg", style: "width:100%;",class: "img-responsive floatCenter"%>        
+                    </a>
+                </div>
+    			<% end %>
+            <% else %>
+                <% @photos.each_with_index do |photo, i| %>
+                <div class="grid-item">
+                    <a href="/gallery" class="portfolio-box">
+                    <%= image_tag "#{photo.img(:medium)}", style: "width:100%;",class: "img-responsive floatCenter"%>
+                    </a>
+                </div>
+                <% end %>
+            <% end %>
         </div>
     </div>
         <div class="col-md-12 bg-dark" style="margin-bottom: 45px; padding-bottom: 15px; padding-top: 15px;">

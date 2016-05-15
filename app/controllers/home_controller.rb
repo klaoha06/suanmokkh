@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   	helper ApplicationHelper
   def index
   	@books = Book.order('created_at DESC').limit(10).where(draft: false)
+    @photos = GalleryPhoto.limit(9)
   	# @articles = Article.order('created_at DESC').limit(10)
   	# @featured_article = Article.order('created_at DESC').find_by(featured: true)
   	# @featured_book = Book.order('created_at DESC')

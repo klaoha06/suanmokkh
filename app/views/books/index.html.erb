@@ -15,13 +15,13 @@
                 <span itemprop="name"><%= author.name %></span>
               <% end %>
             </p>
-            <p style="color:white !important; font-size:1.3em;" class="text-justify text-indent" itemprop="description"><%= sanitize(strip_tags(book.description)).first(530).strip.concat('...') %></p>
+            <p style="color:white !important; font-size:1.3em;" class="text-justify text-indent" itemprop="description"><%= sanitize(strip_tags(book.description)).first(570).strip.concat('...') %></p>
           </div>
           <div class="col-md-6">
             <% if !book.external_cover_img_link.blank? %>
-              <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:55%;", itemprop: 'image' %>
+              <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:50%;", itemprop: 'image' %>
             <% else %>
-              <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:55%;", itemprop: 'image' %>
+              <%= image_tag "#{book.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width:50%;", itemprop: 'image' %>
             <% end %>
           </div>
           <br>
@@ -103,7 +103,7 @@
               <% if !book.external_cover_img_link.blank? %>
                 <%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;", itemprop: 'image' %>
               <% else %>
-                <%= image_tag "#{book.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;", itemprop: 'image' %>
+                <%= image_tag "#{book.cover_img.url(:medium)}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;", itemprop: 'image' %>
               <% end %>
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">

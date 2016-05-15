@@ -2,8 +2,8 @@
   <% if @books.count < 1 %>
 
   <% else %>
-  <% @books.each do |book| %>
-    <div class="col-md-4 book-grid" itemscope itemtype="http://schema.org/Book">
+  <% @books.each_with_index do |book,index| %>
+    <div class="col-sm-3" itemscope itemtype="http://schema.org/Book">
       <a href=<%= '/books/' + book.id.to_s %> class="portfolio-box text-center">
         <% if !book.external_cover_img_link.blank? %>
           <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
@@ -14,12 +14,14 @@
       <h4 class="text-center" itemprop="name"><a href=<%= '/books/' + book.id.to_s %>><%= book.title %></a></h4>
       <p class="text-center" itemprop='author' itemscope='' itemtype='http://schema.org/Person'><span itemprop="name"><%= book.authors.first.name if book.authors.first %></span></p>
     </div>
+    <% if (index + 1) % 4 == 0 %>
+      <div class="clearfix"></div>
+    <% end %>
   <% end %>
 <% end %>
 
 <div class="col-md-12">
   <p class="text-center"><%= page_entries_info @books %></p>
-
   <nav class="text-center">
     <%= paginate @books, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
   </nav>
