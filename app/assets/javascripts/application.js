@@ -1,5 +1,5 @@
-//= require turbolinks
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require jquery.easing.min
@@ -13,6 +13,7 @@
 //= require_self
 //= require books
 //= require poems
+//= require turbolinks
 //= require google_analytics
 //= stub ckeditor/init
 //= stub activeadmin

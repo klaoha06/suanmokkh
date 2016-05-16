@@ -29,7 +29,11 @@
   <![endif]-->
 </head>
 <%= render "shared/main_navbar" %>
-<body>
+<%- if params[:controller] == 'retreat_talks' and params[:action] == 'show' %>
+  <body data-no-turbolink="true">
+<%- else %>
+  <body data-no-turbolink="false">
+<%- end %>
 <%= yield %>
   <% if !current_page?('/alt') %>
     <%= render "layouts/footer"%>
