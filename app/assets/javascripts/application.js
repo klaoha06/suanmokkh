@@ -1,5 +1,4 @@
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require jquery.easing.min
@@ -129,3 +128,28 @@ $(document).ready(function(){
       $('#audio'+ ($('select.changeStatus').val())).removeClass('hide');
     });
   });
+$('#buddhadasa-nav').affix({
+  offset: {
+    top: 100,
+    bottom: 350
+    // bottom: function () {
+    //   return (this.bottom = $('.footer').outerHeight(true))
+    // }
+  }
+});
+$("#owl-demo").owlCarousel({
+    nav : false, // Show next and prev buttons
+    slideSpeed : 300,
+    paginationSpeed : 400,
+    singleItem:true,
+    autoHeight:true
+});
+$('#suanmokkh-nav').affix({
+  offset: {
+    top: 130,
+    bottom: 350
+    // bottom: function () {
+    //   return (this.bottom = $('.footer').outerHeight(true))
+    // }
+  }
+});
