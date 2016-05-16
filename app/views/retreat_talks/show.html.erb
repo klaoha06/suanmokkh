@@ -7,9 +7,9 @@
     <div class="row">
       <div class="col-md-4">
         <% if !@retreat_talk.external_cover_img_link.blank? %>
-        <%= image_tag "#{@retreat_talk.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+        <%= image_tag "#{@retreat_talk.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%; margin-bottom:20px;" %>
         <% else %>
-        <%= image_tag "#{@retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;" %>
+        <%= image_tag "#{@retreat_talk.cover_img.url}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%; margin-bottom:20px;" %>
         <% end %>
         <% if @audios.count > 1 %>
         <hr>
