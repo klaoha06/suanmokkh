@@ -8,7 +8,7 @@ Bundler.require(*Rails.groups)
 
 module SuanmokkhOrg
   class Application < Rails::Application
-    config.middleware.use Rack::Deflater
+    config.middleware.insert_before(Rack::Sendfile, Rack::Deflater)
     #spree
 
     # config.to_prepare do
