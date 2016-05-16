@@ -63,10 +63,10 @@
       </div>
       <% if !@related_retreat_talks.blank? %>
       <div class="col-md-12">
-        <a data-no-turbolink="true" id="collapsebutton" class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-plus"></i>
+        <a id="collapsebutton" class="text-center floatCenter" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-plus"></i>
           See related talks
         </a>
-        <div data-no-turbolink="true" class="collapse" id="collapseExample">
+        <div class="collapse" id="collapseExample">
           <hr>
           <div id="owl_related_retreat_talks">
             <% @related_retreat_talks.each do |rt| %>

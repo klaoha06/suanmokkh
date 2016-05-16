@@ -1,13 +1,13 @@
   <% @retreat_talks.each_with_index do |retreat_talk,index| %>
   <div class="col-md-4 retreat_talk-grid" itemscope itemprop="audio" itemtype="http://schema.org/AudioObject">
-    <a itemprop="url" href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
+    <a itemprop="url" data-no-turbolink='true' href=<%= '/retreat_talks/' + retreat_talk.id.to_s %> class="portfolio-box text-center">
       <% if !retreat_talk.external_cover_img_link.blank? %>
         <%= image_tag "#{retreat_talk.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width: 65%;", itemprop: 'image' %>
       <% else %>
         <%= image_tag "#{retreat_talk.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter shadow animated fadeIn", style: "width: 65%;", itemprop: 'image' %>
       <% end %>
     </a>
-    <h4 class="text-center" itemprop="name"><a itemprop="url" href=<%= '/retreat_talks/' + retreat_talk.id.to_s %>><%= retreat_talk.title %></a></h4>
+    <h4 class="text-center" itemprop="name"><a itemprop="url" data-no-turbolink='true' href=<%= '/retreat_talks/' + retreat_talk.id.to_s %>><%= retreat_talk.title %></a></h4>
     <p class="text-center" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><%= retreat_talk.authors.first.name if retreat_talk.authors.first %></span></p>
     <div itemscope itemprop="provider" itemtype="http://schema.org/Organization"><meta itemprop="name" content="SoundCloud" /><meta itemprop="image" content="http://developers.soundcloud.com/assets/logo_white-8bf7615eb575eeb114fc65323068e1e4.png" /></div>
   </div>
