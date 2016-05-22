@@ -4,7 +4,11 @@ class SuanmokkhController < ApplicationController
 		if get_page
 			@page = get_page
 		else
-			@page = Page.find(2)
+			if Page.where(id: 2).first
+				@page = Page.where(id: 2).first
+			else
+				@page = nil
+			end
 		end
 	end
 end
