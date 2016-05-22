@@ -34,10 +34,10 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	      tab 'Basic' do
 	        f.inputs 'Basic Info' do
 	        	f.input :title, :required => true
-	        	f.input :content, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
+	        	f.input :content, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }, hint: content_tag(:span, "Click on 'Source' on the top right to edit HTML")
 	        end
 	        f.inputs 'Publish Status' do
-	        	f.input :identifier
+	        	f.input :identifier, hint: content_tag(:span, "Do not edit this because the website use this identifier to link this content to the specific page.")
 	        	f.input :draft, :label => "Make this a draft?"
 	        end
 	      end
