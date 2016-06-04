@@ -39,9 +39,9 @@ class ArticlesController < InheritedResources::Base
 		  end
 		  return
 		elsif !@article.blank?
-		  @title = @article.title + " by " + (@article.authors.first.name if @article.authors.first) + ' - Suan Mokkh'
+		  @title = @article.title + " by " + (@article.authors.first.name if @article.authors.first) + " - Suan Mokkh"
 		  if !@article.external_cover_img_link.blank?
-		    @img = 'http://www.suanmokkh.org' + @article.external_cover_img_link
+		    @img = @article.external_cover_img_link
 		  elsif !@article.cover_img.url.blank?
 		    @img = 'http://www.suanmokkh.org' + @article.cover_img.url
 		  else
