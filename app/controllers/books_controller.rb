@@ -36,8 +36,14 @@ class BooksController < ApplicationController
       end
       return
     elsif !@book.blank?
-      @title = @book.title + " by " + (@book.authors.first.name if @book.authors.first) + '- Suan Mokkh'
-      @img = @book.external_cover_img_link || 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
+      @title = @book.title + " by " + (@book.authors.first.name if @book.authors.first) + ' - Suan Mokkh'
+      if !@book.external_cover_img_link.blank?
+        @img = 'http://www.suanmokkh.org' + @book.external_cover_img_link
+      elsif !@book.cover_img.url.blank?
+        @img = 'http://www.suanmokkh.org' + @book.cover_img.url
+      else
+        @img = 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
+      end
       @related_books = @book.related_books.unshift(@book)
       @audio_languages = ''
       @options_for_audio_languages = []

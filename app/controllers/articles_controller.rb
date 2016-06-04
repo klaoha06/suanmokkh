@@ -31,6 +31,23 @@ class ArticlesController < InheritedResources::Base
 	# GET /articles/1
 	# GET /articles/1.json
 	def show
+		@article = Article.includes(:authors, :languages).where(id: params[:id], draft: false).first
+		if @article.blank?
+		  respond_to do |format|
+		    format.html { render template: 'shared/_not_found', layout: 'layouts/application', status: 404 }
+		    format.all  { render nothing: true, status: 404 }
+		  end
+		  return
+		elsif !@article.blank?
+		  @title = @article.title + " by " + (@article.authors.first.name if @article.authors.first) + ' - Suan Mokkh'
+		  if !@article.external_cover_img_link.blank?
+		    @img = 'http://www.suanmokkh.org' + @article.external_cover_img_link
+		  elsif !@article.cover_img.url.blank?
+		    @img = 'http://www.suanmokkh.org' + @article.cover_img.url
+		  else
+		    @img = 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
+		  end
+		end
 	end
 
 	# GET /articles/new

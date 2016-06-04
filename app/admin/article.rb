@@ -28,7 +28,7 @@ ActiveAdmin.register Article do
 	  panel "Status" do
 	  	attributes_table_for article do
 	  	    row 'allow_comments' do
-	  	    	status_tag((article.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (article.allow_comments? ? :warning : :ok))
+	  	    	status_tag((article.allow_comments? ? "Commenting Allowed" : "Commenting Not Allowed"), (article.allow_comments? ? :ok : :warning))
 	  	    end
 	  	    row 'featured' do
 	  	    	status_tag((article.featured? ? "Featured" : "Not Featured"), (article.featured? ? :ok : :warning))

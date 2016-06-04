@@ -1,19 +1,8 @@
 <% content_for :head do %>
-<title><%= @article.title %> - Suan Mokkh</title>
+<title><%= @title %></title>
+<meta content="832982693512511" property="fb:app_id"><meta content="Suan Mokkh" property="og:site_name" /><meta content="website" property="og:type" /><meta content="<%= @img %>"  itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="<%= sanitize(strip_tags(@article.content)) %>" property="og:description" /><meta content="Suan Mokkh" name="twitter:site" /><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="<%= sanitize(strip_tags(@article.content)) %>" name="twitter:description" /><meta content="<%= @img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>" />
 <% end %>
-<!-- <p id="notice"><%= notice %></p> -->
-<!-- <header class="showBook">
-  <div class="header-content">
-    <div class="header-content-inner wow fadeIn">
-      <h1>Suan Mokkh</h1>
-      <h1>Garden of Liberation</h1>
-      <hr>
-      <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p>
-    </div>
-  </div>
-</header> -->
 <div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;">
-  <!-- <hr class="full"> -->
   <div class="container book_header bg-primary">
     <div class="row">
       <div class="col-md-12">
@@ -39,15 +28,7 @@
         </div>
       </div>
     </div>
-<!--       <div class="row">
-        <div class="col-md-12">
-          <a href="#start_reading" class="btn btn-default text-center page-scroll floatCenter" style="width:350px; padding:15px 0; font-size: 1.5em;"><i class="fa fa-book"></i> Start Reading</a>
-        </div>
-      </div> -->
       <hr>
       <iframe src=<%= @article.file.url + "#view=fit" %> width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>
-<!--     <h1>Suan Mokkh</h1>
-    <h1>Garden of Liberation</h1>
-    <p>Start Bootstrap can help you build better websites using the Bootstrap CSS framework! Just download your template and start going, no strings attached!</p> -->
   </div>
 </div>
