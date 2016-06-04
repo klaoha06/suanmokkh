@@ -24,6 +24,8 @@ class Article < ActiveRecord::Base
 		# validate :source_of_file
 		# validate :source_of_cover_img
 
+		paginates_per 16
+
 		filterrific(
 		  available_filters: [
 		    :search_query,

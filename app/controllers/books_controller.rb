@@ -36,7 +36,7 @@ class BooksController < ApplicationController
       end
       return
     elsif !@book.blank?
-      @title = @book.title.to_s + " by " + (@book.authors.first.name.to_s if @book.authors.first) + " - Suan Mokkh"
+      @title = @book.title.to_s + " by " + (@book.authors.count > 0 ? @book.authors.first.name.to_s : 'Buddhadasa') + " - Suan Mokkh"      
       if !@book.external_cover_img_link.blank?
         @img =  @book.external_cover_img_link
       elsif !@book.cover_img.url.blank?
