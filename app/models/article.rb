@@ -19,10 +19,61 @@ class Article < ActiveRecord::Base
 	  accepts_nested_attributes_for :languages, allow_destroy: true
 
 		validates :title, presence: true, uniqueness: true
-		validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
-		validates :external_cover_img_link, url: true, unless: ->(book){book.external_cover_img_link.blank?}
-		validate :source_of_file
-		validate :source_of_cover_img
+		# validates :external_file_link, url: true, unless: ->(article){article.external_file_link.blank?}
+		# validates :external_cover_img_link, url: true, unless: ->(article){article.external_cover_img_link.blank?}
+		# validate :source_of_file
+		# validate :source_of_cover_img
+
+		filterrific(
+		  available_filters: [
+		    :search_query,
+		    :with_language_id,
+		    :with_author_id,
+		    :with_series,
+		  ]
+		)
+
+		scope :search_query, lambda { |query|
+		  return nil  if query.blank?
+		  # condition query, parse into individual keywords
+		  terms = query.to_s.downcase.split(/\s+/)
+		  # replace "*" with "%" for wildcard searches,
+		  # append '%', remove duplicate '%'s
+		  terms = terms.map { |e|
+		    ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
+		  }
+		  # configure number of OR conditions for provision
+		  # of interpolation arguments. Adjust this if you
+		  # change the number of OR conditions.
+		  num_or_conditions = 1
+		  where(
+		    terms.map {
+		      or_clauses = [
+		        "LOWER(articles.title) LIKE ?",
+		        # "LOWER(articles.description) LIKE ?",
+		        # "LOWER(students.email) LIKE ?"
+		      ].join(' OR ')
+		      "(#{ or_clauses })"
+		    }.join(' AND '),
+		    *terms.map { |e| [e] * num_or_conditions }.flatten
+		  )
+		}
+
+		def self.with_language_id language_id
+		  joins(:languages).where(languages: { id: language_id })
+		end
+
+		def self.with_author_id author_id
+		  joins(:authors).where(authors: { id: author_id })
+		end
+
+		def self.with_series series
+		  where(series: series)
+		end
+
+		def self.options_for_series
+		  where.not('series' => '').pluck(:series)
+		end
 
 		# Before create
 		before_create :before_creation

@@ -57,13 +57,13 @@ show do |book|
   panel "Status" do
   	attributes_table_for book do
   	    row 'allow_comments' do
-  	    	status_tag((book.allow_comments? ? "No Commenting Allowed" : "Allowed Commenting"), (book.allow_comments? ? :warning : :ok))
+  	    	status_tag((book.allow_comments? ? "Commenting Allowed" : "NO Commenting Allowed"), (book.allow_comments? ? :ok : :warning))
   	    end
   	    row 'featured' do
-  	    	status_tag((book.featured? ? "Not Featured" : "Featured"), (book.featured? ? :warning : :ok))
+  	    	status_tag((book.featured? ? "Featured" : "Not Featured"), (book.featured? ? :ok : :warning))
   	    end
   	    row 'recommended' do
-  	    	status_tag((book.recommended? ? "Not recommended" : "Recommended"), (book.recommended? ? :warning : :ok))
+  	    	status_tag((book.recommended? ? "Recommended" : "Not Recommended"), (book.recommended? ? :ok : :warning))
   	    end
   	    row 'draft' do
   	    	status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
