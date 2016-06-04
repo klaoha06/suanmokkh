@@ -4,7 +4,28 @@ class ArticlesController < InheritedResources::Base
 	# GET /articles
 	# GET /articles.json
 	def index
-	  @articles = Article.all
+	  @robot_img = 'http://www.bia.or.th/en/images/photo/08dec.jpg'
+	  @title = 'Articles - Suan Mokkh'
+	  # @featured_books = Book.includes(:authors, :groups, :languages).where(featured: true, draft: false).order('created_at DESC').limit(10)
+	  # @recommended_books = Book.includes(:authors).where(recommended: true, draft: false).order('created_at DESC').limit(15)
+	  @filterrific = initialize_filterrific(
+	    Article,
+	    params[:filterrific],
+	    :select_options => {
+	      with_language_id: Language.options_for_select,
+	      with_author_id: Author.options_for_select,
+	      with_series: Article.options_for_series,
+	    },
+	    # default_filter_params: [],
+	    # persistence_id: 'shared_key',
+	    # available_filters: [],
+	  ) or return
+	  @articles = @filterrific.find.page(params[:page]).where(draft: false)
+
+	  respond_to do |format|
+	    format.html
+	    format.js
+	  end
 	end
 
 	# GET /articles/1
