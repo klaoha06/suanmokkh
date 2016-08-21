@@ -15,7 +15,7 @@ class RetreatTalksController < InheritedResources::Base
 	      # default_filter_params: {draft: false},
 	      # available_filters: [],
 	      ) or return
-		@retreat_talks = @filter.find.page(params[:page]).where(draft: false)
+		@retreat_talks = @filter.find.page(params[:page]).where(draft: false).uniq.order(created_at: :desc)
 		respond_to do |format|
 			format.html
 			format.js
