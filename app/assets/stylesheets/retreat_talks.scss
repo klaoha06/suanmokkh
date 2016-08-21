@@ -2,10 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
 .retreat_talk_header {
 	margin-top: 50px;
 	margin-bottom: 50px;
 	padding: 30px 45px 15px 45px;
 	border: 10px solid white;
+}
+
+#retreat-talk-show-title {
+	margin-top:0; margin-bottom: 15px; font-size: 3.2em; line-height: 1.2;
 }

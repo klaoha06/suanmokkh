@@ -16,13 +16,14 @@
                 <li><a href="/buddhadasa">Buddhadasa</a></li>
                 <li><a href="/suanmokkh">Suan Mokkh</a></li>
                 <li><%= link_to "Books", books_path %></li>
-                <li class="dropdown">
+                <li><%= link_to "Audios", retreat_talks_path %></li>
+<!--                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Audios</a>
                   <ul class="dropdown-menu">
                   <li><a href="/retreat_talks"><h4 class="text-center brown">Retreat Talks</h4></a></li>
                   <li><a href="https://soundcloud.com/buddhadasa"><h4 class="text-center brown">All Audios in SoundCloud</h4></a></li>
                   </ul>
-                </li>
+                </li> -->
                 <li><%= link_to "Poetry", poems_path %></li>
                 <li><a href="/gallery">Gallery</a></li>
               </ul>
@@ -36,10 +37,10 @@
                     <li class="divider"></li>
                     <h4 class="text-center brown"><i class="fa fa-book brown"> </i> Buddhadasa's Teachings</h4>                 
                     <li><%= link_to "Retreat Talks", retreat_talks_path %></li>
-                    <li><a href="https://www.soundcloud.com/buddhadasa">All Audios</a></li>
+                    <!-- <li><a target="_blank" href="https://www.soundcloud.com/buddhadasa">All Audios</a></li> -->
                     <li><%= link_to "Books", books_path %></li>
                     <li><%= link_to "Poetry", poems_path %></li>
-                    <li><a href="https://www.youtube.com/user/buddhadasaarchives">Video</a></li>
+                    <li><a target="_blank" href="https://www.youtube.com/playlist?list=PLhSp_mSSQCh-11KF_DOlnVpcXdajoJvyt">Videos</a></li>
                     <% if Article.where(draft: false).count > 0 %>
                     <li><%= link_to "Articles", articles_path %></li>
                     <% end %>

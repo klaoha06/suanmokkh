@@ -1,13 +1,13 @@
 class Language < ActiveRecord::Base
 		validates :name, presence: true, uniqueness: true
 
-	  has_and_belongs_to_many :articles, -> { distinct }
-	  has_and_belongs_to_many :news_articles, -> { distinct }
-	  has_and_belongs_to_many :audios, -> { distinct }
-	  has_and_belongs_to_many :books, -> { distinct }
-	  has_and_belongs_to_many :retreat_talks, -> { distinct }
-	  has_and_belongs_to_many :poems, -> { distinct }
-	  has_and_belongs_to_many :groups, -> { distinct }
+	  has_and_belongs_to_many :articles, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :news_articles, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :audios, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :books, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :retreat_talks, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :poems, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :groups, -> { distinct }, :uniq => true
 
 		accepts_nested_attributes_for :articles, allow_destroy: true
 		accepts_nested_attributes_for :news_articles, allow_destroy: true

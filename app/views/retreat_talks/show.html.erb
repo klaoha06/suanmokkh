@@ -23,7 +23,7 @@
         <% end %>
       </div>
       <div class="col-md-8">
-        <h1 style="margin-top:0; margin-bottom: 15px; font-size: 63px; line-height: 1.2;"><%= @retreat_talk.title %></h1>
+        <h2 id="retreat-talk-show-title"><%= @retreat_talk.title %></h2>
         <p>
           <% @retreat_talk.authors.each do |author|%>
           <%= author.name.upcase %>
@@ -91,7 +91,7 @@
     </div>
   </div>
   <% if @retreat_talk.allow_comments %>
-  <div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
+  <div class="container-fluid bg-dark suanmokkh-comment">
     <div class="container">
       <div id="disqus_thread"></div>
       <script type="text/javascript">
