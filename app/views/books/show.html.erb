@@ -2,7 +2,7 @@
 <title><%= @title %></title>
 <meta content="832982693512511" property="fb:app_id"><meta content="Suan Mokkh" property="og:site_name" /><meta content="website" property="og:type" /><meta content="<%= @img %>"  itemprop="image primaryImageOfPage" property="og:image" /><meta itemprop="title name" content="<%= @title %>" property="og:title" itemprop="title name" /><meta itemprop="description" content="<%= sanitize(strip_tags(@book.description)) %>" property="og:description" /><meta content="Suan Mokkh" name="twitter:site" /><meta content="" name="twitter:card" /><meta name="twitter:domain" content="suanmokkh.org"/><meta property="og:type" content="website" /><meta content="<%= @title %>" name="twitter:title" /><meta itemprop="description" content="<%= sanitize(strip_tags(@book.description)) %>" name="twitter:description" /><meta content="<%= @img %>" name="twitter:image:src" /><meta property="og:url" content="<%= request.original_url %>"/><link rel="canonical" href="<%= request.original_url %>" />
 <% end %>
-<div class="jumbotron bg-dark" style="margin-bottom: 0; min-height: 100%;" itemprop="mainEntity" itemscope itemtype="http://schema.org/Book">
+<div id="book-show" class="jumbotron bg-dark" itemprop="mainEntity" itemscope itemtype="http://schema.org/Book">
   <div class="container bg-primary retreat_talk_header">
     <div class="row">
       <div class="col-md-4">
@@ -17,7 +17,7 @@
           <br>
           </small>
           <div class="col-md-12">
-            <p style="font-size: 15px; text-align: center;">Select Audio Language</p>
+            <p class="book-show-lang-label">Select Audio Language</p>
             <%= 
             select_tag('languages', options_for_select(@options_for_audio_languages), class: 'form-control input-sm changeStatus')
             %>
@@ -28,7 +28,7 @@
           <br>
           <div class="col-md-12">
             <%= @options_for_languages %>
-          <p style="font-size: 15px; text-align: center;">Select Book Language</p>
+          <p class="book-show-lang-label">Select Book Language</p>
           <%= 
           select_tag('languages', options_for_select(@options_for_book_languages), class: 'form-control input-sm bookStatus')
           %>
@@ -38,7 +38,7 @@
         <hr class="full visible-sm visible-xs">
       </div>
       <div class="col-md-8">
-        <h1 style="margin-top:0; margin-bottom: 15px" itemprop="name"><%= @book.title %></h1>
+        <h2 id="book-show-title" itemprop="name"><%= @book.title %></h2>
         <p itemprop='author' itemscope='' itemtype='http://schema.org/Person'>
           <% @book.authors.each do |author|%>
             <span itemprop="name"><%= author.name.upcase %></span>
@@ -50,7 +50,7 @@
         <% if @book.audios.count > 1 && @book.show_book %>
         <div class="row">
           <div class="col-md-12">
-            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
+            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
           </div>
         </div>
         <% end %>
@@ -71,7 +71,7 @@
           <% end %>
       <% if @book.audios.count <= 1 && @book.show_book %>
           <div class="col-md-12">
-            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter" style="width:300px; padding:15px 0; font-size: 1.2em; margin-top:15px; margin-bottom: 20px;" role="button"><i class="fa fa-book"></i> Start Reading</a>
+            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
           </div>
       <% end %>
        </div>
@@ -96,8 +96,8 @@
   </div>
 </div>
 <% if @additional_info.first && @book.show_book %>
-<div id="additionalBookInfo" class="container-fluid bg-dark">
-  <a class="text-center floatCenter white" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="width:30%; padding:10px 0; font-size: 0.9em"><i class="fa fa-info"></i>
+<div class="container-fluid bg-dark">
+  <a id="book-show-additional-info"class="text-center floatCenter white" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-info"></i>
     See additional info
   </a>
   <div class="collapse container text-center" id="collapseExample">
@@ -139,7 +139,7 @@
 </div>
 <% end %>
 <% if @book.allow_comments %>
-<div class="container-fluid bg-dark" style="padding-right: 0; padding-left: 0;">
+<div id="book-show-comment" class="container-fluid bg-dark">
   <div class="container">
   <div id="disqus_thread"></div>
   <script type="text/javascript">

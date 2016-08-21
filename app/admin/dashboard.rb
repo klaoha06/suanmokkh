@@ -84,7 +84,6 @@ ActiveAdmin.register_page "Dashboard" do
               end
                a ' See all', :href => admin_audios_path(), :style => 'float:right'
             end
-
           end
         end
         column do

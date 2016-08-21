@@ -16,12 +16,12 @@ class Book < ActiveRecord::Base
   # validates :file_file_name, presence: true, unless: ->(book){book.external_file_link.present?}
 
   # Associations
-  has_and_belongs_to_many :authors, -> { distinct }
+  has_and_belongs_to_many :authors, -> { distinct }, :uniq => true
   has_and_belongs_to_many :retreat_talks, -> { distinct }
-  has_and_belongs_to_many :publishers, -> { distinct }
+  has_and_belongs_to_many :publishers, -> { distinct }, :uniq => true
   has_and_belongs_to_many :audios, -> { distinct }
-  has_and_belongs_to_many :groups, -> { distinct }
-  has_and_belongs_to_many :languages, -> { distinct }
+  has_and_belongs_to_many :groups, -> { distinct }, :uniq => true
+  has_and_belongs_to_many :languages, -> { distinct }, :uniq => true
   belongs_to :admin_user, inverse_of: :books
 
   has_many :collections

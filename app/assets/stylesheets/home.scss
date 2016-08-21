@@ -1,3 +1,6 @@
+html {
+    overflow-x:hidden;
+}
 html,
 body {
     width: 100%;
@@ -136,6 +139,15 @@ p,h1,h2,h3,h4,h5,h6,blockquote {
 .text-faded {
     /*color: rgba(255,255,255,.7);*/
     color: #725843;
+}
+
+#myspinner {
+    z-index: -92121; font-size:6em; position: absolute; top: 25%; margin-left: auto; margin-right: auto; left: 0; right: 0;
+}
+
+.suanmokkh-comment {
+    padding-right: 0; 
+    padding-left: 0;
 }
 
 #owl-books .item{
@@ -421,7 +433,7 @@ header .header-content .header-content-inner p {
 
     header .header-content {
         position: absolute;
-        top: 55%;
+        top: 59%;
         padding: 0 50px;
         -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
@@ -459,10 +471,6 @@ header .header-content .header-content-inner p {
 
 .service-box p {
     margin-bottom: 0;
-}
-
-#book_lang_filter li a {
-	color:white;
 }
 
 .portfolio-box {
@@ -847,6 +855,11 @@ a.footer-icon:hover {
 }
 #retreat_talk_banner {
     border: none; margin-top: 35px;
+}
+.footer-row {
+    padding-top:50px;
+    padding-bottom:50px; 
+    margin:0;
 }
 #footer h3 {
     font-weight: 600;

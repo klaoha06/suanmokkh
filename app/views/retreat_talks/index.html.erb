@@ -6,6 +6,7 @@
     <div class="container bg-primary" id="retreat_talk_banner">
       <h1 class="text-center animated fadeIn">Selected Retreat Talks</h1>
       <hr>
+      <a target="_blank" href="https://soundcloud.com/buddhadasa" class="haveMargin text-center floatCenter"><i class="fa fa-soundcloud"></i> See All Talks in SoundCloud</a>
       <% if @featured_retreat_talks.count >= 1 %>
         <div id="owl-featured-retreat_talks" class="owl-carousel">
           <% @featured_retreat_talks.each do |retreat_talk| %>
@@ -22,61 +23,60 @@
       <% end %>
       <div class="clearfix"></div>
   <div class="container bg-primary" style="border: none;">
-  <%= form_for_filterrific(@filter) do |f| %>
-  <div class="row">
-    <div class="col-md-3">
-      <p>Search</p>
-      <div class="input-group">
-      <%= f.text_field(
-        :search_query,
-        class: 'filterrific-periodically-observed form-control input-sm'
-      ) %>
-      <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+    <%= form_for_filterrific(@filter) do |f| %>
+    <div class="row">
+      <div class="col-md-3">
+        <p>Search</p>
+        <div class="input-group">
+        <%= f.text_field(
+          :search_query,
+          class: 'filterrific-periodically-observed form-control input-sm'
+        ) %>
+        <span class="input-group-addon" id="basic-addon1"><i class="fa fa-search"></i></span>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Language</p>
+        <%= f.select(
+          :with_language_id,
+          @filter.select_options[:with_language_id],
+          { include_blank: '- Any -' },
+          { :class => 'form-control input-sm' }
+        ) %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Author</p>
+        <%= f.select(
+          :with_author_id,
+          @filter.select_options[:with_author_id],
+          { include_blank: '- Any -' },
+          { :class => 'form-control input-sm' }
+        ) %>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group chardin_box">
+        <p>Series</p>
+        <%= f.select(
+          :with_series,
+          @filter.select_options[:with_series],
+          { include_blank: '- Any -' },
+          { :class => 'form-control input-sm' }
+        ) %>
+        </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group chardin_box">
-      <p>Language</p>
-      <%= f.select(
-        :with_language_id,
-        @filter.select_options[:with_language_id],
-        { include_blank: '- Any -' },
-        { :class => 'form-control input-sm' }
+      <h1 class="text-center"><%= render_filterrific_spinner %></h1>
+    <% end %>
+    <div id="results">
+      <%= render(
+        partial: 'retreat_talks/list',
+        locals: { retreat_talks: @retreat_talks }
       ) %>
-      </div>
     </div>
-    <div class="col-md-3">
-      <div class="form-group chardin_box">
-      <p>Author</p>
-      <%= f.select(
-        :with_author_id,
-        @filter.select_options[:with_author_id],
-        { include_blank: '- Any -' },
-        { :class => 'form-control input-sm' }
-      ) %>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="form-group chardin_box">
-      <p>Series</p>
-      <%= f.select(
-        :with_series,
-        @filter.select_options[:with_series],
-        { include_blank: '- Any -' },
-        { :class => 'form-control input-sm' }
-      ) %>
-      </div>
-    </div>
-  </div>
-    <h1 class="text-center"><%= render_filterrific_spinner %></h1>
-  <% end %>
-  <div id="results">
-    <%= render(
-      partial: 'retreat_talks/list',
-      locals: { retreat_talks: @retreat_talks }
-    ) %>
-  </div>
-    <a href="https://soundcloud.com/buddhadasa" class="haveMargin text-center floatCenter"><i class="fa fa-soundcloud"></i> See All Tracks in SoundCloud</a>
   </div>
   <div class="clearfix"></div>
 </div>
