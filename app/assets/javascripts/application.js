@@ -12,7 +12,6 @@
 //= require_self
 //= require books
 //= require poems
-//= require turbolinks
 //= require google_analytics
 //= stub ckeditor/init
 //= stub activeadmin
