@@ -39,7 +39,7 @@ show do |book|
   	    end
   	    row "File" do
   	    	if book.file_file_name
-	  	    	text_node ("<iframe src='" + book.file.url(:medium) + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+	  	    	text_node ("<iframe src='" + book.file.url() + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
 	  	    elsif !book.external_file_link.blank?
 	  	    	text_node ("<iframe src='" + book.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
 	  	    else
