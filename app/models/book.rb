@@ -110,11 +110,11 @@ class Book < ActiveRecord::Base
   end
 
   def self.with_series series
-    where(series: series)
+    where(series: series).uniq
   end
 
   def self.options_for_series
-    where.not('series' => '').pluck(:series)
+    where.not('series' => '').pluck(:series).uniq
   end
 
   def show_book
