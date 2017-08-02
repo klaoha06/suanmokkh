@@ -42,10 +42,10 @@ class ArticlesController < InheritedResources::Base
 		  @title = @article.title.to_s + " by " + (@article.authors.count > 0 ? @article.authors.first.name.to_s : 'Buddhadasa') + " - Suan Mokkh"		  
 		  if !@article.external_cover_img_link.blank?
 		    @img = @article.external_cover_img_link
-		  elsif !@article.cover_img.url.blank?
+		  elsif !@article.cover_img.url.blank? && !@article.cover_img.url.include?('missing')
 		    @img = 'http://www.suanmokkh.org' + @article.cover_img.url
 		  else
-		    @img = 'http://www.thaipulse.com/photos/thailand-buddhism/hl/images/suan-mokkh-buddha-statue-whole-leaves-blurred.jpg'
+		    @img = ''
 		  end
 
 		end

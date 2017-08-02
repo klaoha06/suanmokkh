@@ -1,28 +1,28 @@
 ActiveAdmin.register Article do
 	menu priority: 31
 	config.per_page = 15
-	permit_params :recommended, :external_file_link, :external_cover_img_link, :author_ids, :creation_date, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
+	permit_params :recommended, :external_file_link, :external_url_link, :external_cover_img_link, :author_ids, :creation_date, :publisher_ids, :publishers_attributes, :featured, :title, :cover_img, :file, :content, :group, :series, :language, :reads, :publication_date, :draft, :allow_comments, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ]
 	
 	show do |article|
 	  panel "Basic" do
 	  	attributes_table_for article do
 	  	    row :title
-	  	    row :created_at
-	  	    row :updated_at
-	  	    row :series
-	  	    row :creation_date
 	  	    if article.content
 		  	    row "content" do
 		  	    	text_node (article.content).html_safe
 		  	    end
 		  	  end
-	  	    row "File" do
-	  	    	if article.file_file_name
-		  	    	text_node ("<iframe src='" + article.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
-		  	    else
-		  	    	text_node ("<iframe src='" + article.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
-		  	    end
-	  	    end
+		  	  row :created_at
+		  	  row :updated_at
+		  	  row :series
+		  	  row :creation_date
+	  	    # row "File" do
+	  	    # 	if article.file_file_name
+		  	   #  	text_node ("<iframe src='" + article.file.url + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+		  	   #  else
+		  	   #  	text_node ("<iframe src='" + article.external_file_link + "#view=fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
+		  	   #  end
+	  	    # end
 	  	  end
 	  end
 	  panel "Status" do
