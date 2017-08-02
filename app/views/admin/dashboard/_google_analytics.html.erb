@@ -7,10 +7,44 @@
 
 <!-- Step 1: Create the containing elements. -->
 
-<section id="auth-button"></section>
-<section id="view-selector"></section>
-<section id="timeline"></section>
+  <section id="auth-button"></section>
+<header>
+  <div id="embed-api-auth-container"></div>
+  <div id="view-selector-container"></div>
+  <div id="view-name"></div>
+  <div id="active-users-container"></div>
+  <div id="chart-container"></div>
+</header>
+    <div class="Chartjs">
+      <h3>This Week vs Last Week (by sessions)</h3>
+      <figure class="Chartjs-figure" id="chart-1-container"></figure>
+      <ol class="Chartjs-legend" id="legend-1-container"></ol>
+    </div>
+    <div class="Chartjs">
+      <h3>This Year vs Last Year (by users)</h3>
+      <figure class="Chartjs-figure" id="chart-2-container"></figure>
+      <ol class="Chartjs-legend" id="legend-2-container"></ol>
+    </div>
+    <div class="Chartjs">
+      <h3>Top Browsers (by pageview)</h3>
+      <figure class="Chartjs-figure" id="chart-3-container"></figure>
+      <ol class="Chartjs-legend" id="legend-3-container"></ol>
+    </div>
+    <div class="Chartjs">
+      <h3>Top Countries (by sessions)</h3>
+      <figure class="Chartjs-figure" id="chart-4-container"></figure>
+      <ol class="Chartjs-legend" id="legend-4-container"></ol>
+    </div>
+  <section id="view-selector"></section>
+  <section id="timeline"></section>
+<!-- This demo uses the Chart.js graphing library and Moment.js to do date
+     formatting and manipulation. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
 
+<style type="text/css">
+  .ActiveUsers{background:#f4f2f1;border:1px solid #d4d2d0;border-radius:4px;font-weight:300;padding:.5em 1.5em;white-space:nowrap}.ActiveUsers-value{display:inline-block;font-weight:600;margin-right:-.25em}.ActiveUsers.is-increasing{-webkit-animation:a 3s;animation:a 3s}.ActiveUsers.is-decreasing{-webkit-animation:b 3s;animation:b 3s}@-webkit-keyframes a{10%{background-color:#ebffeb;border-color:rgba(0,128,0,.5);color:green}}@keyframes a{10%{background-color:#ebffeb;border-color:rgba(0,128,0,.5);color:green}}@-webkit-keyframes b{10%{background-color:#ffebeb;border-color:rgba(255,0,0,.5);color:red}}@keyframes b{10%{background-color:#ffebeb;border-color:rgba(255,0,0,.5);color:red}}.Chartjs{font-size:.85em}.Chartjs-figure{height:250px}.Chartjs-legend{list-style:none;margin:0;padding:1em 0 0;text-align:center}.Chartjs-legend>li{display:inline-block;padding:.25em .5em}.Chartjs-legend>li>i{display:inline-block;height:1em;margin-right:.5em;vertical-align:-.1em;width:1em}@media (min-width:570px){.Chartjs-figure{margin-right:1.5em}}
+</style>
 <!-- Step 2: Load the library. -->
 
 <script>
@@ -23,6 +57,13 @@
 </script>
 
 <script>
+
+!function(e){function t(r){if(i[r])return i[r].exports;var o=i[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,t),o.l=!0,o.exports}var i={};t.m=e,t.c=i,t.i=function(e){return e},t.d=function(e,i,r){t.o(e,i)||Object.defineProperty(e,i,{configurable:!1,enumerable:!0,get:r})},t.n=function(e){var i=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(i,"a",i),i},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=4)}([function(e,t,i){function r(){var e=gapi.client.request({path:s}).then(function(e){return e});return new e.constructor(function(t,i){var r=[];e.then(function e(o){var c=o.result;c.items?r=r.concat(c.items):i(new Error("You do not have any Google Analytics accounts. Go to http://google.com/analytics to sign up.")),c.startIndex+c.itemsPerPage<=c.totalResults?gapi.client.request({path:s,params:{"start-index":c.startIndex+c.itemsPerPage}}).then(e):t(new n(r))}).then(null,i)})}var o,n=i(1),s="/analytics/v3/management/accountSummaries";e.exports={get:function(e){return e&&(o=null),o||(o=r())}}},function(e,t){function i(e){this.accounts_=e,this.webProperties_=[],this.profiles_=[],this.accountsById_={},this.webPropertiesById_=this.propertiesById_={},this.profilesById_=this.viewsById_={};for(var t,i=0;t=this.accounts_[i];i++)if(this.accountsById_[t.id]={self:t},t.webProperties){r(t,"webProperties","properties");for(var o,n=0;o=t.webProperties[n];n++)if(this.webProperties_.push(o),this.webPropertiesById_[o.id]={self:o,parent:t},o.profiles){r(o,"profiles","views");for(var s,c=0;s=o.profiles[c];c++)this.profiles_.push(s),this.profilesById_[s.id]={self:s,parent:o,grandParent:t}}}}function r(e,t,i){Object.defineProperty?Object.defineProperty(e,i,{get:function(){return e[t]}}):e[i]=e[t]}i.prototype.all=function(){return this.accounts_},r(i.prototype,"all","allAccounts"),i.prototype.allWebProperties=function(){return this.webProperties_},r(i.prototype,"allWebProperties","allProperties"),i.prototype.allProfiles=function(){return this.profiles_},r(i.prototype,"allProfiles","allViews"),i.prototype.get=function(e){if(!!e.accountId+!!e.webPropertyId+!!e.propertyId+!!e.profileId+!!e.viewId>1)throw new Error('get() only accepts an object with a single property: either "accountId", "webPropertyId", "propertyId", "profileId" or "viewId"');return this.getProfile(e.profileId||e.viewId)||this.getWebProperty(e.webPropertyId||e.propertyId)||this.getAccount(e.accountId)},i.prototype.getAccount=function(e){return this.accountsById_[e]&&this.accountsById_[e].self},i.prototype.getWebProperty=function(e){return this.webPropertiesById_[e]&&this.webPropertiesById_[e].self},r(i.prototype,"getWebProperty","getProperty"),i.prototype.getProfile=function(e){return this.profilesById_[e]&&this.profilesById_[e].self},r(i.prototype,"getProfile","getView"),i.prototype.getAccountByProfileId=function(e){return this.profilesById_[e]&&this.profilesById_[e].grandParent},r(i.prototype,"getAccountByProfileId","getAccountByViewId"),i.prototype.getWebPropertyByProfileId=function(e){return this.profilesById_[e]&&this.profilesById_[e].parent},r(i.prototype,"getWebPropertyByProfileId","getPropertyByViewId"),i.prototype.getAccountByWebPropertyId=function(e){return this.webPropertiesById_[e]&&this.webPropertiesById_[e].parent},r(i.prototype,"getAccountByWebPropertyId","getAccountByPropertyId"),e.exports=i},,,function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var r=i(0),o=i.n(r);gapi.analytics.ready(function(){function e(e,t,i){e.innerHTML=t.map(function(e){return"<option "+(e.id==i?"selected ":" ")+'value="'+e.id+'">'+e.name+"</option>"}).join("")}function t(e){return e.ids||e.viewId?{prop:"viewId",value:e.viewId||e.ids&&e.ids.replace(/^ga:/,"")}:e.propertyId?{prop:"propertyId",value:e.propertyId}:e.accountId?{prop:"accountId",value:e.accountId}:void 0}gapi.analytics.createComponent("ViewSelector2",{execute:function(){return this.setup_(function(){this.updateAccounts_(),this.changed_&&(this.render_(),this.onChange_())}.bind(this)),this},set:function(e){if(!!e.ids+!!e.viewId+!!e.propertyId+!!e.accountId>1)throw new Error('You cannot specify more than one of the following options: "ids", "viewId", "accountId", "propertyId"');if(e.container&&this.container)throw new Error("You cannot change containers once a view selector has been rendered on the page.");var t=this.get();return t.ids==e.ids&&t.viewId==e.viewId&&t.propertyId==e.propertyId&&t.accountId==e.accountId||(t.ids=null,t.viewId=null,t.propertyId=null,t.accountId=null),gapi.analytics.Component.prototype.set.call(this,e)},setup_:function(e){var t=this,i=function(){o.a.get().then(function(i){t.summaries=i,t.accounts=t.summaries.all(),e()},function(e){t.emit("error",e)})};gapi.analytics.auth.isAuthorized()?i():gapi.analytics.auth.on("signIn",i)},updateAccounts_:function(){var e=this.get(),i=t(e),r=void 0,o=void 0,n=void 0;if(!this.summaries.all().length)return void this.emit("error",new Error('This user does not have any Google Analytics accounts. You can sign up at "www.google.com/analytics".'));if(i)switch(i.prop){case"viewId":r=this.summaries.getProfile(i.value),o=this.summaries.getAccountByProfileId(i.value),n=this.summaries.getWebPropertyByProfileId(i.value);break;case"propertyId":n=this.summaries.getWebProperty(i.value),o=this.summaries.getAccountByWebPropertyId(i.value),r=n&&n.views&&n.views[0];break;case"accountId":o=this.summaries.getAccount(i.value),n=o&&o.properties&&o.properties[0],r=n&&n.views&&n.views[0]}else o=this.accounts[0],n=o&&o.properties&&o.properties[0],r=n&&n.views&&n.views[0];o||n||r?o==this.account&&n==this.property&&r==this.view||(this.changed_={account:o&&o!=this.account,property:n&&n!=this.property,view:r&&r!=this.view},this.account=o,this.properties=o.properties,this.property=n,this.views=n&&n.views,this.view=r,this.ids=r&&"ga:"+r.id):this.emit("error",new Error("This user does not have access to "+i.prop.slice(0,-2)+" : "+i.value))},render_:function(){var t=this.get();this.container="string"==typeof t.container?document.getElementById(t.container):t.container,this.container.innerHTML=t.template||this.template;var i=this.container.querySelectorAll("select"),r=this.accounts,o=this.properties||[{name:"(Empty)",id:""}],n=this.views||[{name:"(Empty)",id:""}];e(i[0],r,this.account.id),e(i[1],o,this.property&&this.property.id),e(i[2],n,this.view&&this.view.id),i[0].onchange=this.onUserSelect_.bind(this,i[0],"accountId"),i[1].onchange=this.onUserSelect_.bind(this,i[1],"propertyId"),i[2].onchange=this.onUserSelect_.bind(this,i[2],"viewId")},onChange_:function(){var e={account:this.account,property:this.property,view:this.view,ids:this.view&&"ga:"+this.view.id};this.changed_&&(this.changed_.account&&this.emit("accountChange",e),this.changed_.property&&this.emit("propertyChange",e),this.changed_.view&&(this.emit("viewChange",e),this.emit("idsChange",e),this.emit("change",e.ids))),this.changed_=null},onUserSelect_:function(e,t){var i={};i[t]=e.value,this.set(i),this.execute()},template:'<div class="ViewSelector2">  <div class="ViewSelector2-item">    <label>Account</label>    <select class="FormField"></select>  </div>  <div class="ViewSelector2-item">    <label>Property</label>    <select class="FormField"></select>  </div>  <div class="ViewSelector2-item">    <label>View</label>    <select class="FormField"></select>  </div></div>'})})}]);
+
+!function(t){function e(a){if(n[a])return n[a].exports;var r=n[a]={i:a,l:!1,exports:{}};return t[a].call(r.exports,r,r.exports,e),r.l=!0,r.exports}var n={};e.m=t,e.c=n,e.i=function(t){return t},e.d=function(t,n,a){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:a})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=3)}({3:function(t,e){gapi.analytics.ready(function(){function t(t){if(a.test(t))return t;var r=n.exec(t);if(r)return e(+r[1]);if("today"==t)return e(0);if("yesterday"==t)return e(1);throw new Error("Cannot convert date "+t)}function e(t){var e=new Date;e.setDate(e.getDate()-t);var n=String(e.getMonth()+1);n=1==n.length?"0"+n:n;var a=String(e.getDate());return a=1==a.length?"0"+a:a,e.getFullYear()+"-"+n+"-"+a}var n=/(\d+)daysAgo/,a=/\d{4}\-\d{2}\-\d{2}/;gapi.analytics.createComponent("DateRangeSelector",{execute:function(){var e=this.get();e["start-date"]=e["start-date"]||"7daysAgo",e["end-date"]=e["end-date"]||"yesterday",this.container="string"==typeof e.container?document.getElementById(e.container):e.container,e.template&&(this.template=e.template),this.container.innerHTML=this.template;var n=this.container.querySelectorAll("input");return this.startDateInput=n[0],this.startDateInput.value=t(e["start-date"]),this.endDateInput=n[1],this.endDateInput.value=t(e["end-date"]),this.setValues(),this.setMinMax(),this.container.onchange=this.onChange.bind(this),this},onChange:function(){this.setValues(),this.setMinMax(),this.emit("change",{"start-date":this["start-date"],"end-date":this["end-date"]})},setValues:function(){this["start-date"]=this.startDateInput.value,this["end-date"]=this.endDateInput.value},setMinMax:function(){this.startDateInput.max=this.endDateInput.value,this.endDateInput.min=this.startDateInput.value},template:'<div class="DateRangeSelector">  <div class="DateRangeSelector-item">    <label>Start Date</label>     <input type="date">  </div>  <div class="DateRangeSelector-item">    <label>End Date</label>     <input type="date">  </div></div>'})})}});
+
+!function(t){function e(s){if(i[s])return i[s].exports;var n=i[s]={i:s,l:!1,exports:{}};return t[s].call(n.exports,n,n.exports,e),n.l=!0,n.exports}var i={};e.m=t,e.c=i,e.i=function(t){return t},e.d=function(t,i,s){e.o(t,i)||Object.defineProperty(t,i,{configurable:!1,enumerable:!0,get:s})},e.n=function(t){var i=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(i,"a",i),i},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="",e(e.s=2)}({2:function(t,e){gapi.analytics.ready(function(){gapi.analytics.createComponent("ActiveUsers",{initialize:function(){this.activeUsers=0,gapi.analytics.auth.once("signOut",this.handleSignOut_.bind(this))},execute:function(){this.polling_&&this.stop(),this.render_(),gapi.analytics.auth.isAuthorized()?this.pollActiveUsers_():gapi.analytics.auth.once("signIn",this.pollActiveUsers_.bind(this))},stop:function(){clearTimeout(this.timeout_),this.polling_=!1,this.emit("stop",{activeUsers:this.activeUsers})},render_:function(){var t=this.get();this.container="string"==typeof t.container?document.getElementById(t.container):t.container,this.container.innerHTML=t.template||this.template,this.container.querySelector("b").innerHTML=this.activeUsers},pollActiveUsers_:function(){var t=this.get(),e=1e3*(t.pollingInterval||5);if(isNaN(e)||e<5e3)throw new Error("Frequency must be 5 seconds or more.");this.polling_=!0,gapi.client.analytics.data.realtime.get({ids:t.ids,metrics:"rt:activeUsers"}).then(function(t){var i=t.result,s=i.totalResults?+i.rows[0][0]:0,n=this.activeUsers;this.emit("success",{activeUsers:this.activeUsers}),s!=n&&(this.activeUsers=s,this.onChange_(s-n)),1==this.polling_&&(this.timeout_=setTimeout(this.pollActiveUsers_.bind(this),e))}.bind(this))},onChange_:function(t){var e=this.container.querySelector("b");e&&(e.innerHTML=this.activeUsers),this.emit("change",{activeUsers:this.activeUsers,delta:t}),t>0?this.emit("increase",{activeUsers:this.activeUsers,delta:t}):this.emit("decrease",{activeUsers:this.activeUsers,delta:t})},handleSignOut_:function(){this.stop(),gapi.analytics.auth.once("signIn",this.handleSignIn_.bind(this))},handleSignIn_:function(){this.pollActiveUsers_(),gapi.analytics.auth.once("signOut",this.handleSignOut_.bind(this))},template:'<div class="ActiveUsers">Active Users: <b class="ActiveUsers-value"></b></div>'})})}});
+
 gapi.analytics.ready(function() {
 
   // Step 3: Authorize the user.
@@ -34,43 +75,360 @@ gapi.analytics.ready(function() {
     clientid: CLIENT_ID,
   });
 
-  // Step 4: Create the view selector.
+    /**
+     * Create a new ActiveUsers instance to be rendered inside of an
+     * element with the id "active-users-container" and poll for changes every
+     * five seconds.
+     */
+    var activeUsers = new gapi.analytics.ext.ActiveUsers({
+      container: 'active-users-container',
+      pollingInterval: 5
+    });
 
-  var viewSelector = new gapi.analytics.ViewSelector({
-    container: 'view-selector'
-  });
 
-  // Step 5: Create the timeline chart.
+    /**
+     * Add CSS animation to visually show the when users come and go.
+     */
+    activeUsers.once('success', function() {
+      var element = this.container.firstChild;
+      var timeout;
 
-  var timeline = new gapi.analytics.googleCharts.DataChart({
-    reportType: 'ga',
-    query: {
-      'dimensions': 'ga:date',
-      'metrics': 'ga:sessions',
-      'start-date': '30daysAgo',
-      'end-date': 'yesterday',
-    },
-    chart: {
-      type: 'LINE',
-      container: 'timeline'
-    }
-  });
+      this.on('change', function(data) {
+        var element = this.container.firstChild;
+        var animationClass = data.delta > 0 ? 'is-increasing' : 'is-decreasing';
+        element.className += (' ' + animationClass);
 
-  // Step 6: Hook up the components to work together.
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+          element.className =
+              element.className.replace(/ is-(increasing|decreasing)/g, '');
+        }, 3000);
+      });
+    });
 
-  gapi.analytics.auth.on('success', function(response) {
-    viewSelector.execute();
-  });
 
-  viewSelector.on('change', function(ids) {
-    var newIds = {
+    /**
+     * Create a new ViewSelector2 instance to be rendered inside of an
+     * element with the id "view-selector-container".
+     */
+    var viewSelector = new gapi.analytics.ext.ViewSelector2({
+      container: 'view-selector-container',
+    })
+    .execute();
+
+    /**
+     * Create a new DataChart instance with the given query parameters
+     * and Google chart options. It will be rendered inside an element
+     * with the id "chart-container".
+     */
+    var dataChart = new gapi.analytics.googleCharts.DataChart({
       query: {
-        ids: ids
+        metrics: 'ga:sessions',
+        dimensions: 'ga:date',
+        'start-date': '30daysAgo',
+        'end-date': 'yesterday'
+      },
+      chart: {
+        container: 'chart-container',
+        type: 'LINE',
+        options: {
+          width: '100%'
+        }
       }
+    });
+
+
+    /**
+     * Render the dataChart on the page whenever a new view is selected.
+     */
+    viewSelector.on('change', function(ids) {
+      dataChart.set({query: {ids: ids}}).execute();
+    });
+
+    /**
+     * Update the activeUsers component, the Chartjs charts, and the dashboard
+     * title whenever the user changes the view.
+     */
+    viewSelector.on('viewChange', function(data) {
+      var title = document.getElementById('view-name');
+      title.textContent = data.property.name + ' (' + data.view.name + ')';
+
+      // Start tracking active users for this view.
+      activeUsers.set(data).execute();
+
+      // Render all the of charts for this view.
+      renderWeekOverWeekChart(data.ids);
+      renderYearOverYearChart(data.ids);
+      renderTopBrowsersChart(data.ids);
+      renderTopCountriesChart(data.ids);
+    });
+
+
+    /**
+     * Draw the a chart.js line chart with data from the specified view that
+     * overlays session data for the current week over session data for the
+     * previous week.
+     */
+    function renderWeekOverWeekChart(ids) {
+
+      // Adjust `now` to experiment with different days, for testing only...
+      var now = moment(); // .subtract(3, 'day');
+
+      var thisWeek = query({
+        'ids': ids,
+        'dimensions': 'ga:date,ga:nthDay',
+        'metrics': 'ga:sessions',
+        'start-date': moment(now).subtract(1, 'day').day(0).format('YYYY-MM-DD'),
+        'end-date': moment(now).format('YYYY-MM-DD')
+      });
+
+      var lastWeek = query({
+        'ids': ids,
+        'dimensions': 'ga:date,ga:nthDay',
+        'metrics': 'ga:sessions',
+        'start-date': moment(now).subtract(1, 'day').day(0).subtract(1, 'week')
+            .format('YYYY-MM-DD'),
+        'end-date': moment(now).subtract(1, 'day').day(6).subtract(1, 'week')
+            .format('YYYY-MM-DD')
+      });
+
+      Promise.all([thisWeek, lastWeek]).then(function(results) {
+
+        var data1 = results[0].rows.map(function(row) { return +row[2]; });
+        var data2 = results[1].rows.map(function(row) { return +row[2]; });
+        var labels = results[1].rows.map(function(row) { return +row[0]; });
+
+        labels = labels.map(function(label) {
+          return moment(label, 'YYYYMMDD').format('ddd');
+        });
+
+        var data = {
+          labels : labels,
+          datasets : [
+            {
+              label: 'Last Week',
+              fillColor : 'rgba(220,220,220,0.5)',
+              strokeColor : 'rgba(220,220,220,1)',
+              pointColor : 'rgba(220,220,220,1)',
+              pointStrokeColor : '#fff',
+              data : data2
+            },
+            {
+              label: 'This Week',
+              fillColor : 'rgba(151,187,205,0.5)',
+              strokeColor : 'rgba(151,187,205,1)',
+              pointColor : 'rgba(151,187,205,1)',
+              pointStrokeColor : '#fff',
+              data : data1
+            }
+          ]
+        };
+
+        new Chart(makeCanvas('chart-1-container')).Line(data);
+        generateLegend('legend-1-container', data.datasets);
+      });
     }
-    timeline.set(newIds).execute();
+
+
+    /**
+     * Draw the a chart.js bar chart with data from the specified view that
+     * overlays session data for the current year over session data for the
+     * previous year, grouped by month.
+     */
+    function renderYearOverYearChart(ids) {
+
+      // Adjust `now` to experiment with different days, for testing only...
+      var now = moment(); // .subtract(3, 'day');
+
+      var thisYear = query({
+        'ids': ids,
+        'dimensions': 'ga:month,ga:nthMonth',
+        'metrics': 'ga:users',
+        'start-date': moment(now).date(1).month(0).format('YYYY-MM-DD'),
+        'end-date': moment(now).format('YYYY-MM-DD')
+      });
+
+      var lastYear = query({
+        'ids': ids,
+        'dimensions': 'ga:month,ga:nthMonth',
+        'metrics': 'ga:users',
+        'start-date': moment(now).subtract(1, 'year').date(1).month(0)
+            .format('YYYY-MM-DD'),
+        'end-date': moment(now).date(1).month(0).subtract(1, 'day')
+            .format('YYYY-MM-DD')
+      });
+
+      Promise.all([thisYear, lastYear]).then(function(results) {
+        var data1 = results[0].rows.map(function(row) { return +row[2]; });
+        var data2 = results[1].rows.map(function(row) { return +row[2]; });
+        var labels = ['Jan','Feb','Mar','Apr','May','Jun',
+                      'Jul','Aug','Sep','Oct','Nov','Dec'];
+
+        // Ensure the data arrays are at least as long as the labels array.
+        // Chart.js bar charts don't (yet) accept sparse datasets.
+        for (var i = 0, len = labels.length; i < len; i++) {
+          if (data1[i] === undefined) data1[i] = null;
+          if (data2[i] === undefined) data2[i] = null;
+        }
+
+        var data = {
+          labels : labels,
+          datasets : [
+            {
+              label: 'Last Year',
+              fillColor : 'rgba(220,220,220,0.5)',
+              strokeColor : 'rgba(220,220,220,1)',
+              data : data2
+            },
+            {
+              label: 'This Year',
+              fillColor : 'rgba(151,187,205,0.5)',
+              strokeColor : 'rgba(151,187,205,1)',
+              data : data1
+            }
+          ]
+        };
+
+        new Chart(makeCanvas('chart-2-container')).Bar(data);
+        generateLegend('legend-2-container', data.datasets);
+      })
+      .catch(function(err) {
+        console.error(err.stack);
+      });
+    }
+
+
+    /**
+     * Draw the a chart.js doughnut chart with data from the specified view that
+     * show the top 5 browsers over the past seven days.
+     */
+    function renderTopBrowsersChart(ids) {
+
+      query({
+        'ids': ids,
+        'dimensions': 'ga:browser',
+        'metrics': 'ga:pageviews',
+        'sort': '-ga:pageviews',
+        'max-results': 5
+      })
+      .then(function(response) {
+
+        var data = [];
+        var colors = ['#4D5360','#949FB1','#D4CCC5','#E2EAE9','#F7464A'];
+
+        response.rows.forEach(function(row, i) {
+          data.push({ value: +row[1], color: colors[i], label: row[0] });
+        });
+
+        new Chart(makeCanvas('chart-3-container')).Doughnut(data);
+        generateLegend('legend-3-container', data);
+      });
+    }
+
+
+    /**
+     * Draw the a chart.js doughnut chart with data from the specified view that
+     * compares sessions from mobile, desktop, and tablet over the past seven
+     * days.
+     */
+    function renderTopCountriesChart(ids) {
+      query({
+        'ids': ids,
+        'dimensions': 'ga:country',
+        'metrics': 'ga:sessions',
+        'sort': '-ga:sessions',
+        'max-results': 5
+      })
+      .then(function(response) {
+
+        var data = [];
+        var colors = ['#4D5360','#949FB1','#D4CCC5','#E2EAE9','#F7464A'];
+
+        response.rows.forEach(function(row, i) {
+          data.push({
+            label: row[0],
+            value: +row[1],
+            color: colors[i]
+          });
+        });
+
+        new Chart(makeCanvas('chart-4-container')).Doughnut(data);
+        generateLegend('legend-4-container', data);
+      });
+    }
+
+    /**
+     * Extend the Embed APIs `gapi.analytics.report.Data` component to
+     * return a promise the is fulfilled with the value returned by the API.
+     * @param {Object} params The request parameters.
+     * @return {Promise} A promise.
+     */
+    function query(params) {
+      return new Promise(function(resolve, reject) {
+        var data = new gapi.analytics.report.Data({query: params});
+        data.once('success', function(response) { resolve(response); })
+            .once('error', function(response) { reject(response); })
+            .execute();
+      });
+    }
+
+
+    /**
+     * Create a new canvas inside the specified element. Set it to be the width
+     * and height of its container.
+     * @param {string} id The id attribute of the element to host the canvas.
+     * @return {RenderingContext} The 2D canvas context.
+     */
+    function makeCanvas(id) {
+      var container = document.getElementById(id);
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+
+      container.innerHTML = '';
+      canvas.width = container.offsetWidth;
+      canvas.height = container.offsetHeight;
+      container.appendChild(canvas);
+
+      return ctx;
+    }
+
+
+    /**
+     * Create a visual legend inside the specified element based off of a
+     * Chart.js dataset.
+     * @param {string} id The id attribute of the element to host the legend.
+     * @param {Array.<Object>} items A list of labels and colors for the legend.
+     */
+    function generateLegend(id, items) {
+      var legend = document.getElementById(id);
+      legend.innerHTML = items.map(function(item) {
+        var color = item.color || item.fillColor;
+        var label = item.label;
+        return '<li><i style="background:' + color + '"></i>' +
+            escapeHtml(label) + '</li>';
+      }).join('');
+    }
+
+
+    // Set some global Chart.js defaults.
+    Chart.defaults.global.animationSteps = 60;
+    Chart.defaults.global.animationEasing = 'easeInOutQuart';
+    Chart.defaults.global.responsive = true;
+    Chart.defaults.global.maintainAspectRatio = false;
+
+
+    /**
+     * Escapes a potentially unsafe HTML string.
+     * @param {string} str An string that may contain HTML entities.
+     * @return {string} The HTML-escaped string.
+     */
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.appendChild(document.createTextNode(str));
+      return div.innerHTML;
+    }
+
   });
-});
-</script>
+  </script>
 </body>
 </html>
