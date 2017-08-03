@@ -40,14 +40,27 @@ class ArticlesController < InheritedResources::Base
 		  return
 		elsif !@article.blank?
 		  @title = @article.title.to_s + " by " + (@article.authors.count > 0 ? @article.authors.first.name.to_s : 'Buddhadasa') + " - Suan Mokkh"		  
+		  
 		  if !@article.external_cover_img_link.blank?
 		    @img = @article.external_cover_img_link
-		  elsif !@article.cover_img.url.blank? && !@article.cover_img.url.include?('missing')
-		    @img = 'http://www.suanmokkh.org' + @article.cover_img.url
+		  elsif !@article.cover_img.url.blank? && !@article.cover_img.url.include?('missing.png')
+		    @img = @article.cover_img.url
 		  else
 		    @img = ''
 		  end
 
+		  if @article.file.url.include?('missing.png')
+		  	if !@article.external_file_link.blank?
+			  	@file = @article.external_file_link
+			  else
+			  	@file = ''
+			  end
+		  elsif @article.file.url.length > 6
+		  	@file = @article.file.url
+		  else
+		  	@file = ''
+		  end
+		  	
 		end
 	end
 
