@@ -162,8 +162,8 @@ p,h1,h2,h3,h4,h5,h6,blockquote {
 }
 
 .grid-sizer,
-.grid-item { width: 25%; }
-.grid-item--width2 { width: 50%; }
+.grid-item { width: 100%; }
+.grid-item--width2 { width: 100%; }
 
 section {
     padding: 25px 0;
@@ -869,3 +869,5 @@ a.footer-icon:hover {
     background-color: #725843;
     color: #fff;
 }
+
+

@@ -15,7 +15,7 @@ class RetreatTalksController < InheritedResources::Base
 	      # default_filter_params: {draft: false},
 	      # available_filters: [],
 	      ) or return
-		@retreat_talks = @filter.find.page(params[:page]).where(draft: false).uniq.order(created_at: :desc)
+		@retreat_talks = @filter.find.page(params[:page]).where(draft: false).order("RANDOM()")
 		respond_to do |format|
 			format.html
 			format.js
@@ -42,10 +42,10 @@ class RetreatTalksController < InheritedResources::Base
 			@audios = @retreat_talk.audios
 			@audio = @audios.first
 			@audio_languages = 'in '
-			@related_retreat_talks = (@retreat_talk.related_retreat_talks + RetreatTalk.joins(:audios).where({:id => low..high} || {audios: {audio_code: @retreat_talk.audios.first.audio_code}}).where.not(id: params[:id])).uniq
+			@related_retreat_talks = !@retreat_talk.related_retreat_talks.blank? ? @retreat_talk.related_retreat_talks : RetreatTalk.with_series(@retreat_talk.series).where.not({id: @retreat_talk.id})
 			@related_audios = @retreat_talk.audios
-
 			@options_for_languages = []
+
 			@retreat_talk.audios.each do |a|
 				language_option = ''
 				a.languages.each_with_index do |l, index|

@@ -102,7 +102,7 @@
               <% if !book.external_cover_img_link.blank? %>
                 <%= image_tag "#{book.external_cover_img_link}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;", itemprop: 'image' %>
               <% else %>
-                <%= image_tag "#{book.cover_img.url(:medium)}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;", itemprop: 'image' %>
+                <%= image_tag "#{book.cover_img.url(:small)}", size: "250x300", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 100%;", itemprop: 'image' %>
               <% end %>
               <div class="portfolio-box-caption">
                 <div class="portfolio-box-caption-content">

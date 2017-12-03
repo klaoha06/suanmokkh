@@ -1,6 +1,6 @@
 class Article < ActiveRecord::Base
 		# File attachments
-		has_attached_file :cover_img
+		has_attached_file :cover_img, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 		validates_attachment :cover_img, content_type: { content_type: ["image/jpg", "image/jpeg", "image/png"] }
 		has_attached_file :file
 	  validates_attachment :file, content_type: { content_type: ["application/pdf", "application/epub"] }

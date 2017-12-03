@@ -8,7 +8,7 @@
         <% if !book.external_cover_img_link.blank? %>
           <%= image_tag "#{book.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% else %>
-          <%= image_tag "#{book.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
+          <%= image_tag "#{book.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% end %>
       </a>
       <h4 class="text-center" itemprop="name"><a href=<%= '/books/' + book.id.to_s %>><%= book.title %></a></h4>

@@ -8,7 +8,7 @@
         <% if !article.external_cover_img_link.blank? %>
           <%= image_tag "#{article.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% else %>
-          <%= image_tag "#{article.cover_img.url}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
+          <%= image_tag "#{article.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter shadow", style: "width: 65%;", itemprop: 'image' %>
         <% end %>
       </a>
       <h4 class="text-center" itemprop="name"><a href=<%= '/articles/' + article.id.to_s %>><%= article.title %></a></h4>

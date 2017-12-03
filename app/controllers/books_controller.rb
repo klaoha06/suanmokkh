@@ -16,7 +16,7 @@ class BooksController < ApplicationController
       # persistence_id: 'shared_key',
       # available_filters: [],
     ) or return
-    @books = @filterrific.find.page(params[:page]).where(draft: false).uniq.order(created_at: :desc)
+    @books = @filterrific.find.page(params[:page]).where(draft: false).order("RANDOM()")
     # @books = @books.where(draft: false)
 
     respond_to do |format|

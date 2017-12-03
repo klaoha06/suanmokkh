@@ -7,19 +7,10 @@
 	<h1 class="text-center animated fadeIn" itemprop="name"><%= @page ? @page.title : 'Suan Mokkh : Garden of Liberation' %></h1>
 	<hr>
 	<div class="col-md-10">
-		<div class="bg-primary col-md-10 col-md-offset-1 havePadding haveMargin shadow">
-			<div id="owl-demo" class="owl-carousel owl-theme">
-			  <div class="item">
-					<%= image_tag "suanmokkh10.jpg",class: "lazyOwl"%>
-			  </div>
-			  <div class="item">
-					<%= image_tag "suanmokkh6.jpg",class: "lazyOwl"%>
-			  </div>
-			  <div class="item">
-					<%= image_tag "suanmokkh-land.jpg",class: "lazyOwl"%>
-			  </div>
-			</div>
-		</div>
+<div class="bg-primary col-md-10 col-md-offset-1 havePadding haveMargin shadow">
+	<%= image_tag "suanmokkh8.jpg",class: "floatCenter",style:"width: 100%"%>
+</div>
+<div class="clearfix"></div>
 		<% if @page %>
 			<%= @page.content.html_safe %>
 		<% else %>
@@ -31,8 +22,7 @@
 									<div class="clearfix"></div>
 									<hr id="introduction" class="full">
 									<h2 class="text-center haveMargin" style="margin-top:30px;">Introduction</h2>
-									<hr>
-								
+									<hr>								
 															<blockquote>
 																<p align="center"><small class="white">This article was written in 1988, for Monastic Studies<i>, a Catholic journal.</i>&nbsp;Since then, Ajahn Buddhadasa has died &amp; others have taken over leadership of the monastery he founded in 1932. There are some new directions, and the style is somewhat different,though it is still a fine place where many come to learn about &amp; practice the Dhamma. Closer to mainstream Thai Buddhism than in the past, and with less attention to Ajahn Buddhadasa's reformist legacy, the ideals described below nonetheless still are valid &amp; continue to motivate those who seek liberation through non-attachment to &quot;I&quot; &amp; &quot;mine.&quot;</small>
 															</small></blockquote>
@@ -80,6 +70,10 @@
 									<hr id="monastary"class="full">											
 														<h2 class="text-center haveMargin" style="margin-top:30px;">THE MONASTERY AND NATURE</h2>
 														<hr>
+														<div class="bg-primary col-md-10 col-md-offset-1 havePadding haveMargin shadow">
+															<%= image_tag "suanmokkh10.jpg",class: "floatCenter",style:"width: 100%"%>
+														</div>
+														<div class="clearfix"></div>
 														<p>The Buddha taught about Dhamma, rather than gods or a God. <a href="#FNGL4" name="TXTGL4"><sup class="white">4</sup></a>
 									He didn't describe the Supreme Thing, ultimate truth, the fundamental nature of
 									everything, or whatever we might call it, in personal or anthropomorphic terms.
@@ -700,5 +694,15 @@
 					</div>
 						
 </div>
-
 </div>
+<style type="text/css">
+	.owl-carousel .owl-item img {
+	    height:auto;
+	    width:100%;
+	    display: block;
+	}
+
+	.owl-carousel .item {
+	    margin:0px;
+	}
+</style>

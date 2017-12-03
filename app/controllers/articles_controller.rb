@@ -20,7 +20,7 @@ class ArticlesController < InheritedResources::Base
 	    # persistence_id: 'shared_key',
 	    # available_filters: [],
 	  ) or return
-	  @articles = @filterrific.find.page(params[:page]).where(draft: false)
+	  @articles = @filterrific.find.page(params[:page]).where(draft: false).order("RANDOM()")
 
 	  respond_to do |format|
 	    format.html

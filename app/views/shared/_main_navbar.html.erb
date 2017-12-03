@@ -24,9 +24,9 @@
                   <li><a href="https://soundcloud.com/buddhadasa"><h4 class="text-center brown">All Audios in SoundCloud</h4></a></li>
                   </ul>
                 </li> -->
-                <li><%= link_to "Poetry", poems_path %></li>
+                <li><%= link_to "Poems", poems_path %></li>
                 <li><%= link_to "Articles", articles_path %></li>
-                <li><a href="/gallery">Gallery</a></li>
+                <!-- <li><a href="/gallery">Gallery</a></li> -->
               </ul>
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
@@ -34,17 +34,17 @@
                   <ul class="dropdown-menu text-center" role="menu">
                     <h4 class="text-center brown"><i class="fa fa-circle-thin brown"></i>  Buddhadasa Indapanno</h4>
                     <li><a href="/buddhadasa">About Ajahn</a></li>                
-                    <li><a href="/gallery">Gallery</a></li>
                     <li class="divider"></li>
                     <h4 class="text-center brown"><i class="fa fa-book brown"> </i> Buddhadasa's Teachings</h4>                 
-                    <li><%= link_to "Retreat Talks", retreat_talks_path %></li>
                     <!-- <li><a target="_blank" href="https://www.soundcloud.com/buddhadasa">All Audios</a></li> -->
                     <li><%= link_to "Books", books_path %></li>
-                    <li><%= link_to "Poetry", poems_path %></li>
+                    <li><%= link_to "Talks", retreat_talks_path %></li>
+                    <li><%= link_to "Poems", poems_path %></li>
 <!--                     <li><a target="_blank" href="https://www.youtube.com/playlist?list=PLhSp_mSSQCh-11KF_DOlnVpcXdajoJvyt">Videos</a></li>
- -->                    <% if Article.where(draft: false).count > 0 %>
-                    <li><%= link_to "Articles", articles_path %></li>
+ -->                <% if Article.where(draft: false).count > 0 %>
+                      <li><%= link_to "Articles", articles_path %></li>
                     <% end %>
+                    <li><a href="/gallery">Photos</a></li>
                     <li class="divider"></li>
 <!--                     <h4 class="text-center brown"><i class="fa fa-shopping-cart brown"></i> Online Store</h4>
                     <li><a href="/store">Visit Store</a></li>
