@@ -65,14 +65,14 @@
           <div class="col-md-12">
             <% if mobile? %>
               <% @related_books.each_with_index do |b,i| %>
-                <% if b.show_book %>
+                <% if b.show_book_mobile %>
                   <% if i == 0 %>
-                  <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
+                  <div id=<%= "book-mobile"+ b.id.to_s %> class="mobile-btn">
                       <a target="_blank" href="<%= b.show_book_mobile %>" class="btn btn-primary text-center floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
                   </div>
                   <% else %>
-                    <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
-                      <a target="_blank" href="<%= b.show_book_mobile %>" class="btn btn-primary text-center floatCenter book-show-read-btn" role="button"><i class="fa fa-book hide"></i> Start Reading</a>
+                    <div id=<%= "book-mobile"+ b.id.to_s %> class="mobile-btn hide">
+                      <a target="_blank" href="<%= b.show_book_mobile %>" class="btn btn-primary text-center floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
                     </div>
                   <% end %>
                 <% end %>

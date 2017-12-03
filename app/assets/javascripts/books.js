@@ -47,8 +47,8 @@ $('.featured')
   });
   $('select.bookStatus').change(function(){
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        $('.book-show-read-btn').addClass('hide');
-        $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
+        $('.mobile-btn').addClass('hide');
+        $('#book-mobile'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
       } else {
         $('.embeded_book').addClass('hide');
         $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
