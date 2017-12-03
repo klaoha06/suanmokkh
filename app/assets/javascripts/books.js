@@ -46,8 +46,13 @@ $('.featured')
       $('#audio'+ ($('select.changeStatus').val())).removeClass('hide').addClass('animated fadeIn');
   });
   $('select.bookStatus').change(function(){
-      $('.embeded_book').addClass('hide');
-      $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        $('.book-show-read-btn').addClass('hide');
+        $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
+      } else {
+        $('.embeded_book').addClass('hide');
+        $('#book'+ ($('select.bookStatus').val())).removeClass('hide').addClass('animated fadeIn');
+      }
   });
 });
 
