@@ -129,9 +129,9 @@ class Book < ActiveRecord::Base
 
   def show_book_mobile
       if !self.external_file_link.blank? 
-        return '<iframe src="' 'https://docs.google.com/viewerng/viewer?embeded=true&url='+ self.external_file_link + '#page=1&zoom=100' + '"#view=fit" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+        'https://docs.google.com/viewer?url=' + self.external_file_link + '&embedded=true'
       elsif !self.file.url.blank? && !self.file.url.include?('missing')
-        return '<iframe src="' 'https://docs.google.com/viewerng/viewer?embeded=true&url=' + self.file.url + '#page=1&zoom=100' + '"#view=fitH" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+        'https://docs.google.com/viewer?url=suanmokkh.org/' + self.file.url + '&embedded=true'
       else
         return false
       end 

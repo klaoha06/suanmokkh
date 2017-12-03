@@ -46,14 +46,6 @@
         </p>
         <hr class="full" style="border-color:#725843;">
         <span style="color:black !important" itemprop="description"><%= @book.description.html_safe %></span>
-
-        <% if @book.audios.count > 1 && @book.show_book %>
-        <div class="row">
-          <div class="col-md-12">
-            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
-          </div>
-        </div>
-        <% end %>
       </div>    
       <hr class="full visible-sm visible-xs">
        <div class="col-md-12">
@@ -69,32 +61,50 @@
               </div>
             <% end %>
           <% end %>
-      <% if @book.audios.count <= 1 && @book.show_book %>
+      <% if @book.show_book %>
           <div class="col-md-12">
-            <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
+            <% if mobile? %>
+              <% @related_books.each_with_index do |b,i| %>
+                <% if b.show_book %>
+                  <% if i == 0 %>
+                  <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
+                      <a target="_blank" href="<%= b.show_book_mobile %>" class="btn btn-primary text-center floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
+                  </div>
+                  <% else %>
+                    <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
+                      <a target="_blank" href="<%= b.show_book_mobile %>" class="btn btn-primary text-center floatCenter book-show-read-btn" role="button"><i class="fa fa-book hide"></i> Start Reading</a>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% else %>
+              <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
+            <% end %>
           </div>
       <% end %>
        </div>
     </div>
   </div>
 </div>
+<% if !mobile? %>
 <div class="container-fluid">
   <div id="start_reading" class="container">
     <% @related_books.each_with_index do |b,i| %>
       <% if b.show_book %>
         <% if i == 0 %>
         <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
-            <%= mobile? ? b.show_book_mobile.html_safe : b.show_book.html_safe %>
+            <%= b.show_book.html_safe %>
         </div>
         <% else %>
           <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
-            <%= mobile? ? b.show_book_mobile.html_safe : b.show_book.html_safe %>
+            <%= b.show_book.html_safe %>
           </div>
         <% end %>
       <% end %>
     <% end %>
   </div>
 </div>
+<% end %>
 <% if @additional_info.first && @book.show_book %>
 <div class="container-fluid bg-dark">
   <a id="book-show-additional-info"class="text-center floatCenter white" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><i class="fa fa-info"></i>
