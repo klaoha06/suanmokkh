@@ -84,11 +84,11 @@
       <% if b.show_book %>
         <% if i == 0 %>
         <div id=<%= "book"+ b.id.to_s %> class="embeded_book">
-            <%= b.show_book.html_safe %>
+            <%= mobile? ? b.show_book_mobile.html_safe : b.show_book.html_safe %>
         </div>
         <% else %>
           <div id=<%= "book"+ b.id.to_s %> class="embeded_book hide">
-            <%= b.show_book.html_safe %>
+            <%= mobile? ? b.show_book_mobile.html_safe : b.show_book.html_safe %>
           </div>
         <% end %>
       <% end %>

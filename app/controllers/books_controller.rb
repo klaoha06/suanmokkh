@@ -104,6 +104,13 @@ class BooksController < ApplicationController
       end
     end
     @additional_info['Publishers'] = @publishers
+
+    if mobile?
+
+    else
+
+    end
+
   end
 
 
