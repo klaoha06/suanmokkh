@@ -1,3 +1,9 @@
-// .poem-grid-sizer,
-// .poem-grid-item { width: 32.6%; }
-// .poem-grid-item--width2 { width: 50%; }
+	.poem-grid-sizer,
+	.poem-grid-item { max-width: 32.6%; }
+	.poem-grid-item--width2 { max-width: 50%; }
+
+	@media(max-width: 768px) {
+		.poem-grid-sizer,
+		.poem-grid-item { max-width: 100%; }
+		.poem-grid-item--width2 { max-width: 100%; }
+	}

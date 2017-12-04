@@ -2,7 +2,7 @@
       <div class="poem-grid-sizer"></div>
       <% @poems.each_with_index do |poem, i| %>
         <div class="poem-grid-item">
-          <div class="thumbnail shadow">
+          <div class="thumbnail shadow" style="margin-bottom: 10px">
               <% if poem.cover_img.url != '/images/original/missing.png'%>
                 <%= image_tag "#{poem.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
               <% elsif !poem.external_cover_img_link.blank? %>
