@@ -1,7 +1,8 @@
+	@media(min-width: 769px) {
 	.poem-grid-sizer,
 	.poem-grid-item { max-width: 32.6%; }
 	.poem-grid-item--width2 { max-width: 50%; }
-
+}
 	@media(max-width: 768px) {
 		.poem-grid-sizer,
 		.poem-grid-item { max-width: 100%; }
