@@ -18,6 +18,7 @@ class RetreatTalk < ActiveRecord::Base
 	  # Associations
 	  has_and_belongs_to_many :authors, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :books, -> { distinct }
+	  has_and_belongs_to_many :ebooks, -> { distinct }
 	  has_and_belongs_to_many :audios, -> { distinct }
 	  has_and_belongs_to_many :groups, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :languages, -> { distinct }, :uniq => true
@@ -30,6 +31,7 @@ class RetreatTalk < ActiveRecord::Base
 
 		accepts_nested_attributes_for :authors, allow_destroy: true
 		accepts_nested_attributes_for :books, allow_destroy: true
+		accepts_nested_attributes_for :ebooks, allow_destroy: true
 		accepts_nested_attributes_for :audios, allow_destroy: true
 		accepts_nested_attributes_for :groups, allow_destroy: true
 		accepts_nested_attributes_for :languages, allow_destroy: true

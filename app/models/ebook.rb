@@ -1,18 +1,21 @@
-class Book < ActiveRecord::Base
+class Ebook < ActiveRecord::Base
   # File Attachments
   has_attached_file :cover_img, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment :cover_img, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
-  has_attached_file :file
-  validates_attachment :file, content_type: { content_type: ["application/pdf"] }
+  has_attached_file :pdf
+  validates_attachment :pdf, content_type: { content_type: ["application/pdf"] }
   has_attached_file :epub
-  # validates_attachment_file_name :epub, matches: [/epub\z/, /epub?g\z/]
+  # validates_attachment_content_type :epub, content_type: /\Aimage\/.*\z/
+  # validates_attachment :epub, content_type: { content_type: ["application/epub"] }
+  validates_attachment_file_name :epub, matches: [/epub\z/, /epub?g\z/]
   has_attached_file :mobi
   validates_attachment_file_name :mobi, matches: [/mobi\z/, /mobi?g\z/]
+  # validates_attachment :mobi, content_type: { content_type: ["application/mobi"] }
 
   # Validations
   validates :title, presence: true, uniqueness: true
   # validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
-  validates :external_cover_img_link, url: true,  unless: ->(book){book.external_cover_img_link.blank?}
+  validates :external_cover_img_link, url: true,  unless: ->(ebook){ebook.external_cover_img_link.blank?}
   # validate :source_of_file
   validate :source_of_cover_img
 
@@ -26,12 +29,12 @@ class Book < ActiveRecord::Base
   has_and_belongs_to_many :audios, -> { distinct }
   has_and_belongs_to_many :groups, -> { distinct }, :uniq => true
   has_and_belongs_to_many :languages, -> { distinct }, :uniq => true
-  belongs_to :admin_user, inverse_of: :books
+  belongs_to :admin_user, inverse_of: :ebooks
 
-  has_many :collections
-  has_many :related_books, :through => :collections
-  has_many :inverse_collections, :class_name => "Collection", :foreign_key => "related_book_id"
-  has_many :inverse_related_books, :through => :inverse_collections, :source => :book
+  has_many :ebook_collections
+  has_many :related_ebooks, :through => :ebook_collections
+  has_many :inverse_collections, :class_name => "EbookCollection", :foreign_key => "related_ebook_id"
+  has_many :inverse_related_ebooks, :through => :inverse_collections, :source => :ebook
 
 	accepts_nested_attributes_for :authors, allow_destroy: true
 	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
@@ -43,28 +46,32 @@ class Book < ActiveRecord::Base
   attr_reader :cover_img_remote_url
   # has_attached_file :avatar
 
-  def set_content_type
-    self.epub.instance_write(:content_type, MIME::Types.type_for(self.epub_file_name).to_s)
-  end
+  before_create :create_remote_url
+
+  paginates_per 16
 
   def create_remote_url
-    if external_file_link && !file
-      self.file = URI.parse(external_file_link)
-      # self.file.url = external_file_link
-      # @file_remote_url = external_file_link
-    end
+    # if external_pdf_link && !pdf
+    #   self.pdf = URI.parse(external_pdf_link)
+    #   # self.file.url = external_file_link
+    #   # @file_remote_url = external_file_link
+    # end
+    # if external_mobi_link && !mobi
+    #   self.mobi = URI.parse(external_mobi_link)
+    #   # self.file.url = external_file_link
+    #   # @file_remote_url = external_file_link
+    # end
+    # if external_epub_link && !epub
+    #   self.epub = URI.parse(external_epub_link)
+    #   # self.file.url = external_file_link
+    #   # @file_remote_url = external_file_link
+    # end
     if external_cover_img_link && !cover_img
       self.cover_img = URI.parse(external_cover_img_link)
       # self.cover_img.url = external_cover_img_link
       # @cover_img_remote_url = external_cover_img_link
     end
   end
-
-  before_post_process :set_content_type
-
-  before_create :create_remote_url
-
-  paginates_per 16
 
   # def self.search language, author, series
   #   query_obj = includes(:authors, :groups, :languages)
@@ -127,32 +134,32 @@ class Book < ActiveRecord::Base
     where.not('series' => '').pluck(:series).uniq
   end
 
-  def show_book
-      if !self.external_file_link.blank? 
-        return '<iframe src="' + self.external_file_link + '#page=1&zoom=100' + '"#view=fit" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
-      elsif !self.file.url.blank? && !self.file.url.include?('missing')
-        return '<iframe src="' + self.file.url + '#page=1&zoom=100' + '"#view=fitH" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
-      else
-        return false
-      end 
-  end
+  # def show_book
+  #     if !self.external_file_link.blank? 
+  #       return '<iframe src="' + self.external_file_link + '#page=1&zoom=100' + '"#view=fit" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+  #     elsif !self.file.url.blank? && !self.file.url.include?('missing')
+  #       return '<iframe src="' + self.file.url + '#page=1&zoom=100' + '"#view=fitH" width="100%" height="1000px" border="0" style="border:none" scrolling="no"></iframe>'
+  #     else
+  #       return false
+  #     end 
+  # end
 
-  def show_book_mobile
-      if !self.external_file_link.blank? 
-        'https://docs.google.com/viewer?url=' + self.external_file_link + '&embedded=true'
-      elsif !self.file.url.blank? && !self.file.url.include?('missing')
-        'https://docs.google.com/viewer?url=suanmokkh.org/' + self.file.url + '&embedded=true'
-      else
-        return false
-      end 
-  end
+  # def show_book_mobile
+  #     if !self.external_file_link.blank? 
+  #       'https://docs.google.com/viewer?url=' + self.external_file_link + '&embedded=true'
+  #     elsif !self.file.url.blank? && !self.file.url.include?('missing')
+  #       'https://docs.google.com/viewer?url=suanmokkh.org/' + self.file.url + '&embedded=true'
+  #     else
+  #       return false
+  #     end 
+  # end
 
-  private
+  # private
 
-  def source_of_file
-    if (external_file_link.blank? && file_file_name.blank?)
-      errors.add(:file, "Please upload a file OR give an external link/url to the file")
-      errors.add(:external_file_link, "Please upload a file OR give an external link/url to the file")
+  def source_of_pdf
+    if (external_file_link.blank? && pdf_file_name.blank?)
+      errors.add(:file, "Please upload a PDF file.")
+      errors.add(:external_file_link, "Please upload a PDF file.")
     end
   end
 

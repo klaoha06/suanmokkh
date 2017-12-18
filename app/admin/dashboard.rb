@@ -44,6 +44,34 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
       column do
+        panel "Ebooks" do
+          table_for Ebook.order('id desc').limit(10) do
+            column "cover_img", :sortable => false do |book|
+              if book.cover_img_file_name
+                "<img src='#{book.cover_img.url}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+              else
+                "<img src='#{book.external_cover_img_link}' alt='book cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe
+               end
+            end
+            column("Title") {|book| book.title}
+            column("Created At") {|book|pretty_format( book.created_at)}
+            column("Status") {|book| status_tag(book.draft? ? "Not Published" : "Published")}
+            column("Actions") {|book| a ' Go to', :href => admin_book_path(book), :class => "button"}
+            # column("Downloads") {|book| book.downloads}
+            # attachment_column :file, truncate: false
+          # column("State")   {|order| status_tag(order.state)                                    }
+          # column("File"){|book| link_to(order.user.email, admin_customer_path(order.user)) }
+          # column("Total")   {|order| number_to_currency order.total_price                       }
+          end
+          div :style => 'display:inline; text-align:center; padding: 5px;' do
+            para :style => 'display:inline-block; margin:0;' do
+              ("Number of Books in Archieve - <strong>#{Book.count}</strong>").html_safe
+            end
+            a ' See all', :href => admin_books_path(), :style => 'float:right'
+          end
+        end
+      end
+      column do
         panel "Retreat Talks" do
           table_for RetreatTalk.order('id desc').limit(10) do
             column "cover_img", :sortable => false do |retreat_talk|

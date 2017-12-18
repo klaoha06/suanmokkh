@@ -4,6 +4,7 @@ class AdminUser < ActiveRecord::Base
 
 	has_many :poems, inverse_of: :admin_user
 	has_many :books, inverse_of: :admin_user
+	has_many :ebooks, inverse_of: :admin_user
 	has_many :retreat_talks, inverse_of: :admin_user
 	has_many :audios, inverse_of: :admin_user
 	has_many :articles, inverse_of: :admin_user

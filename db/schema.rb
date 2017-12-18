@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821014036) do
+ActiveRecord::Schema.define(version: 20171217144709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,14 @@ ActiveRecord::Schema.define(version: 20160821014036) do
   add_index "audios_books", ["audio_id"], name: "index_audios_books_on_audio_id", using: :btree
   add_index "audios_books", ["book_id"], name: "index_audios_books_on_book_id", using: :btree
 
+  create_table "audios_ebooks", id: false, force: :cascade do |t|
+    t.integer "audio_id"
+    t.integer "ebook_id"
+  end
+
+  add_index "audios_ebooks", ["audio_id"], name: "index_audios_ebooks_on_audio_id", using: :btree
+  add_index "audios_ebooks", ["ebook_id"], name: "index_audios_ebooks_on_ebook_id", using: :btree
+
   create_table "audios_groups", id: false, force: :cascade do |t|
     t.integer "audio_id"
     t.integer "group_id"
@@ -191,6 +199,14 @@ ActiveRecord::Schema.define(version: 20160821014036) do
 
   add_index "authors_books", ["author_id"], name: "index_authors_books_on_author_id", using: :btree
   add_index "authors_books", ["book_id"], name: "index_authors_books_on_book_id", using: :btree
+
+  create_table "authors_ebooks", id: false, force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "ebook_id"
+  end
+
+  add_index "authors_ebooks", ["author_id"], name: "index_authors_ebooks_on_author_id", using: :btree
+  add_index "authors_ebooks", ["ebook_id"], name: "index_authors_ebooks_on_ebook_id", using: :btree
 
   create_table "authors_poems", id: false, force: :cascade do |t|
     t.integer "author_id"
@@ -244,6 +260,14 @@ ActiveRecord::Schema.define(version: 20160821014036) do
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
     t.string   "editor"
+    t.string   "mobi_file_name"
+    t.string   "mobi_content_type"
+    t.integer  "mobi_file_size"
+    t.datetime "mobi_updated_at"
+    t.string   "epub_file_name"
+    t.string   "epub_content_type"
+    t.integer  "epub_file_size"
+    t.datetime "epub_updated_at"
   end
 
   add_index "books", ["admin_user_id"], name: "index_books_on_admin_user_id", using: :btree
@@ -308,6 +332,91 @@ ActiveRecord::Schema.define(version: 20160821014036) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
+
+  create_table "ebook_collections", force: :cascade do |t|
+    t.integer "ebook_id"
+    t.integer "related_ebook_id"
+  end
+
+  create_table "ebooks", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.text     "external_url_link"
+    t.text     "external_cover_img_link"
+    t.text     "external_file_link"
+    t.string   "language"
+    t.string   "series"
+    t.string   "group"
+    t.string   "editor"
+    t.date     "creation_date"
+    t.string   "translator"
+    t.string   "transcriber"
+    t.string   "isbn_10"
+    t.string   "isbn_13"
+    t.date     "publication_date"
+    t.boolean  "draft",                                           default: false
+    t.boolean  "featured",                                        default: false
+    t.boolean  "allow_comments",                                  default: true
+    t.boolean  "recommended",                                     default: false
+    t.string   "format"
+    t.float    "weight"
+    t.integer  "pages"
+    t.decimal  "price",                   precision: 8, scale: 2
+    t.string   "currency"
+    t.integer  "admin_user_id"
+    t.datetime "created_at",                                                      null: false
+    t.datetime "updated_at",                                                      null: false
+    t.string   "cover_img_file_name"
+    t.string   "cover_img_content_type"
+    t.integer  "cover_img_file_size"
+    t.datetime "cover_img_updated_at"
+    t.string   "pdf_file_name"
+    t.string   "pdf_content_type"
+    t.integer  "pdf_file_size"
+    t.datetime "pdf_updated_at"
+    t.string   "epub_file_name"
+    t.string   "epub_content_type"
+    t.integer  "epub_file_size"
+    t.datetime "epub_updated_at"
+    t.string   "mobi_file_name"
+    t.string   "mobi_content_type"
+    t.integer  "mobi_file_size"
+    t.datetime "mobi_updated_at"
+  end
+
+  add_index "ebooks", ["admin_user_id"], name: "index_ebooks_on_admin_user_id", using: :btree
+
+  create_table "ebooks_groups", id: false, force: :cascade do |t|
+    t.integer "ebook_id"
+    t.integer "group_id"
+  end
+
+  add_index "ebooks_groups", ["ebook_id"], name: "index_ebooks_groups_on_ebook_id", using: :btree
+  add_index "ebooks_groups", ["group_id"], name: "index_ebooks_groups_on_group_id", using: :btree
+
+  create_table "ebooks_languages", id: false, force: :cascade do |t|
+    t.integer "ebook_id"
+    t.integer "language_id"
+  end
+
+  add_index "ebooks_languages", ["ebook_id"], name: "index_ebooks_languages_on_ebook_id", using: :btree
+  add_index "ebooks_languages", ["language_id"], name: "index_ebooks_languages_on_language_id", using: :btree
+
+  create_table "ebooks_publishers", id: false, force: :cascade do |t|
+    t.integer "publisher_id"
+    t.integer "ebook_id"
+  end
+
+  add_index "ebooks_publishers", ["ebook_id"], name: "index_ebooks_publishers_on_ebook_id", using: :btree
+  add_index "ebooks_publishers", ["publisher_id"], name: "index_ebooks_publishers_on_publisher_id", using: :btree
+
+  create_table "ebooks_retreat_talks", id: false, force: :cascade do |t|
+    t.integer "ebook_id"
+    t.integer "retreat_talk_id"
+  end
+
+  add_index "ebooks_retreat_talks", ["ebook_id"], name: "index_ebooks_retreat_talks_on_ebook_id", using: :btree
+  add_index "ebooks_retreat_talks", ["retreat_talk_id"], name: "index_ebooks_retreat_talks_on_retreat_talk_id", using: :btree
 
   create_table "feedbacks", force: :cascade do |t|
     t.string   "title"

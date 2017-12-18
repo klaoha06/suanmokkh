@@ -5,6 +5,7 @@ class Language < ActiveRecord::Base
 	  has_and_belongs_to_many :news_articles, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :audios, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :books, -> { distinct }, :uniq => true
+	  has_and_belongs_to_many :ebooks, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :retreat_talks, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :poems, -> { distinct }, :uniq => true
 	  has_and_belongs_to_many :groups, -> { distinct }, :uniq => true
@@ -14,6 +15,7 @@ class Language < ActiveRecord::Base
 		accepts_nested_attributes_for :audios, allow_destroy: true
 		accepts_nested_attributes_for :retreat_talks, allow_destroy: true
 		accepts_nested_attributes_for :books, allow_destroy: true
+		accepts_nested_attributes_for :ebooks, allow_destroy: true
 		accepts_nested_attributes_for :poems, allow_destroy: true
 		accepts_nested_attributes_for :groups, allow_destroy: true
 

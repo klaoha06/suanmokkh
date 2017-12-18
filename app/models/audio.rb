@@ -7,6 +7,7 @@ class Audio < ActiveRecord::Base
 	validates_attachment :file, content_type: { content_type: [ 'audio/mpeg', 'audio/x-mpeg', 'audio/mp3', 'audio/x-mp3', 'audio/mpeg3', 'audio/x-mpeg3', 'audio/mpg', 'audio/x-mpg', 'audio/x-mpegaudio' ]}
 
 	has_and_belongs_to_many :books, -> { distinct }
+	has_and_belongs_to_many :ebooks, -> { distinct }
 	has_and_belongs_to_many :retreat_talks, -> { distinct }
 	has_and_belongs_to_many :authors, -> { distinct }
 	has_and_belongs_to_many :languages, -> { distinct }
@@ -15,6 +16,7 @@ class Audio < ActiveRecord::Base
 
 
 	accepts_nested_attributes_for :books, allow_destroy: true
+	accepts_nested_attributes_for :ebooks, allow_destroy: true
 	accepts_nested_attributes_for :retreat_talks, allow_destroy: true
 	accepts_nested_attributes_for :authors, allow_destroy: true
 	accepts_nested_attributes_for :languages, allow_destroy: true
