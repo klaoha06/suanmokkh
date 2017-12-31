@@ -1,4 +1,4 @@
-ActiveAdmin.register Book do
+ActiveAdmin.register Book, as: "Ebook" do
 	batch_action :unpublish do |ids|
 	    Book.find(ids).each do |book|
 	      book.draft = true
@@ -15,10 +15,8 @@ ActiveAdmin.register Book do
   end
 	menu priority: 2
 	config.per_page = 12
-	permit_params :ebook, :normalbook, :recommended, :creation_date, :transcriber, :translator, :editor, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :epub, :mobi, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :language_ids, :title, :embeded_audio_link, :admin_user_id ]
+	permit_params :recommended, :creation_date, :transcriber, :translator, :editor, :currency, :language_ids, :admin_user_id, :group_ids, :author_ids, :audio_ids, :publisher_ids, :id, :external_url_link, :external_file_link, :external_cover_img_link, :title, :cover_img, :description, :isbn_10, :isbn_13, :downloads, :draft, :series, :file, :mobi, :epub, :allow_comments, :weight, :pages, :publication_date, :format, :price, :featured, authors_attributes:  [ :id, :name, :first_name, :last_name, :brief_biography ], publishers_attributes: [ :name, :id ], languages_attributes: [ :name, :id ], groups_attributes: [ :name, :id ], audios_attributes: [ :id, :language_ids, :title, :embeded_audio_link, :admin_user_id ]
 	# config.batch_actions = true
-	# scope :normalbook
-
 
 show do |book|
   panel "Basic" do
@@ -39,10 +37,6 @@ show do |book|
 	  	    	para 'no description'
 	  	    end
   	    end
-  	    row "Book Distinction" do
-  	    	status_tag((book.ebook? ? "Ebook" : "Not Ebook"), (book.ebook? ? :ok : :warning))
-  	    	status_tag((book.normalbook? ? "Normal Book" : "Not Normal Book"), (book.normalbook? ? :ok : :warning))
-  	    end
   	    row "PDF" do
   	    	if book.file_file_name
 	  	    	text_node ("<iframe src='" + book.file.url() + "'#view='fit' width='100%' height='1000px' border='0' style='border:none' scrolling='no'></iframe>").html_safe
@@ -51,7 +45,6 @@ show do |book|
 	  	  row "Epub" do
   	    	if book.epub_file_name
   	    		text_node ("<a href='" + book.epub.url() + "'>" + book.epub_file_name + "</a>").html_safe
-  	    		text_node ("<p>" + book.epub_content_type + "</p>").html_safe
 	  	    end
 	  	  end
 	  	  row "Mobi" do
@@ -114,10 +107,10 @@ show do |book|
 	  end
   end
   if book.file_file_name
-	  panel "PDF" do
+	  panel "File" do
 	  	attributes_table_for book do
 	  	    attachment_row:file
-	  	    row :file_file_name, :label => "file name"
+	  	    row :file_file_name
 	  	    row :file_content_type
 	  	    row 'file size (in Megabytes)' do
 	  	    	para number_to_human_size(book.file_file_size)
@@ -129,38 +122,6 @@ show do |book|
 	  	  end
 	  end
 	 end
-   if book.epub_file_name
- 	  panel "Epub" do
- 	  	attributes_table_for book do
- 	  	    attachment_row:epub
- 	  	    row :epub_file_name, :label => "file name"
- 	  	    row :epub_content_type
- 	  	    row 'file size (in Megabytes)' do
- 	  	    	para number_to_human_size(book.epub_file_size)
- 	  	    end
- 	  	    row 'epub url' do
- 	  	    	para book.epub.url
- 	  	    end
- 	  	    row :epub_updated_at
- 	  	  end
- 	  end
- 	 end
-	  if book.mobi_file_name
-		  panel "Mobi" do
-		  	attributes_table_for book do
-		  	    attachment_row:mobi
-		  	    row :mobi_file_name, :label => "file name"
-		  	    row :mobi_content_type
-		  	    row 'file size (in Megabytes)' do
-		  	    	para number_to_human_size(book.mobi_file_size)
-		  	    end
-		  	    row 'mobi url' do
-		  	    	para book.mobi.url
-		  	    end
-		  	    row :mobi_updated_at
-		  	  end
-		  end
-		 end
 	 if book.cover_img_file_name
 	  panel "Cover Image" do
 	  	attributes_table_for book do
@@ -194,7 +155,7 @@ show do |book|
   active_admin_comments
 end
 
-sidebar "Admin who created this book..", :only => :show do
+sidebar "Admin who created this ebook..", :only => :show do
 	if book.admin_user
 		table_for(book.admin_user) do
 			column("") {|admin_user| link_to admin_user.email, admin_admin_user_path(admin_user) }
@@ -213,7 +174,7 @@ sidebar "Audio", :only => :show do
 		column("Title") {|audio| link_to "#{audio.title}", admin_audio_path(audio) }
 	end
 end
-sidebar "Same Books in different languages", :only => :show do
+sidebar "Same books in different languages", :only => :show do
 	table_for(book.related_books) do
 		column("Title") {|related_book| link_to "#{related_book.title}", admin_book_path(related_book) }
 	end
@@ -253,11 +214,11 @@ end
 index as: :grid, columns: 3 do |book|
   panel book.title do
   	if book.cover_img_file_name
-	  	a :href => admin_book_path(book) do
+	  	a :href => admin_ebook_path(book) do
 		  		image_tag(book.cover_img, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
   		end
   	else
-	  	a :href => admin_book_path(book) do
+	  	a :href => admin_ebook_path(book) do
 		  		image_tag(book.external_cover_img_link, width: '150', height: '200',margin: '0 auto', display: 'block', class: 'grid_img')
   		end
   	end
@@ -279,16 +240,17 @@ index as: :grid, columns: 3 do |book|
   		  row("Created At", :sortable => :created_at){ pretty_format(book.created_at) }
   		  if book.file_file_name
 	  		  attachment_row :file
-	  		elsif book.external_file_link
-	  			row 'external_file_link' do
-	  				a book.external_file_link.first(50), href: book.external_file_link         
-	  			end
+	  		else
+	  			text_node ("<p>No File Available</p><br>").html_safe
+	  		# 	row 'external_file_link' do
+	  		# 		a book.external_file_link.first(50), href: book.external_file_link         
+	  		# 	end
 	  		end
 	 #  book.authors.each do |author|
 		#   a truncate(author.name), :href => admin_author_path(author), :style => 'display:block; text-align:center; font-size:1em;'
 		end
-		a ' Show ', :href => admin_book_path(book), :class => "button"
-		a ' Edit ', :href => '/admin/books/' + book.id.to_s + '/edit', :class => "button"
+		a ' Show ', :href => admin_ebook_path(book), :class => "button"
+		a ' Edit ', :href => '/admin/ebooks/' + book.id.to_s + '/edit', :class => "button"
 		text_node ("<a class='delete_link member_link button' data-confirm='Are you sure you want to delete this?' rel='nofollow' data-method='delete' href='/admin/books/" + book.id.to_s + "'>Delete</a>").html_safe
 	end
   end
@@ -362,7 +324,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	tabs do
 		tab 'Data' do
 			f.inputs 'Required Information' do
-				f.input :title, :required => true
+				f.input :title
 				f.input :description, :required => true, :as => :ckeditor, :input_html => { :ckeditor => { :height => 400 } }
 				f.input :languages, hint: content_tag(:span, "Existing Languages")
 				# f.has_many :languages do |language|
@@ -373,14 +335,6 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				f.has_many :authors do |author|
 					author.input :name, :required => true
 				end
-				# f.input :file, hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "Please choose ONLY between uploading the file here or give a link to the pdf/epub file below in the external_file_link")
-				# f.input :external_file_link, :as => :url
-				# f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
-				# f.input :external_cover_img_link, :as => :url
-			end
-			f.inputs "Book Distinction" do
-				f.input :ebook, :label => "Ebook?"
-				f.input :normalbook, :label => "Book?"
 			end
 			f.inputs "Optional Information" do
 				# f.input :authors
@@ -396,6 +350,7 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 				f.has_many :groups do |group|
 					group.input :name, :required => true
 				end
+
 			end
 			f.inputs "Audio related to this book" do
         f.input :audios
@@ -434,11 +389,11 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	        	f.input :publication_date
 	        end
 	        f.inputs 'Actual Files' do
-	        	f.input :file, label: "Pdf", hint: f.book.file? ? link_to(f.book.file_file_name, f.book.file.url) : content_tag(:span, "")
-	        	f.input :epub, hint: f.book.epub? ? link_to(f.book.epub_file_name, f.book.epub.url) : content_tag(:span, "")
-	        	f.input :mobi, hint: f.book.mobi? ? link_to(f.book.mobi_file_name, f.book.mobi.url) : content_tag(:span, "")
+	        	f.input :file, label: "Pdf", hint: f.ebook.file? ? link_to(f.ebook.file_file_name, f.ebook.file.url) : content_tag(:span, "")
+	        	f.input :epub, hint: f.ebook.epub? ? link_to(f.ebook.epub_file_name, f.ebook.epub.url) : content_tag(:span, "")
+	        	f.input :mobi, hint: f.ebook.mobi? ? link_to(f.ebook.mobi_file_name, f.ebook.mobi.url) : content_tag(:span, "")
 	        	# f.input :external_file_link, :as => :url
-	        	f.input :cover_img, :required => true, hint: f.book.cover_img? ? image_tag(f.book.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
+	        	f.input :cover_img, :required => true, hint: f.ebook.cover_img? ? image_tag(f.ebook.cover_img.url, height: '150') : content_tag(:span, "Please choose ONLY between uploading the cover image here or give a link to the image file below in the external_cover_img_link")
 	        	f.input :external_cover_img_link, :as => :url
 	        end
 	        f.inputs 'Post Status' do
@@ -466,16 +421,16 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  end
 
 	  after_create do	  	
-	  	@book.audios.each do |audio|
+	  	@ebook.audios.each do |audio|
 	  		@current_admin_user.audios << audio
 	  	end
 
-	  	if @book.authors.count == 1 && @book.authors.first.blank?
-	  		@book.authors << Author.first
+	  	if @ebook.authors.count == 1 && @ebook.authors.first.blank?
+	  		@ebook.authors << Author.first
 	  	end
 
-	  	if @book.languages.count == 1 && @book.languages.first.blank?
-	  		@book.languages << Language.first
+	  	if @ebook.languages.count == 1 && @ebook.languages.first.blank?
+	  		@ebook.languages << Language.first
 	  	end
 
 	  	audios = @_params[:book][:audios_attributes]
@@ -503,15 +458,15 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  end #before_create
 
   controller do
-  	def scoped_collection
-  		@books = Book.normalbook
-	  end
-	  def show
-	  	@book = Book.find params[:id]
-	  end
-	  def edit
-	  	@book = Book.find params[:id]
-	  end
+	  	def scoped_collection
+	  		@books = Book.ebook
+		  end
+		  def show
+		  	@book = Book.find params[:id]
+		  end	
+		  def edit
+		  	@ebook = Book.find params[:id]
+		  end	
 	  	def create
 	  		super do |format|
 	  			params.permit!
@@ -522,36 +477,34 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 	  			@existing_languages = params[:book].delete("language_ids")
 	  			@existing_groups = params[:book].delete("group_ids")
 	  			if @existing_authors
-	  				@book.authors << Author.where(id: @existing_authors)
+	  				@ebook.authors << Author.where(id: @existing_authors)
 	  			end
 	  			if @existing_related_books
-	  				@book.related_books << Book.where(id: @existing_related_books)
+	  				@ebook.related_books << Book.where(id: @existing_related_books)
 	  			end
 	  			if @existing_retreat_talks
-	  				@book.retreat_talks << RetreatTalk.where(id: @existing_retreat_talks)
+	  				@ebook.retreat_talks << RetreatTalk.where(id: @existing_retreat_talks)
 	  			end
 	  			if @existing_audios
-	  				@book.audios << Audio.where(id: @existing_audios)
+	  				@ebook.audios << Audio.where(id: @existing_audios)
 	  			end
 	  			if @existing_publishers
-	  				@book.publishers << Publisher.where(id: @existing_publishers)
+	  				@ebook.publishers << Publisher.where(id: @existing_publishers)
 	  			end
 	  			if @existing_languages
-	  				@book.languages << Language.where(id: @existing_languages)
+	  				@ebook.languages << Language.where(id: @existing_languages)
 	  			end
 	  			if @existing_groups
-	  				@book.groups << Group.where(id: @existing_groups)
+	  				@ebook.groups << Group.where(id: @existing_groups)
 	  			end
 
-	  			@book.admin_user = @current_admin_user
-	  			@current_admin_user.books << @book
+	  			@ebook.admin_user = @current_admin_user
+	  			@current_admin_user.books << @ebook
 
 				end #super
 			end #create
 
 	def update
-			  	@book = Book.find params[:id]
-
 		super do |format|
 			params.permit!
 			@existing_authors = params[:book].delete("author_ids")
@@ -563,85 +516,85 @@ form :html => { :enctype => "multipart/form-data" } do |f|
 			@existing_groups = params[:book].delete("group_ids")
 
 			if @existing_authors
-				@book.authors = Author.where(id: @existing_authors)
+				@ebook.authors = Author.where(id: @existing_authors)
 			end
 			if params[:book][:authors_attributes]
 				params[:book][:authors_attributes].each do |key, author|
 					if !author.has_key?("id")
 						new_author = Author.where(name: author[:name]).first_or_create
-						@book.authors << new_author
+						@ebook.authors << new_author
 					end
 				end
 			end
 
 			if @existing_related_books
-				@book.related_books = Book.where(id: @existing_related_books)
+				@ebook.related_books = Book.where(id: @existing_related_books)
 			end
 			if params[:book][:related_books_attributes]
 				params[:book][:related_books_attributes].each do |key, related_book|
 					if !book.has_key?("id")
 						new_related_book = Book.where(title: related_book[:title]).first_or_create
-						@book.related_books << new_related_book
+						@ebook.related_books << new_related_book
 					end
 				end
 			end
 
 			if @existing_retreat_talks
-				@book.retreat_talks = RetreatTalk.where(id: @existing_retreat_talks)
+				@ebook.retreat_talks = RetreatTalk.where(id: @existing_retreat_talks)
 			end
 			if params[:book][:retreat_talks_attributes]
 				params[:book][:retreat_talks_attributes].each do |key, retreat_talk|
 					if !retreat_talk.has_key?("id")
 						new_retreat_talk = RetreatTalk.where(name: retreat_talk[:name]).first_or_create
-						@book.retreat_talks << new_retreat_talk
+						@ebook.retreat_talks << new_retreat_talk
 					end
 				end
 			end
 
 			if @existing_audios
-				@book.audios = Audio.where(id: @existing_audios)
+				@ebook.audios = Audio.where(id: @existing_audios)
 			end
 			if params[:book][:audios_attributes]
 				params[:book][:audios_attributes].each do |key, audio|
 					if !audio.has_key?("id")
 						new_audio = Audio.where(title: audio[:title]).first_or_create
-						@book.audios << new_audio
+						@ebook.audios << new_audio
 					end
 				end
 			end
 
 			if @existing_publishers
-				@book.publishers = Publisher.where(id:  @existing_publishers)
+				@ebook.publishers = Publisher.where(id:  @existing_publishers)
 			end
 			if params[:book][:publishers_attributes]
 				params[:book][:publishers_attributes].each do |key, publisher|
 					if !publisher.has_key?("id")
 						new_publisher = Publisher.where(name: publisher[:name]).first_or_create
-						@book.publishers << new_publisher
+						@ebook.publishers << new_publisher
 					end
 				end
 			end
 
 			if @existing_languages
-				@book.languages = Language.where(id: @existing_languages)
+				@ebook.languages = Language.where(id: @existing_languages)
 			end
 			if params[:book][:languages_attributes]
 				params[:book][:languages_attributes].each do |key, language|
 					if !language.has_key?("id")
 						new_language = Language.where(name: language[:name]).first_or_create
-						@book.languages << new_language
+						@ebook.languages << new_language
 					end
 				end
 			end
 
 			if @existing_groups
-				@book.groups = Group.where(id: @existing_groups)
+				@ebook.groups = Group.where(id: @existing_groups)
 			end
 			if params[:book][:groups_attributes]
 				params[:book][:groups_attributes].each do |key, group|
 					if !group.has_key?("id")
 						new_group = Group.where(name: group[:name]).first_or_create
-						@book.groups << new_group
+						@ebook.groups << new_group
 					end
 				end 
 			end

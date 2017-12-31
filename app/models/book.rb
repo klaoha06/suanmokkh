@@ -1,16 +1,50 @@
 class Book < ActiveRecord::Base
+  # Scopes
+  scope :ebook, ->{where(ebook: true)}
+  scope :normalbook, ->{where(normalbook: true)}
+  scope :with_type, lambda { |type|
+    if type == "eBook"
+      where(ebook: true)
+    elsif type == "Book"
+      where(normalbook: true)
+    else
+      Book.includes(:authors, :audios, :groups, :languages, :related_books).where(id: params[:id], draft: false).first
+    end
+  }
+
   # File Attachments
   has_attached_file :cover_img, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
   validates_attachment :cover_img, content_type: { content_type:     ["image/jpg", "image/jpeg", "image/png"] }
   has_attached_file :file
-  validates_attachment :file, content_type: { content_type: ["application/pdf", "application/epub"] }
+  validates_attachment :file, content_type: { content_type: ["application/pdf"] }
+  has_attached_file :epub, { validate_media_type: false }
+  # validates_attachment_file_name :epub, matches: [/epub\z/, /epub?g\z/]
+  has_attached_file :mobi
+  validates_attachment_file_name :mobi, matches: [/mobi\z/, /mobi?g\z/]
+
+  before_post_process :set_content_type
+
+  def set_content_type
+    # debugger  
+    # self.epub.instance_write(:content_type, MIME::Types.type_for(self.epub_file_name).first.to_s)
+    # debugger
+  end
 
   # Validations
+  validates :title, presence: true, uniqueness: true
   validates :title, presence: true, uniqueness: true
   # validates :external_file_link, url: true, unless: ->(book){book.external_file_link.blank?}
   validates :external_cover_img_link, url: true,  unless: ->(book){book.external_cover_img_link.blank?}
   # validate :source_of_file
   validate :source_of_cover_img
+  validate :presence_of_ebook_or_book
+
+  def presence_of_ebook_or_book
+    if normalbook == false && ebook == false
+      errors.add(:normalbook, "ebook or normalbook must be true")
+      errors.add(:ebook, "ebook or normalbook must be true")
+    end
+  end
 
   # validates :external_file_link, presence: true, unless: ->(book){book.file_file_name.present?}
   # validates :file_file_name, presence: true, unless: ->(book){book.external_file_link.present?}
@@ -70,7 +104,7 @@ class Book < ActiveRecord::Base
     available_filters: [
       :search_query,
       :with_language_id,
-      :with_author_id,
+      :with_type,
       :with_series,
     ]
   )
@@ -105,9 +139,13 @@ class Book < ActiveRecord::Base
     joins(:languages).where(languages: { id: language_id })
   end
 
-  def self.with_author_id author_id
-    joins(:authors).where(authors: { id: author_id })
-  end
+  # def self.with_type type
+  #   if type == "ebook"
+  #     where(ebook: true)
+  #   elsif type == "normalbook"
+  #     where(normalbook: true)
+  #   end
+  # end
 
   def self.with_series series
     where(series: series).uniq
@@ -115,6 +153,10 @@ class Book < ActiveRecord::Base
 
   def self.options_for_series
     where.not('series' => '').pluck(:series).uniq
+  end
+
+  def self.options_for_type
+    where(normalbook: true, ebook: true)
   end
 
   def show_book

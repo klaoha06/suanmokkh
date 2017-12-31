@@ -9,7 +9,7 @@ class BooksController < ApplicationController
       params[:filterrific],
       :select_options => {
         with_language_id: Language.options_for_select,
-        with_author_id: Author.options_for_select,
+        with_type: ['eBook', 'Book'],
         with_series: Book.options_for_series,
       },
       # default_filter_params: [],
@@ -73,6 +73,19 @@ class BooksController < ApplicationController
         end
         @options_for_book_languages << [language_option, rb.id]
       end
+
+      #book source
+      @book_source_array = []
+      if @book.epub.exists?
+       @book_source_array.push({:type => "Pdf", :url => @book.file.url()})
+      end
+      if @book.epub.exists?
+       @book_source_array.push({:type => "Epub", :url => "/download_epub/" + @book.id.to_s})
+      end
+      if @book.mobi.exists?
+        @book_source_array.push({:type => "Mobi", :url => @book.mobi.url()})
+      end   
+
     end
 
     if !@languages.blank?
@@ -111,6 +124,11 @@ class BooksController < ApplicationController
 
     end
 
+  end
+
+  def download_epub
+      @book = Book.find(params[:id])
+      send_file @book.epub.path, type: "application/epub+zip", x_sendfile: true
   end
 
 

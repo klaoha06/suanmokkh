@@ -63,10 +63,10 @@
       </div>
       <div class="col-md-3">
         <div class="form-group chardin_box">
-        <h3>Author</h3>
+        <h3>Type</h3>
         <%= f.select(
-          :with_author_id,
-          @filterrific.select_options[:with_author_id],
+          :with_type,
+          @filterrific.select_options[:with_type],
           { include_blank: '- Any -' },
           { :class => 'form-control' }
         ) %>

@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :books, :except => [:update, :destroy, :create, :new]
+  get "/download_epub/:id", to: "books#download_epub"
   resources :articles, :except => [:update, :destroy, :create, :new]
   resources :retreat_talks, :only => [:show, :index]
 

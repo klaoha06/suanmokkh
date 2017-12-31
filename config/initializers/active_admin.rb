@@ -248,4 +248,6 @@ ActiveAdmin.setup do |config|
   # config.clear_javascripts! 
   # config.register_javascript 'application.js'
   # current_javascripts.reverse.each{|j| config.register_javascript j}
+  MIME::Types.add MIME::Type.from_hash('Content-Type' => 'application/epub+zip',
+                                       'Extensions' => ['epub'])
 end
