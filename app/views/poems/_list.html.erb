@@ -1,32 +1,70 @@
-    <div class="poem-grid">
-      <div class="poem-grid-sizer"></div>
-      <% @poems.each_with_index do |poem, i| %>
-        <div class="poem-grid-item">
-          <div class="thumbnail shadow" style="margin-bottom: 12px">
-              <% if poem.cover_img.url != '/images/original/missing.png'%>
-                <%= image_tag "#{poem.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
-              <% elsif !poem.external_cover_img_link.blank? %>
-                <%= image_tag "#{poem.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
-              <% else %>
-              <% end %>
-            <div class="caption">
-              <h2 class="text-center"><%= poem.title %></h2>
-              <hr>
-              <div class="poem-content">
-                <%= poem.content.html_safe %>
-              </div>
+<% if mobile? %>
+  <div class="container">
+    <!-- <div class="poem-grid-sizer"></div> -->
+    <% @poems.each_with_index do |poem, i| %>
+      <div class="col-md-12">
+        <div class="thumbnail shadow" style="margin-bottom: 12px">
+            <% if poem.cover_img.url != '/images/original/missing.png'%>
+              <%= image_tag "#{poem.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
+            <% elsif !poem.external_cover_img_link.blank? %>
+              <%= image_tag "#{poem.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
+            <% else %>
+            <% end %>
+          <div class="caption">
+            <h2 class="text-center"><%= poem.title %></h2>
+            <hr>
+            <div class="poem-content">
+              <%= poem.content.html_safe %>
             </div>
           </div>
         </div>
-        <% end %>
-    </div>
+      </div>
+      <% end %>
+  </div>
 
-    <div class="col-md-12" style="margin-top: 100px">
-      <p class="text-center"><%= page_entries_info @poems %></p>
+  <div class="col-md-12" style="margin-top: 100px">
+    <p class="text-center"><%= page_entries_info @poems %></p>
 
-      <nav class="text-center">
-      <%= paginate @poems, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
-      </nav>
-      <br>
-      <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
-    </div>
+    <nav class="text-center">
+    <%= paginate @poems, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
+    </nav>
+    <br>
+    <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
+  </div>
+
+<% else %>
+
+  <div class="poem-grid">
+    <div class="poem-grid-sizer"></div>
+    <% @poems.each_with_index do |poem, i| %>
+      <div class="poem-grid-item">
+        <div class="thumbnail shadow" style="margin-bottom: 12px">
+            <% if poem.cover_img.url != '/images/original/missing.png'%>
+              <%= image_tag "#{poem.cover_img.url(:medium)}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
+            <% elsif !poem.external_cover_img_link.blank? %>
+              <%= image_tag "#{poem.external_cover_img_link}", class: "lazyOwl img-responsive floatCenter", style: "width: 100%;" %>
+            <% else %>
+            <% end %>
+          <div class="caption">
+            <h2 class="text-center"><%= poem.title %></h2>
+            <hr>
+            <div class="poem-content">
+              <%= poem.content.html_safe %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+  </div>
+
+  <div class="col-md-12" style="margin-top: 100px">
+    <p class="text-center"><%= page_entries_info @poems %></p>
+
+    <nav class="text-center">
+    <%= paginate @poems, :theme => 'twitter-bootstrap-3', :pagination_class => "pagination-small pagination-centered" %>
+    </nav>
+    <br>
+    <!-- <a href="https://soundcloud.com/buddhadasa"><h4 class="text-center">Listen to All Audios in SoundCloud</h4></a> -->
+  </div>
+
+<% end %>

@@ -163,10 +163,10 @@ ActiveAdmin.register Article do
 		# if article.file_file_name
 			# attachment_column :file
 		# end
-		column :file do |article|
-			a article.file.url.first(30), :href => article.file.url if article.file.url
-			a article.external_file_link.first(30), :href => article.external_file_link if article.external_file_link
-		end
+		# column :file do |article|
+		# 	a article.file.url.first(30), :href => article.file.url if article.file.url
+		# 	a article.external_file_link.first(30), :href => article.external_file_link if article.external_file_link
+		# end
 		column :languages do |article|
 				article.languages.each do |language|
 					a :href => admin_language_path(language) do

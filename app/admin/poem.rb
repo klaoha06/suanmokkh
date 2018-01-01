@@ -56,10 +56,17 @@ index do
 	selectable_column
 	id_column
 	column :title
-	column :content
+	# column :content
 	# column "cover_img", :sortable => false do |poem|
 	#   poem.cover_img.url ? "<img src='#{poem.cover_img.url}' alt='poem cover_img' style='width:75px; max-height: none;height:150x; display:block; margin:0 auto;'/>".html_safe : 'no image'
 	# end
+	column :content do |poem|
+		if poem.content
+	  	text_node (poem.content).html_safe
+	  else
+	  	para 'no content'
+	  end
+	end
 	column :groups do |poem|
 			poem.groups.each do |group|
 				a :href => admin_group_path(group) do
