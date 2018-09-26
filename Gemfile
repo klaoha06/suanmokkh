@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 
+ruby '2.3.7'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 # Use PostgreSQL as the database for Active Record
-gem 'pg'
+gem 'pg', '0.21.0'
 # Use Bootstrap for Front-End Framework
 gem 'bootstrap-sass', '~> 3.3.4'
 gem "font-awesome-rails"
@@ -18,7 +20,7 @@ gem 'pundit'
 gem 'activeadmin_addons'
 # gem 'activeadmin_associations'
 
-gem 'filterrific'
+gem 'filterrific', '4.0.1'
 # gem 'ransack'
 
 gem 'soundcloud'
