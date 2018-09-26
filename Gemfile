@@ -32,6 +32,7 @@ gem "paperclip", "~> 4.2"
 
 # Use autoprefixer to automatically adds the proper vendor prefixes to your CSS code when it is compiled.
 gem 'autoprefixer-rails'
+gem 'mini_racer'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
