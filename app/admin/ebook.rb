@@ -66,16 +66,32 @@ show do |book|
   panel "Status" do
   	attributes_table_for book do
   	    row 'allow_comments' do
-  	    	status_tag((book.allow_comments? ? "Commenting Allowed" : "NO Commenting Allowed"))
+  	    	if book.allow_comments?
+  	    		status_tag(:yes, label: 'Commenting Allowed')
+	  	    else
+	  	    	status_tag( :no, label: "No Commenting Allowed")
+	  	    end
   	    end
   	    row 'featured' do
-  	    	status_tag((book.featured? ? "Featured" : "Not Featured"))
+  	    	if book.featured?
+  	    		status_tag(:yes, label: 'Featured')
+	  	    else
+	  	    	status_tag(:no, label: "Not Featured")
+	  	    end
   	    end
   	    row 'recommended' do
-  	    	status_tag((book.recommended? ? "Recommended" : "Not Recommended"))
+  	    	if book.recommended?
+  	    		status_tag(:yes, label: 'Recommended')
+	  	    else
+	  	    	status_tag(:no, label: "Not Recommended")
+	  	    end
   	    end
   	    row 'draft' do
-  	    	status_tag((book.draft? ? "Not Published" : "Published"))
+  	    	if book.draft?
+  	    		status_tag(:no, label: 'Not Published')
+	  	    else
+	  	    	status_tag(:yes, label: "Published")
+	  	    end
   	    end
   	  end
   end
@@ -308,7 +324,11 @@ index do
 			end
 	end
 	column :draft, :sortable => :draft do |book|
-		status_tag(book.draft? ? "Not Published" : "Published")
+		if book.draft?
+  	    	status_tag(:no, label: 'Not Published')
+	  	else
+	  	    status_tag(:yes, label: "Published")
+	  	end
 	end
 	column :featured
 	column :recommended

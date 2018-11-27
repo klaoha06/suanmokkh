@@ -88,8 +88,12 @@ index do
 				end
 			end
 	end
-	column :draft, :sortable => :draft do |book|
-		status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
+	column :draft, :sortable => :draft do |poem|
+		  	 if poem.draft?
+  	    		status_tag(:no, label: 'Not Published')
+	  	    else
+	  	    	status_tag(:yes, label: "Published")
+	  	    end
 	end
 	column :featured
 	column :created_at

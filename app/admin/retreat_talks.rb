@@ -41,7 +41,11 @@ show do |retreat_talk|
 		  	  end
   	    end
   	    row 'do_not_update_from_soundcloud' do
-  	    	status_tag((retreat_talk.do_not_update_from_soundcloud? ? "Not updating from SoundCloud" : "Updating from SoundClound"), (retreat_talk.do_not_update_from_soundcloud? ? :ok : :ok))
+  	    	 if retreat_talk.do_not_update_from_soundcloud?
+  	    		status_tag(:no, label: 'Not updating from SoundCloud')
+	  	    else
+	  	    	status_tag(:yes, label: "Updating from SoundClound")
+	  	    end
   	    end
   	    row "Book file" do
   	    	if retreat_talk.books.first
@@ -123,18 +127,34 @@ show do |retreat_talk|
 	 end
 	 panel "Status" do
 	 	attributes_table_for retreat_talk do
-	 	    row 'allow_comments' do
-	 	    	status_tag((retreat_talk.allow_comments? ? "Commenting Allowed" : "No Commenting Allowed"), (retreat_talk.allow_comments? ? :ok : :warning))
-	 	    end
-	 	    row 'featured' do
-	 	    	status_tag((retreat_talk.featured? ? "Featured" : "Not Featured"), (retreat_talk.featured? ? :ok : :warning))
-	 	    end
-	 	    row 'recommended' do
-	 	    	status_tag((retreat_talk.recommended? ? "Recommended" : "Not Recommended"), (retreat_talk.recommended? ? :ok : :warning))
-	 	    end
-	 	    row 'draft' do
-	 	    	status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
-	 	    end
+	 	row 'allow_comments' do
+  	    	if retreat_talk.allow_comments?
+  	    		status_tag(:yes, label: 'Commenting Allowed')
+	  	    else
+	  	    	status_tag( :no, label: "No Commenting Allowed")
+	  	    end
+  	    end
+  	    row 'featured' do
+  	    	if retreat_talk.featured?
+  	    		status_tag(:yes, label: 'Featured')
+	  	    else
+	  	    	status_tag(:no, label: "Not Featured")
+	  	    end
+  	    end
+  	    row 'recommended' do
+  	    	if retreat_talk.recommended?
+  	    		status_tag(:yes, label: 'Recommended')
+	  	    else
+	  	    	status_tag(:no, label: "Not Recommended")
+	  	    end
+  	    end
+  	    row 'draft' do
+  	    	if retreat_talk.draft?
+  	    		status_tag(:no, label: 'Not Published')
+	  	    else
+	  	    	status_tag(:yes, label: "Published")
+	  	    end
+  	    end
 	 	  end
 	 end
   active_admin_comments
@@ -235,7 +255,11 @@ index do
 			end
 	end
 	column :draft, :sortable => :draft do |retreat_talk|
-      status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
+    	if retreat_talk.draft?
+    		status_tag(:no, label: 'Not Published')
+  	    else
+  	    	status_tag(:yes, label: "Published")
+  	    end
     end
 	column :featured
 	# column :created_at

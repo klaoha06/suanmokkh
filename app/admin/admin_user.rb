@@ -9,7 +9,11 @@ ActiveAdmin.register AdminUser do
         column("Book ID", :sortable => :id) {|book| link_to "##{book.id}", admin_book_path(book) }
         column("Title") {|book| book.title}
         column :draft, :sortable => :draft do |book|
-          status_tag((book.draft? ? "Not Published" : "Published"), (book.draft? ? :warning : :ok))
+          if book.draft?
+            status_tag(:no, label: 'Not Published')
+          else
+            status_tag(:yes, label: "Published")
+          end
         end
         column("Created At", :sortable => :created_at){|book| pretty_format(book.created_at) }
       end
@@ -25,7 +29,11 @@ ActiveAdmin.register AdminUser do
         column("Retreat Talk ID", :sortable => :id) {|retreat_talk| link_to "##{retreat_talk.id}", admin_article_path(article) }
         column("Title") {|retreat_talk| retreat_talk.title}
         column :draft, :sortable => :draft do |retreat_talk|
-          status_tag((retreat_talk.draft? ? "Not Published" : "Published"), (retreat_talk.draft? ? :warning : :ok))
+          if retreat_talk.draft?
+            status_tag(:no, label: 'Not Published')
+          else
+            status_tag(:yes, label: "Published")
+          end
         end
         column("Created At", :sortable => :created_at){|retreat_talk| pretty_format(retreat_talk.created_at) }
       end
@@ -41,7 +49,11 @@ ActiveAdmin.register AdminUser do
         column("Audio ID", :sortable => :id) {|audio| link_to "##{audio.id}", admin_audio_path(audio) }
         column("Title") {|audio| audio.title}
         column :draft, :sortable => :draft do |audio|
-          status_tag((audio.draft? ? "Not Published" : "Published"), (audio.draft? ? :warning : :ok))
+          if audio.draft?
+            status_tag(:no, label: 'Not Published')
+          else
+            status_tag(:yes, label: "Published")
+          end
         end
         column("Created At", :sortable => :created_at){|audio| pretty_format(audio.created_at) }
       end
@@ -73,7 +85,11 @@ ActiveAdmin.register AdminUser do
         column("Poem ID", :sortable => :id) {|poem| link_to "##{poem.id}", admin_poem_path(poem) }
         column("Title") {|poem| poem.title}
         column :draft, :sortable => :draft do |poem|
-          status_tag((poem.draft? ? "Not Published" : "Published"), (poem.draft? ? :warning : :ok))
+          if poem.draft?
+            status_tag(:no, label: 'Not Published')
+          else
+            status_tag(:yes, label: "Published")
+          end
         end
         column("Created At", :sortable => :created_at){|poem| pretty_format(poem.created_at) }
       end

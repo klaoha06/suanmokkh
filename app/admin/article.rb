@@ -27,18 +27,34 @@ ActiveAdmin.register Article do
 	  end
 	  panel "Status" do
 	  	attributes_table_for article do
-	  	    row 'allow_comments' do
-	  	    	status_tag((article.allow_comments? ? "Commenting Allowed" : "Commenting Not Allowed"), (article.allow_comments? ? :ok : :warning))
+	  	row 'allow_comments' do
+  	    	if article.allow_comments?
+  	    		status_tag(:yes, label: 'Commenting Allowed')
+	  	    else
+	  	    	status_tag( :no, label: "No Commenting Allowed")
 	  	    end
-	  	    row 'featured' do
-	  	    	status_tag((article.featured? ? "Featured" : "Not Featured"), (article.featured? ? :ok : :warning))
+  	    end
+  	    row 'featured' do
+  	    	if article.featured?
+  	    		status_tag(:yes, label: 'Featured')
+	  	    else
+	  	    	status_tag(:no, label: "Not Featured")
 	  	    end
-	  	    row 'recommended' do
-	  	    	status_tag((article.recommended? ? "Recommended" : "Not Recommended"), (article.recommended? ? :ok : :warning))
+  	    end
+  	    row 'recommended' do
+  	    	if article.recommended?
+  	    		status_tag(:yes, label: 'Recommended')
+	  	    else
+	  	    	status_tag(:no, label: "Not Recommended")
 	  	    end
-	  	    row 'draft' do
-	  	    	status_tag((article.draft? ? "Not Published" : "Published"), (article.draft? ? :warning : :ok))
+  	    end
+  	    row 'draft' do
+  	    	if article.draft?
+  	    		status_tag(:no, label: 'Not Published')
+	  	    else
+	  	    	status_tag(:yes, label: "Published")
 	  	    end
+  	    end
 	  	  end
 	  end
 	  panel "Stats" do
@@ -190,7 +206,11 @@ ActiveAdmin.register Article do
 				end
 		end
 		column :draft, :sortable => :draft do |article|
-	      status_tag((article.draft? ? "Not Published" : "Published"), (article.draft? ? :warning : :ok))
+	  	    if article.draft?
+  	    		status_tag(:no, label: 'Not Published')
+	  	    else
+	  	    	status_tag(:yes, label: "Published")
+	  	    end
 	    end
 		column :featured
 		column :cover_img
