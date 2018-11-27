@@ -117,7 +117,7 @@ ActiveAdmin.register_page "Dashboard" do
                 column("Content") {|feedback| feedback.content}
                 column("Created At") {|feedback| pretty_format(feedback.created_at)}
                 # column("Required response?") {|feedback| status_tag(feedback.required_response? ? "Required a response" : "Do not required response", feedback.required_response? ? :warning : :ok)}
-                column("Responsed?") {|feedback| status_tag(feedback.responsed? ? "Responsed" : "Not responsed yet", feedback.responsed? ? :ok : :warning)}
+                # column("Responsed?") {|feedback| status_tag(feedback.responsed? ? "Responsed" : "Not responsed yet", feedback.responsed? ? :ok : :warning)}
                 column("Actions") {|feedback| a ' Go to', :href => admin_feedback_path(feedback), :class => "button"}
             end
             div :style => 'display:inline; text-align:center; padding: 5px;' do
