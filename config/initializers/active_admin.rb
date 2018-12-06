@@ -171,13 +171,15 @@ ActiveAdmin.setup do |config|
   # and feel.
   #
   # To load a stylesheet:
-    config.register_stylesheet 'chartjs-visualizations.css'
+    # config.register_stylesheet 'chartjs-visualizations.css'
+    # config.register_stylesheet '//cdn.ckeditor.com/4.6.1/basic/ckeditor.js'
+
   #
   # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
   #   config.register_stylesheet 'my_print_stylesheet.css', media: :print
   #
   # To load a javascript file:
-    config.register_javascript 'active-users.js'
+    config.register_javascript '//cdn.ckeditor.com/4.6.1/basic/ckeditor.js'
 
   # == CSV options
   #
