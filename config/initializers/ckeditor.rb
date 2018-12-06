@@ -37,5 +37,5 @@ Ckeditor.setup do |config|
   # config.assets_languages = ['en', 'uk']
   # config.assets_plugins = ['copyformatting']
 
-  # config.cdn_url = "//cdn.ckeditor.com/4.6.1/basic/ckeditor.js"
+  config.cdn_url = "//cdn.ckeditor.com/4.6.1/basic/ckeditor.js"
 end

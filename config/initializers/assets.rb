@@ -20,4 +20,5 @@ Rails.application.config.assets.precompile += %w( buddhadasa.js )
 Rails.application.config.assets.precompile += %w( suanmokkh.js )
 Rails.application.config.assets.precompile += %w( gallery.js )
 Rails.application.config.assets.precompile += %w( filterrific/filterrific-spinner.gif )
-Rails.application.config.assets.precompile += %w( ckeditor/*)
+Rails.application.config.assets.precompile += %w(ckeditor/config.js)
+
