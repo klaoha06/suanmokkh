@@ -12,7 +12,7 @@ ActiveAdmin.register_page "Dashboard" do
 
     # Here is an example of a simple dashboard with columns and panels.
     #
-    render 'google_analytics'
+    # render 'google_analytics'
 
     columns do
       column do
