@@ -26,7 +26,7 @@ gem 'filterrific', '4.0.1'
 gem 'soundcloud'
 
 # gem 'rich'
-gem 'ckeditor'
+gem 'ckeditor', github: 'galetahub/ckeditor'
 gem 'non-stupid-digest-assets'
 # For Uploading Files
 gem "paperclip", "~> 4.2"
