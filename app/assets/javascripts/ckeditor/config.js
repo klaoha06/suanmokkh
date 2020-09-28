@@ -1,3 +1,3 @@
 CKEDITOR.editorConfig = function (config) {
-  config.extraPlugins = 'copyformatting,';
+  // config.extraPlugins = 'copyformatting,';
 }
