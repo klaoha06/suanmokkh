@@ -27,6 +27,7 @@ gem 'soundcloud'
 
 # gem 'rich'
 gem 'ckeditor'
+gem 'non-stupid-digest-assets'
 # For Uploading Files
 gem "paperclip", "~> 4.2"
 
