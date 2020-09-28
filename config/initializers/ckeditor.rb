@@ -33,7 +33,7 @@ Ckeditor.setup do |config|
   # config.asset_path = "http://www.example.com/assets/ckeditor/"
 
   # To reduce the asset precompilation time, you can limit plugins and/or languages to those you need:
-  By default: nil (no limit)
+  # By default: nil (no limit)
   config.assets_languages = ['en', 'uk']
   config.assets_plugins = ['copyformatting']
 
