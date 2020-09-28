@@ -13,7 +13,7 @@
 //= require books
 //= require poems
 //= require google_analytics
-//= stub ckeditor/init
+//= require ckeditor/init
 //= stub activeadmin
 
 new WOW().init();
