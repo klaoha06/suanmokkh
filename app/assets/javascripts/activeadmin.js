@@ -4,4 +4,3 @@
 //   if ( $('#ckeditor').prev('label').length ) 
 //     $('#ckeditor').prev('label').css('float','none');
 // });
-#= require ckeditor/init
