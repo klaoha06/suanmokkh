@@ -82,9 +82,9 @@
               <% end %>
             <% end %>
             <% if @book.epub.exists? || @book.mobi.exists? || @book.file.exists? %>
-              <span class="floatCenter text-center">Available in
+              <p class="floatCenter text-center">Available in
                 <%= safe_join(@book_source_array.map { |l| link_to(l[:type], l[:url]) }, ", ".html_safe) %>
-              </span>
+              </p>
             <% end %>
           </div>
        </div>
