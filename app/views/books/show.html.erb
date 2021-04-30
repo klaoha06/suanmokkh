@@ -81,7 +81,7 @@
               <a href="#start_reading" class="btn btn-primary text-center page-scroll floatCenter book-show-read-btn" role="button"><i class="fa fa-book"></i> Start Reading</a>
               <% end %>
             <% end %>
-            <% if @book.epub.exists? || @book.mobi.exists? || @book.file.exists? %>
+            <% if @book.epub.exists? || @book.mobi.exists? %>
               <p class="floatCenter text-center">Available in
                 <%= safe_join(@book_source_array.map { |l| link_to(l[:type], l[:url]) }, ", ".html_safe) %>
               </p>
