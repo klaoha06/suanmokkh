@@ -80,7 +80,7 @@ class BooksController < ApplicationController
        @book_source_array.push({:type => "Pdf", :url => @book.file.url()})
       end
       if @book.epub.exists?
-       @book_source_array.push({:type => "Epub", :url => "/download_epub/" + @book.id.to_s})
+       @book_source_array.push({:type => "Epub", :url => @book.file.url()})
       end
       if @book.mobi.exists?
         @book_source_array.push({:type => "Mobi", :url => @book.mobi.url()})
